@@ -1,16 +1,16 @@
 # Lucee on Tomcat (JAR deployment)
 
-[Lucee](http://www.lucee.org/) CFML application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server
+[Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server
 
 ## Features
 
 ### Java optisation tweaks
 
-Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
+- Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
 
-JVM is set to [use /dev/urandom as an entropy source for secure random numbers](http://support.run.pivotal.io/entries/59869725-Java-Web-Applications-Slow-Startup-or-Failing) to avoid blocking Tomcat on startup.
+- JVM is set to [use /dev/urandom as an entropy source for secure random numbers](http://support.run.pivotal.io/entries/59869725-Java-Web-Applications-Slow-Startup-or-Failing) to avoid blocking Tomcat on startup.
 
-Tomcat is configured to [skip the default scanning of Jar files on startup](http://www.gpickin.com/index.cfm/blog/how-to-get-your-tomcat-to-pounce-on-startup-not-crawl), significantly improving startup time.
+- Tomcat is configured to [skip the default scanning of Jar files on startup](http://www.gpickin.com/index.cfm/blog/how-to-get-your-tomcat-to-pounce-on-startup-not-crawl), significantly improving startup time.
 
 ### Optimised for single-site application
 
