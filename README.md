@@ -30,7 +30,7 @@ The default configuration serves a single application for any hostname on the li
 
 Prebuilt Docker images are available on [Docker Hub](https://registry.hub.docker.com/repos/lucee/). These images are are created via [automated builds](https://docs.docker.com/docker-hub/builds/).
 
-These images are not 'trusted' and are provided with no warranty.
+These images are supported by the Lucee community however they are provided with no warranty.
 
 ## License
 
