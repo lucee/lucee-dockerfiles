@@ -4,7 +4,7 @@
 # -Xss<size> set java thread stack size
 # -XX:MaxPermSize sets the java PermGen size
 
-# Default memory settings if not specified in $RAILO_JAVA_OPTS
+# Default memory settings if not specified in $LUCEE_JAVA_OPTS
 : ${LUCEE_JAVA_OPTS:="-Xms256m -Xmx512m -XX:MaxPermSize=128m"}
 
 # Activate Lucee Java agent and use /dev/urandom for EGD (http://wiki.apache.org/tomcat/HowTo/FasterStartUp)

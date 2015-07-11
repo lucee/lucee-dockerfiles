@@ -16,8 +16,6 @@ Docker images are available on Docker Hub:
 
 - Tomcat is configured to [skip the default scanning of Jar files on startup](http://www.gpickin.com/index.cfm/blog/how-to-get-your-tomcat-to-pounce-on-startup-not-crawl), significantly improving startup time.
 
-- A compatible version of the [Apache Tomcat Native Library](http://tomcat.apache.org/native-doc/) is installed for better Tomcat performance in production environments.
-
 ### Optimised for single-site application
 
 The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the `server.xml` in the Tomcat config.
@@ -32,8 +30,8 @@ The default configuration serves a single application for any hostname on the li
 
 Prebuilt Docker images are available on [Docker Hub](https://registry.hub.docker.com/repos/lucee/). These images are are created via [automated builds](https://docs.docker.com/docker-hub/builds/).
 
-These images are not 'trusted' and are provided with no warranty.
+These images are supported by the Lucee community however they are provided with no warranty.
 
 ## License
 
-The Docker files and config files are available under the [MIT License](LICENSE.txt). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
+The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
