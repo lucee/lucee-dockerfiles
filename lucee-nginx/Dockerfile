@@ -1,6 +1,6 @@
 # Dockerfile for nginx on Lucee/Tomcat
 
-FROM boomfish/lucee-tomcat:4.5
+FROM lucee/lucee-tomcat:latest
 
 MAINTAINER Dennis Clark <boomfish@gmail.com>
 
