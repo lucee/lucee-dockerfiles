@@ -1,3 +1,4 @@
+# Version 4.5.1.022
 FROM tomcat:7.0.63-jre8
 
 MAINTAINER Dennis Clark <boomfish@gmail.com>
@@ -25,3 +26,5 @@ RUN mkdir -p /opt/lucee/server/lucee-server/context /opt/lucee/web
 # Create webroot with a default index.cfm
 RUN mkdir -p /var/www
 COPY index.cfm /var/www/
+
+ONBUILD RUN rm -rf /var/www/*
