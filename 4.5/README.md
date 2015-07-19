@@ -1,4 +1,4 @@
-# Lucee on Tomcat (JAR deployment)
+# Lucee 4.5 on Tomcat (JAR deployment)
 
 [![](https://badge.imagelayers.io/tomcat:latest.svg)](https://imagelayers.io/?images=tomcat:latest 'Get your own badge on imagelayers.io')
 

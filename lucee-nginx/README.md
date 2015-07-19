@@ -1,4 +1,6 @@
-# Lucee on Tomcat with nginx
+# Lucee 4.5 on Tomcat with nginx
+
+[![](https://badge.imagelayers.io/lucee/lucee-nginx:latest.svg)](https://imagelayers.io/?images=lucee/lucee-nginx:latest 'Get your own badge on imagelayers.io')
 
 [Lucee](http://www.lucee.org/) application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server and [nginx](http://nginx.org/) HTTP server. 
 
