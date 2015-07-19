@@ -1,5 +1,7 @@
 # Lucee on Tomcat (JAR deployment)
 
+[![](https://badge.imagelayers.io/tomcat:latest.svg)](https://imagelayers.io/?images=tomcat:latest 'Get your own badge on imagelayers.io')
+
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server
 
 ## Features

@@ -1,12 +1,14 @@
-# Lucee on Tomcat (JAR deployment)
+# Lucee Preview on Tomcat (JAR deployment)
 
-[Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server
+[![](https://badge.imagelayers.io/lucee/lucee-tomcat:latest.svg)](https://imagelayers.io/?images=lucee/lucee-tomcat:latest 'Get your own badge on imagelayers.io')
+
+**Lucee 5.0 Preview: this image is the latest sneak-peek of the next generation Lucee server platform.  It is absolutely NOT ready for production use.**
+
+[Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server.
 
 ## Features
 
 ### Java optisation tweaks
-
-- Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
 
 - JVM is set to [use /dev/urandom as an entropy source for secure random numbers](http://support.run.pivotal.io/entries/59869725-Java-Web-Applications-Slow-Startup-or-Failing) to avoid blocking Tomcat on startup.
 
