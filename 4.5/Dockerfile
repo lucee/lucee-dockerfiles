@@ -1,4 +1,4 @@
-# Version 4.5.1.022
+# Lucee 4.5.1.022
 FROM tomcat:7.0.63-jre8
 
 MAINTAINER Dennis Clark <boomfish@gmail.com>
