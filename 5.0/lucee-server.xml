@@ -192,7 +192,7 @@ Path placeholders:
 			for example when you define physical you can partiquel overwrite the archive.
  -->	
 		<mapping archive="" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-server}/context/" primary="physical" readonly="yes" virtual="/lucee-server/"/>
-		<!-- <mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/> -->
+		<mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/>
 
 	</mappings>	
 	
