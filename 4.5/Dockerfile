@@ -22,6 +22,8 @@ RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
 # Create Lucee config dirs
 RUN mkdir -p /opt/lucee/server/lucee-server/context /opt/lucee/web
+COPY lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
+COPY lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
 
 # Create webroot with a default index.cfm
 RUN mkdir -p /var/www
