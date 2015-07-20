@@ -6,6 +6,13 @@
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server.
 
+Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `preview` on Docker Hub; specific versions of Lucee 5.0 are not provided.
+
+For latest preview release:
+```
+FROM lucee/lucee-tomcat:preview
+```
+
 ## Features
 
 ### Java optisation tweaks
