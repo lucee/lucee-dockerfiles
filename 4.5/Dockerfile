@@ -1,7 +1,7 @@
 # Lucee 4.5.1.022
 FROM tomcat:7.0.63-jre8
 
-MAINTAINER Dennis Clark <boomfish@gmail.com>
+MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
 ENV LUCEE_JARS_URL http://bitbucket.org/lucee/lucee/downloads/lucee-4.5.1.022-jars.zip
 
