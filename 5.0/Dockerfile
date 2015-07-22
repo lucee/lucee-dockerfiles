@@ -1,7 +1,7 @@
 # Lucee 5.0.0.49
-FROM tomcat:7.0.63-jre8
+FROM tomcat:8.0-jre8
 
-MAINTAINER Dennis Clark <boomfish@gmail.com>
+MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
 ENV LUCEE_JARS_URL https://bitbucket.org/lucee/lucee/downloads/lucee-5.0.0.49-jars.zip
 
