@@ -1,5 +1,5 @@
 # Lucee 5.0.0.49
-FROM tomcat:7.0-jre8
+FROM tomcat:8.0-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
