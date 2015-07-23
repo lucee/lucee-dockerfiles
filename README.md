@@ -32,6 +32,28 @@ Prebuilt Docker images are available on [Docker Hub](https://registry.hub.docker
 
 These images are supported by the Lucee community however they are provided with no warranty.
 
+## Vagrant Workbench
+
+You can build images locally using the Vagrant workbench provided, or using your own Docker tooling.
+
+Workbench assumes: Virtualbox, `git v1.6.5`, `vagrant v1.7.3`
+
+```
+git clone git@github.com:lucee/lucee-dockerfiles.git
+cd lucee-dockerfiles
+vagrant up dockerhost
+vagrant up lucee45 lucee50 nginx45 nginx50
+```
+You don't have to bring up all the images in one fell swoop; for example, `vagrant up lucee50` to just build Lucee 5.0.
+
+Containers are forwarded onto the following ports:
+```
+lucee45 -> $ open http://localhost:8001/
+lucee50 -> $ open http://localhost:8002/
+nginx45 -> $ open http://localhost:8003/
+nginx45 -> $ open http://localhost:8004/
+```
+
 ## License
 
 The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
