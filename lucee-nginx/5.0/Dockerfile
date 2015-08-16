@@ -1,5 +1,5 @@
 # Dockerfile for nginx on Lucee/Tomcat
-FROM lucee/lucee-tomcat:preview
+FROM quay.io/lucee/lucee5-tomcat:preview
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
