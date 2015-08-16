@@ -1,9 +1,9 @@
-# Lucee 4.5.1.022
+# Lucee 4.5.2.005
 FROM tomcat:7.0.63-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://bitbucket.org/lucee/lucee/downloads/lucee-4.5.1.022-jars.zip
+ENV LUCEE_JARS_URL http://bitbucket.org/lucee/lucee/downloads/lucee-4.5.2.005-jars.zip
 
 # Download jars archive, extract it, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee-jars.zip && \
