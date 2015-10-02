@@ -1,9 +1,9 @@
-# Lucee 5.0.0.79-SNAPSHOT
-FROM tomcat:8.0-jre8
+# Lucee 5.0.0.81-SNAPSHOT
+FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://stable.lucee.org/rest/update/provider/loader/5.0.0.79-SNAPSHOT
+ENV LUCEE_JARS_URL http://stable.lucee.org/rest/update/provider/loader/5.0.0.81-SNAPSHOT
 
 # Download jars archive, extract it, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee-jars.zip && \

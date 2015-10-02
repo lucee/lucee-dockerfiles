@@ -7,12 +7,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ##################################################
   # Start Docker host
   # - vagrant up dockerhost
-  # 
-  # Notes
-  # - need modern boot2docker image for vagrant; Docker >1.7
-  # - https://vagrantcloud.com/dduportal/boxes/boot2docker
   ##################################################
   config.vm.define "dockerhost", autostart: false do |dh|
+    # Run with a more modern boot2docker variant than default for vagrant
+    # https://atlas.hashicorp.com/dduportal/boxes/boot2docker
     dh.vm.box = "dduportal/boot2docker"
     dh.vm.network "private_network", ip: WORKBENCH_IP
     dh.vm.synced_folder ".", "/vagrant", type: "virtualbox"
@@ -43,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       docker.volumes = [
         "/vagrant/4.5/index.cfm:/var/www/index.cfm"
         ]
-      docker.ports = %w(8001:8080)
+      docker.ports = %w(8001:8888)
       docker.vagrant_machine = "dockerhost"
       docker.vagrant_vagrantfile = __FILE__
     end
@@ -57,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       docker.volumes = [
         "/vagrant/5.0/index.cfm:/var/www/index.cfm"
         ]
-      docker.ports = %w(8002:8080)
+      docker.ports = %w(8002:8888)
       docker.vagrant_machine = "dockerhost"
       docker.vagrant_vagrantfile = __FILE__
     end

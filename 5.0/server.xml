@@ -66,7 +66,7 @@
          APR (HTTP/AJP) Connector: /docs/apr.html
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
-    <Connector port="8080" protocol="HTTP/1.1"
+    <Connector port="8888" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443" />
     <!-- A "Connector" using the shared thread pool-->
@@ -121,11 +121,7 @@
       <!-- </Realm> -->
 
       <Host name="127.0.0.1"  appBase="webapps"
-            unpackWARs="false" autoDeploy="false">
-
-            <Context path="" docBase="/var/www">
-              <JarScanner scanClassPath="false"/>
-            </Context>
+            unpackWARs="true" autoDeploy="true">
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
@@ -140,35 +136,12 @@
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 
+        <!-- block jar scanner for faster start time -->
+        <Context path="" docBase="/var/www/">
+          <JarScanner scanClassPath="false"/>
+        </Context>
       </Host>
-
-
-      <!--
-        Add additional VIRTUALHOSTS by copying the following example config:
-        REPLACE:
-        [ENTER DOMAIN NAME] with a domain, IE: "mysite.com"
-        [ENTER SYSTEM PATH] with your web site's base directory. IE: /home/user/public_html/ or C:\websites\www.mysite.com\ etc...
-  [ENTER DOMAIN ALIAS] with any domain that also points to this same site/directory. You can repeat this tag as often as needed. 
-        Don't forget to remove comments!
-      -->
-      <!--
-  EXAMPLE HOST ENTRY:
-        <Host name="lucee.org" appBase="webapps">
-             <Context path="" docBase="/var/sites/getrailo.org" />
-       <Alias>www.lucee.org</Alias>
-       <Alias>my.lucee.org</Alias>
-        </Host>
-  
-  HOST ENTRY TEMPLATE:
-        <Host name="[ENTER DOMAIN NAME]" appBase="webapps">
-             <Context path="" docBase="[ENTER SYSTEM PATH]" />
-       <Alias>[ENTER DOMAIN ALIAS]</Alias>
-        </Host>
-      -->
-
-      <!-- ADD NEW HOSTS HERE -->
 
     </Engine>
   </Service>
 </Server>
-
