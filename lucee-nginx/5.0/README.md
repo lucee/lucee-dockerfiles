@@ -1,4 +1,4 @@
-# Lucee 5.0 on Tomcat with nginx
+# Lucee 5.0 on Tomcat 8-jre8 with nginx
 
 [![](https://badge.imagelayers.io/lucee/lucee-nginx:preview.svg)](https://imagelayers.io/?images=lucee/lucee-nginx:preview 'Get your own badge on imagelayers.io')
 
@@ -80,4 +80,4 @@ Log folders:
 
 The default image contains scripts that use the following environment variables if they are set in the container.
 
-`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m -XX:MaxPermSize=128m".
+`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m".

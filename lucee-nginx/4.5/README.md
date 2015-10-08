@@ -1,8 +1,13 @@
-# Lucee 4.5 on Tomcat with nginx
+# Lucee 4.5 on Tomcat 8-jre8 with nginx
 
 [![](https://badge.imagelayers.io/lucee/lucee-nginx:latest.svg)](https://imagelayers.io/?images=lucee/lucee-nginx:latest 'Get your own badge on imagelayers.io')
 
 [Lucee](http://www.lucee.org/) application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server and [nginx](http://nginx.org/) HTTP server. 
+
+For latest stable tagged release:
+```
+FROM lucee/lucee-nginx:latest
+```
 
 ## Features
 
@@ -71,4 +76,4 @@ Log folders:
 
 The default image contains scripts that use the following environment variables if they are set in the container.
 
-`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m -XX:MaxPermSize=128m".
+`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m".
