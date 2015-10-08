@@ -11,13 +11,14 @@ RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
 	cp /root/lucee.jar /usr/local/tomcat/lucee/lucee.jar && \
 	rm -rf /root/lucee.jar
 
+# COPY over random missing dependencies; OSGi framework
+COPY org.apache.felix.framework-4.2.1.jar /usr/local/tomcat/lucee/
+
 # Download lucee dependencies
 RUN wget -nv $LUCEE_DEPS_URL -O /root/lucee-jars.zip && \
+	mkdir -p /opt/lucee/server/lucee-server/bundles && \
 	unzip /root/lucee-jars.zip -d /opt/lucee/server/lucee-server/bundles && \
 	rm -rf /root/lucee-jars.zip
-
-# COPY over random missing dependencies
-COPY org.apache.felix.framework-4.2.1.jar /usr/local/tomcat/lucee/
 
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
