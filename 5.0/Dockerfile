@@ -1,13 +1,9 @@
-# Lucee 5.0.0.84-SNAPSHOT
 FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
 ENV LUCEE_JARS_URL http://stable.lucee.org/rest/update/provider/loader/5.0.0.84-SNAPSHOT
 ENV LUCEE_DEPS_URL http://stable.lucee.org/rest/update/provider/dependencies/5.0.0.84-SNAPSHOT
-
-# set up installation directories
-RUN mkdir -p /opt/lucee/server/lucee-server/context /opt/lucee/server/lucee-server/patches /opt/lucee/web /usr/local/tomcat/lucee
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
@@ -34,6 +30,7 @@ COPY setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
 # Create Lucee config dirs
+RUN mkdir -p /opt/lucee/server/lucee-server/context /opt/lucee/web
 COPY lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
 COPY lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
 
@@ -41,4 +38,5 @@ COPY lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
 RUN mkdir -p /var/www
 COPY index.cfm /var/www/
 
+# Remove test page when used as base image
 ONBUILD RUN rm -rf /var/www/*
