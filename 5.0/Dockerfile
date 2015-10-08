@@ -20,6 +20,10 @@ RUN wget -nv $LUCEE_DEPS_URL -O /root/lucee-jars.zip && \
 	unzip /root/lucee-jars.zip -d /opt/lucee/server/lucee-server/bundles && \
 	rm -rf /root/lucee-jars.zip
 
+# COPY over Lucee extensions
+RUN mkdir -p /opt/lucee/server/lucee-server/context/deploy /opt/lucee/web
+COPY extensions/ /opt/lucee/server/lucee-server/context/deploy/
+
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
 
@@ -30,8 +34,7 @@ COPY catalina.properties server.xml web.xml /usr/local/tomcat/conf/
 COPY setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
-# Create Lucee config dirs
-RUN mkdir -p /opt/lucee/server/lucee-server/context /opt/lucee/web
+# Create Lucee configs
 COPY lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
 COPY lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
 
