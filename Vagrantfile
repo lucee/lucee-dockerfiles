@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
       docker.volumes = [
         "/vagrant/" + PROJECT_ENV + "/4.5/index.cfm:/var/www/index.cfm"
         ]
-      docker.ports = %w(8001:8080)
+      docker.ports = %w(8001:8888)
       docker.vagrant_machine = WORKBENCH_HOST
       docker.vagrant_vagrantfile = WORKBENCH_VAGRANTFILE
       docker.force_host_vm = true
@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
       docker.volumes = [
         "/vagrant/" + PROJECT_ENV + "/5.0/index.cfm:/var/www/index.cfm"
         ]
-      docker.ports = %w(8002:8080)
+      docker.ports = %w(8002:8888)
       docker.vagrant_machine = WORKBENCH_HOST
       docker.vagrant_vagrantfile = WORKBENCH_VAGRANTFILE
       docker.force_host_vm = true
