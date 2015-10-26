@@ -1,5 +1,5 @@
 # Dockerfile for nginx on Lucee/Tomcat8-jre8
-FROM lucee/lucee-tomcat:preview
+FROM lucee/lucee5:latest
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
