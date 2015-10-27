@@ -39,9 +39,9 @@ The default session type in Lucee is "cfml". This often causes issues for Lucee 
 
 ### Accessing the service
 
-The default configuration has Tomcat listening on port 8080 in the container.
+The default configuration has Tomcat listening on port 8080 in the container. However, Lucee server's Tomcat installation is on port 8888.
 
-This image exposes port 8080 to linked containers, however you must publish the ports if you wish to access them from the Docker host.
+This base image exposes port 8080 to linked containers but its **not used**.You must publish or expose port 8888 if you wish to access Tomcat from your installation.
 
 ### Accessing the Web admin
 

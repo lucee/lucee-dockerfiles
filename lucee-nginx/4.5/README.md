@@ -35,9 +35,9 @@ The default session type in Lucee is "cfml". This often causes issues for Lucee 
 
 ### Accessing the service
 
-The default configuration has nginx listening on port 80 and Tomcat listening on port 8080 in the container.
+The default configuration has nginx listening on port 80 and Tomcat listening on port 8888 in the container.
 
-This image exposes ports 80, 443 (in case you enable SSL in nginx), and 8080 to linked containers, however you must publish the ports if you wish to access them from the Docker host.
+This image exposes ports 80 and 443 (in case you enable SSL in nginx). Note port 8080 is exposed by the Tomcat base image but is **not used**. You must publish port 8888 if you wish to access Tomcat from outside of the container.
 
 ### Accessing the Web admin
 
