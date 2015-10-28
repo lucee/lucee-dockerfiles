@@ -6,11 +6,17 @@
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat 8 JRE8](https://tomcat.apache.org/) J2EE application server.
 
-Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `preview` on Docker Hub; specific versions of Lucee 5.0 are not provided.
+Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `latest` on Docker Hub.
 
 For latest preview release:
 ```
-FROM lucee/lucee-tomcat:preview
+FROM lucee/lucee5:latest
+```
+
+_Consider using the compound container with NGINX and Tomcat pre-installed and configured._
+
+```
+FROM lucee/lucee5-nginx:5.0.0.98
 ```
 
 ## Features
@@ -70,4 +76,4 @@ Log folders:
 
 The default image contains scripts that use the following environment variables if they are set in the container.
 
-`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m -XX:MaxPermSize=128m".
+`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m".

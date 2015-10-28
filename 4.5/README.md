@@ -8,12 +8,18 @@ Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomc
 
 For latest:
 ```
-FROM lucee/lucee-tomcat:latest
+FROM lucee/lucee4:latest
 ```
 
 For a specific version:
 ```
-FROM lucee/lucee-tomcat:4.5.2
+FROM lucee/lucee4:4.5.1.024
+```
+
+_Consider using the compound container with NGINX and Tomcat pre-installed and configured._
+
+```
+FROM lucee/lucee4-nginx:4.5.1.024
 ```
 
 
@@ -76,4 +82,4 @@ Log folders:
 
 The default image contains scripts that use the following environment variables if they are set in the container.
 
-`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m -XX:MaxPermSize=128m".
+`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m".

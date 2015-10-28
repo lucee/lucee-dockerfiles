@@ -6,7 +6,12 @@
 
 For latest stable tagged release:
 ```
-FROM lucee/lucee-nginx:latest
+FROM lucee/lucee4-nginx:latest
+```
+
+For a specific version:
+```
+FROM lucee/lucee4-nginx:4.5.1.024
 ```
 
 ## Features

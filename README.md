@@ -2,9 +2,74 @@
 
 This repository contains Dockerfiles to build Lucee application servers.
 
-Docker images are available on Docker Hub:
+Lucee Docker images are available on Docker Hub: https://hub.docker.com/u/lucee/
 
-- https://registry.hub.docker.com/repos/lucee/
+## Lucee Base Images
+
+Lucee provides a number of different base images for your Lucee project.  For an example of setting up a Lucee Docker project see [Lucee Docker Workbench](https://github.com/modius/lucee-docker-workbench).
+
+### Lucee 4 with Tomcat/NGINX `lucee/lucee4-nginx`
+
+[README, Dockerfile and associated assets.](./lucee-nginx/4.5/README.md)
+
+```
+FROM lucee/lucee4-nginx:latest
+```
+
+Stable releases of Lucee 4.5+ on Tomcat 8 JRE8 combined with an integrated NGINX web server. [Available Tags](https://hub.docker.com/r/lucee/lucee4-nginx/tags/)
+
+### Lucee 4 with Tomcat `lucee/lucee4`
+
+[README, Dockerfile and associated assets.](./4.5/README.md)
+
+```
+FROM lucee/lucee4:latest
+```
+
+Stable releases of Lucee 4.5+ on Tomcat 8 JRE8. [Available Tags](https://hub.docker.com/r/lucee/lucee4/tags/)
+
+### Lucee 5 with Tomcat/NGINX `lucee/lucee5-nginx`
+
+[README, Dockerfile and associated assets.](./lucee-nginx/5.0/README.md)
+
+```
+FROM lucee/lucee5-nginx:latest
+```
+
+BETA releases of Lucee 5 "Velvet" on Tomcat 8 JRE8 combined with an integrated NGINX web server. [Available Tags](https://hub.docker.com/r/lucee/lucee5-nginx/tags/)
+
+### Lucee 5 with Tomcat `lucee/lucee5`
+
+[README, Dockerfile and associated assets.](./5.0/README.md)
+
+```
+FROM lucee/lucee5:latest
+```
+
+BETA releases of Lucee 5 "Velvet" on Tomcat 8 JRE8. [Available Tags](https://hub.docker.com/r/lucee/lucee5/tags/)
+
+
+## Example Project Dockerfile
+
+**Example FarCry application from [Chelsea Docker](https://github.com/modius/chelsea-docker)**
+```
+FROM lucee/lucee4-nginx:latest
+
+MAINTAINER Geoff Bowers <modius@daemon.com.au>
+
+# TOMCAT CONFIGS
+# COPY catalina.properties server.xml web.xml /usr/local/tomcat/conf/
+# Custom setenv.sh to load Lucee
+# COPY setenv.sh /usr/local/tomcat/bin/
+
+# NGINX configs
+COPY config/nginx/ /etc/nginx/
+# Lucee server configs
+COPY config/lucee/ /opt/lucee/web/
+# Deploy codebase to container
+COPY code /var/www/farcry
+```
+
 
 ## Features
 
@@ -21,20 +86,13 @@ Docker images are available on Docker Hub:
 The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the `server.xml` in the Tomcat config.
 
 
-## Details on Docker images
+## Contributing to this Project
 
-- [Lucee on Tomcat](lucee-tomcat/README.md)
-- [Lucee on Tomcat with nginx](lucee-nginx/README.md)
+The Lucee Dockerfiles project is maintained by the community. Chief protagonist is @modius ([Geoff Bowers](https://github.com/modius) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
 
-## Prebuilt images on Docker Hub registry
+### Spinning things up locally
 
-Prebuilt Docker images are available on [Docker Hub](https://registry.hub.docker.com/repos/lucee/). These images are are created via [automated builds](https://docs.docker.com/docker-hub/builds/).
-
-These images are supported by the Lucee community however they are provided with no warranty.
-
-## Vagrant Workbench
-
-You can build images locally using the Vagrant workbench provided, or using your own Docker tooling.
+You can build images locally using the [Vagrant workbench](https://github.com/Daemonite/workbench) provided, or using your own Docker tooling.
 
 Workbench assumes: Virtualbox, `git v1.6.5`, `vagrant v1.7.3`
 
@@ -44,14 +102,15 @@ cd lucee-dockerfiles
 vagrant up dockerhost
 vagrant up lucee45 lucee50 nginx45 nginx50
 ```
+
 You don't have to bring up all the images in one fell swoop; for example, `vagrant up lucee50` to just build Lucee 5.0.
 
 Containers are forwarded onto the following ports:
 ```
-lucee45 -> $ open http://localhost:8001/
-lucee50 -> $ open http://localhost:8002/
-nginx45 -> $ open http://localhost:8003/
-nginx45 -> $ open http://localhost:8004/
+lucee45 -> $ open http://workbench:8001/
+lucee50 -> $ open http://workbench:8002/
+nginx45 -> $ open http://workbench:8003/
+nginx45 -> $ open http://workbench:8004/
 ```
 
 ## License
