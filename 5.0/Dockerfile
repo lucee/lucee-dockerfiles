@@ -2,8 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-5.0.0.98-20151023.035428-4.jar
-ENV LUCEE_DEPS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-5.0.0.98-BETA-dependencies.zip
+ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-all-5.0.0.105-SNAPSHOT.jar
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
@@ -14,11 +13,6 @@ RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
 # COPY over random missing dependencies; OSGi framework
 COPY org.apache.felix.framework-4.2.1.jar /usr/local/tomcat/lucee/
 
-# Download lucee dependencies
-RUN wget -nv $LUCEE_DEPS_URL -O /root/lucee-jars.zip && \
-	mkdir -p /opt/lucee/server/lucee-server/bundles && \
-	unzip /root/lucee-jars.zip -d /opt/lucee/server/lucee-server/bundles && \
-	rm -rf /root/lucee-jars.zip
 
 # COPY over Lucee extensions
 RUN mkdir -p /opt/lucee/server/lucee-server/context/deploy /opt/lucee/web
