@@ -2,21 +2,13 @@ FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-all-5.0.0.105-SNAPSHOT.jar
+ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-all-5.0.0.112-SNAPSHOT.jar
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
 	mkdir -p /usr/local/tomcat/lucee && \
 	cp /root/lucee.jar /usr/local/tomcat/lucee/lucee.jar && \
 	rm -rf /root/lucee.jar
-
-# COPY over random missing dependencies; OSGi framework
-COPY org.apache.felix.framework-4.2.1.jar /usr/local/tomcat/lucee/
-
-
-# COPY over Lucee extensions
-RUN mkdir -p /opt/lucee/server/lucee-server/context/deploy /opt/lucee/web
-COPY extensions/ /opt/lucee/server/lucee-server/context/deploy/
 
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
