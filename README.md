@@ -94,12 +94,13 @@ The Lucee Dockerfiles project is maintained by the community. Chief protagonist 
 
 You can build images locally using the [Vagrant workbench](https://github.com/Daemonite/workbench) provided, or using your own Docker tooling.
 
-Workbench assumes: Virtualbox, `git v1.6.5`, `vagrant v1.7.3`
+Note Workbench assumes: Virtualbox, `git v1.6.5`, `vagrant v1.7.4`
 
+
+These instructions assume you have the parent Workbench up and running:
 ```
 git clone git@github.com:lucee/lucee-dockerfiles.git
 cd lucee-dockerfiles
-vagrant up dockerhost
 vagrant up lucee45 lucee50 nginx45 nginx50
 ```
 
@@ -111,6 +112,15 @@ lucee45 -> $ open http://workbench:8001/
 lucee50 -> $ open http://workbench:8002/
 nginx45 -> $ open http://workbench:8003/
 nginx45 -> $ open http://workbench:8004/
+```
+
+Alternatively, you can run a make-shift workbench locally. This will only work if you DO NOT have a parent Vagrantfile:
+```
+git clone git@github.com:lucee/lucee-dockerfiles.git
+cd lucee-dockerfiles
+vagrant up dockerhost
+vagrant up lucee45
+open http://192.168.56.100:8001
 ```
 
 ## License
