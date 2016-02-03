@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-all-5.0.0.139-SNAPSHOT.jar
+ENV LUCEE_JARS_URL http://daemon-provisioning-resources.s3.amazonaws.com/lucee/5.0/lucee-all-5.0.0.175-SNAPSHOT.jar
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
 RUN wget -nv $LUCEE_JARS_URL -O /root/lucee.jar && \
