@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
       docker.name = "lucee45"
       docker.build_dir = "./4.5"
       docker.env = {
-        VIRTUAL_HOST: "lucee45.*"
+        VIRTUAL_HOST: "lucee45.dev"
       }
       # local development code, lucee config & logs
       docker.volumes = [
@@ -40,8 +40,7 @@ Vagrant.configure("2") do |config|
     end
     puts '############################################################'
     puts '# LUCEE45'
-    puts '#  - workbench at: http://workbench:8001'
-    puts '#  - stand-alone at: http://192.168.56.100:8001'
+    puts '#  - workbench at: lucee45.dev:8001'
     puts '############################################################'
   end
 
@@ -50,7 +49,7 @@ Vagrant.configure("2") do |config|
       docker.name = "lucee50"
       docker.build_dir = "./5.0"
       docker.env = {
-        VIRTUAL_HOST: "lucee50.*"
+        VIRTUAL_HOST: "lucee50.dev"
       }
       # local development code, lucee config & logs
       docker.volumes = [
@@ -63,8 +62,7 @@ Vagrant.configure("2") do |config|
     end
     puts '############################################################'
     puts '# LUCEE50'
-    puts '#  - workbench at: http://workbench:8002'
-    puts '#  - stand-alone at: http://192.168.56.100:8002'
+    puts '#  - workbench at: lucee50.dev:8002'
     puts '############################################################'
   end
 
