@@ -1,14 +1,28 @@
 lucee50:
   build: ./5.0
   ports: 
-   - "8001:8888"
+   - "8050:8888"
   #volumes:
     # - /workbench/lucee-dockerfiles/5.0/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/5.0/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
 lucee45:
   build: ./4.5
   ports: 
-   - "8002:8888"
+   - "8045:8888"
   #volumes:
     # - /workbench/lucee-dockerfiles/4.5/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/4.5/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
+nginx50:
+  build: ./lucee-nginx/5.0
+  environment:
+    - "VIRTUAL_HOST=nginx50.*"
+  #volumes:
+    # - /workbench/lucee-dockerfiles/lucee-nginx/5.0/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
+    # - /workbench/lucee-dockerfiles/lucee-nginx/5.0/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
+nginx45:
+  build: ./lucee-nginx/4.5
+  environment:
+    - "VIRTUAL_HOST=nginx45.*"
+  #volumes:
+    # - /workbench/lucee-dockerfiles/lucee-nginx/4.5/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
+    # - /workbench/lucee-dockerfiles/lucee-nginx/4.5/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
