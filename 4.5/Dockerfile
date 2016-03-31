@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
-ENV LUCEE_JARS_URL https://d8yjolse1mixx.cloudfront.net/lucee-4.5.2.018-jars.zip
+ENV LUCEE_JARS_URL http://cdn.lucee.org/lucee-4.5.2.018-jars.zip
 ENV LUCEE_JAVA_OPTS "-Xms256m -Xmx512m"
 
 # Download jars archive, extract it, and delete it in one step to avoid committing the installer in a FS layer
