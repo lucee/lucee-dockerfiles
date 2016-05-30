@@ -1,4 +1,4 @@
-FROM tomcat:8-jre8
+FROM tomcat:8.0.35-jre8
 
 MAINTAINER Geoff Bowers <modius@daemon.com.au>
 
