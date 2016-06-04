@@ -109,9 +109,9 @@ Path placeholders:
 			define where lucee first look for a called cfml file.
 			for example when you define physical you can partiquel overwrite the archive.
 		-->
-		
+
 		<!-- <mapping archive="{lucee-web}/context/lucee-context.lar" physical="{lucee-web}/context/" primary="physical" readonly="yes" toplevel="yes" trusted="true" virtual="/lucee/"/>  -->
-		
+
 	</mappings>
 
 	<custom-tag>
@@ -145,7 +145,6 @@ Path placeholders:
 		timeserver: [example: swisstime.ethz.ch] default:local time
 			dns of a ntp time server
 	-->
-	<regional locale="en_AU" timezone="Australia/Sydney"/>
 
 	<!--
 		enable and disable debugging
