@@ -10,7 +10,7 @@ Lucee provides a number of different base images for your Lucee project.  For an
 
 ### Lucee 4 with Tomcat/NGINX `lucee/lucee4-nginx`
 
-[README, Dockerfile and associated assets.](./lucee-nginx/4.5/README.md)
+[README, Dockerfile and associated assets.](./lucee-nginx/4.5/)
 
 ```
 FROM lucee/lucee4-nginx:latest
@@ -20,7 +20,7 @@ Stable releases of Lucee 4.5+ on Tomcat 8 JRE8 combined with an integrated NGINX
 
 ### Lucee 4 with Tomcat `lucee/lucee4`
 
-[README, Dockerfile and associated assets.](./4.5/README.md)
+[README, Dockerfile and associated assets.](./4.5/)
 
 ```
 FROM lucee/lucee4:latest
@@ -30,7 +30,7 @@ Stable releases of Lucee 4.5+ on Tomcat 8 JRE8. [Available Tags](https://hub.doc
 
 ### Lucee 5 with Tomcat/NGINX `lucee/lucee5-nginx`
 
-[README, Dockerfile and associated assets.](./lucee-nginx/5.0/README.md)
+[README, Dockerfile and associated assets.](./lucee-nginx/5.0/)
 
 ```
 FROM lucee/lucee5-nginx:latest
@@ -40,7 +40,7 @@ BETA releases of Lucee 5 "Velvet" on Tomcat 8 JRE8 combined with an integrated N
 
 ### Lucee 5 with Tomcat `lucee/lucee5`
 
-[README, Dockerfile and associated assets.](./5.0/README.md)
+[README, Dockerfile and associated assets.](./5.0/)
 
 ```
 FROM lucee/lucee5:latest
