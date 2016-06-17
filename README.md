@@ -73,7 +73,7 @@ COPY code /var/www/farcry
 
 ## Features
 
-### Java optisation tweaks
+### Java optimisation tweaks
 
 - Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
 
