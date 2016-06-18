@@ -83,3 +83,49 @@ Log folders:
 The default image contains scripts that use the following environment variables if they are set in the container.
 
 `LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms256m -Xmx512m".
+
+### Examples
+
+#### Persisting Logs
+
+Stash your logs wherever you like, but these examples use the following directory, which we'll create as follows:
+
+```bash
+mkdir -p /var/log/lucee/tomcat
+```
+
+Either of the following examples should yield a Hello World page at http://192.168.99.100:8888/.
+
+#### Docker Compose Option
+
+Docker Compose file:
+
+```yaml
+# docker-compose.yml
+lucee50:
+  image: lucee/lucee4:latest
+  ports: 
+   - "8888:8888"
+  volumes:
+   - /var/log/lucee:/opt/lucee/server/lucee-server/context/logs
+   - /var/log/lucee/tomcat:/usr/local/tomcat/logs
+```
+
+Running `docker-compose`:
+
+```bash
+cd /path/to/dir/containing/docker-compose.yml
+docker-compose up -d
+```
+
+#### Docker Run Option
+
+Executing `docker run`:
+
+```bash
+docker run -d \
+ -p 8888:8888 \
+ -v "/var/log/lucee:/opt/lucee/server/lucee-server/context/logs" \
+ -v "/var/log/lucee/tomcat:/usr/local/tomcat/logs" \
+ lucee/lucee4:latest
+```
