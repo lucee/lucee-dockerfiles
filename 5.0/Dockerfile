@@ -34,3 +34,7 @@ ONBUILD RUN rm -rf /var/www/*
 RUN /usr/local/tomcat/bin/catalina.sh start && \
     while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 2; done && \
     /usr/local/tomcat/bin/catalina.sh stop
+
+# Replace the Trusted SSL Certificates packaged with Lucee with those from Debian
+#   ca-certificates package from the OS is the most recent authority
+RUN cp -f /etc/ssl/certs/java/cacerts /opt/lucee/server/lucee-server/context/security/cacerts
