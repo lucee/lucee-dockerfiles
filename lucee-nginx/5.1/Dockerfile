@@ -28,5 +28,24 @@ ONBUILD RUN rm -rf /var/www/*
 # Expose HTTP and HTTPS ports
 EXPOSE 80 443
 
+# Write the Nginx logs out - COMMENT OUT WHEN NEEDED though they can create a lot of noise
+#RUN ln -sf /dev/stdout /var/log/nginx/access.log
+#RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
+# Write the Lucee logs to stdout
+# As these files don't exists until later we'll use "touch" to create them
+RUN mkdir -p /opt/lucee/web/logs
+RUN touch /opt/lucee/web/logs/application.log
+RUN ln -sf /dev/stdout /opt/lucee/web/logs/application.log
+
+RUN touch /opt/lucee/web/logs/exception.log
+RUN ln -sf /dev/stderr /opt/lucee/web/logs/exception.log
+
+RUN touch /opt/lucee/web/logs/orm.log
+RUN ln -sf /dev/stdout /opt/lucee/web/logs/orm.log
+
+RUN touch /opt/lucee/web/logs/mail.log
+RUN ln -sf /dev/stdout /opt/lucee/web/logs/mail.log
+
 # Engage
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
