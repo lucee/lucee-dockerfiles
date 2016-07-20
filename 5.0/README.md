@@ -1,14 +1,12 @@
-# Lucee Preview on Tomcat (JAR deployment)
+# Lucee 5 on Tomcat (JAR deployment)
 
-[![](https://badge.imagelayers.io/lucee/lucee-tomcat:latest.svg)](https://imagelayers.io/?images=lucee/lucee-tomcat:latest 'Get your own badge on imagelayers.io')
-
-**Lucee 5.0 Preview: this image is the latest sneak-peek of the next generation Lucee server platform.  It is absolutely NOT ready for production use.**
+[![](https://badge.imagelayers.io/lucee/lucee5:latest.svg)](https://imagelayers.io/?images=lucee/lucee5:latest 'Get your own badge on imagelayers.io')
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat 8 JRE8](https://tomcat.apache.org/) J2EE application server.
 
 Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `latest` on Docker Hub.
 
-For latest preview release:
+For latest stable release:
 ```
 FROM lucee/lucee5:latest
 ```
