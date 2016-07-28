@@ -20,7 +20,7 @@ COPY default.conf /etc/nginx/conf.d/
 # Copy supervisord.conf
 COPY supervisord.conf /etc/supervisor/conf.d/
 
-# Provide test page
+# Provide test page for base image; removed on build
 RUN mkdir -p /var/www
 COPY index.cfm /var/www/
 ONBUILD RUN rm -rf /var/www/*
