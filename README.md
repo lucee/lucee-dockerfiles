@@ -1,53 +1,36 @@
 # Dockerfiles for Lucee application servers
 
-This repository contains Dockerfiles to build Lucee application servers.
+Dockerfiles to build Lucee application servers.; used for the official LAS Lucee Docker images.
 
 Lucee Docker images are available on Docker Hub: https://hub.docker.com/u/lucee/
 
 ## Lucee Base Images
 
-Lucee provides a number of different base images for your Lucee project.  For an example of setting up a Lucee Docker project see [Lucee Docker Workbench](https://github.com/modius/lucee-docker-workbench).
+Lucee provides a number of different base images for your Lucee project.  
 
-### Lucee 4 with Tomcat/NGINX `lucee/lucee4-nginx`
+### Lucee 5.1
 
-[README, Dockerfile and associated assets.](./lucee-nginx/4.5/)
+- [NGINX / Tomcat 8.0-JRE8 Dockerfile](./lucee-nginx/5.1/) 
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5-nginx/) [![](https://badge.imagelayers.io/lucee/lucee5-nginx:latest.svg)](https://imagelayers.io/?images=lucee/lucee5-nginx:latest)
+- [Tomcat 8.0-JRE8](./5.1/)
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5/) [![](https://badge.imagelayers.io/lucee/lucee5:latest.svg)](https://imagelayers.io/?images=lucee/lucee5:latest)
 
-```
-FROM lucee/lucee4-nginx:latest
-```
+### Lucee 5.0
 
-Stable releases of Lucee 4.5+ on Tomcat 8 JRE8 combined with an integrated NGINX web server. [Available Tags](https://hub.docker.com/r/lucee/lucee4-nginx/tags/)
+- [NGINX / Tomcat 8.0-JRE8 Dockerfile](./lucee-nginx/5.0/) 
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5-nginx/) [![](https://badge.imagelayers.io/lucee/lucee5-nginx:5.0.0-t8.0.36.svg)](https://imagelayers.io/?images=lucee/lucee5-nginx:5.0.0-t8.0.36)
+- [Tomcat 8.0-JRE8](./5.0/)
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5/) [![](https://badge.imagelayers.io/lucee/lucee5:5.0.0-t8.0.36.svg)](https://imagelayers.io/?images=lucee/lucee5:5.0.0-t8.0.36) 
 
-### Lucee 4 with Tomcat `lucee/lucee4`
+### Lucee 4.5
 
-[README, Dockerfile and associated assets.](./4.5/)
+- [NGINX / Tomcat 8.0-JRE8 Dockerfile](./lucee-nginx/4.5/) 
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee4-nginx.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee4-nginx/) [![](https://badge.imagelayers.io/lucee/lucee4-nginx:latest.svg)](https://imagelayers.io/?images=lucee/lucee4-nginx:latest)
+- [Tomcat 8.0-JRE8](./4.5/)
+  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee4.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee4/) [![](https://badge.imagelayers.io/lucee/lucee4:latest.svg)](https://imagelayers.io/?images=lucee/lucee4:latest) 
 
-```
-FROM lucee/lucee4:latest
-```
 
-Stable releases of Lucee 4.5+ on Tomcat 8 JRE8. [Available Tags](https://hub.docker.com/r/lucee/lucee4/tags/)
-
-### Lucee 5 with Tomcat/NGINX `lucee/lucee5-nginx`
-
-[README, Dockerfile and associated assets.](./lucee-nginx/5.0/)
-
-```
-FROM lucee/lucee5-nginx:latest
-```
-
-BETA releases of Lucee 5 "Velvet" on Tomcat 8 JRE8 combined with an integrated NGINX web server. [Available Tags](https://hub.docker.com/r/lucee/lucee5-nginx/tags/)
-
-### Lucee 5 with Tomcat `lucee/lucee5`
-
-[README, Dockerfile and associated assets.](./5.0/)
-
-```
-FROM lucee/lucee5:latest
-```
-
-BETA releases of Lucee 5 "Velvet" on Tomcat 8 JRE8. [Available Tags](https://hub.docker.com/r/lucee/lucee5/tags/)
-
+For an example of setting up a Lucee Docker project see [Lucee Docker Workbench](https://github.com/modius/lucee-docker-workbench).
 
 ## Example Project Dockerfile
 
@@ -70,7 +53,6 @@ COPY config/lucee/ /opt/lucee/web/
 COPY code /var/www/farcry
 ```
 
-
 ## Features
 
 ### Java optimisation tweaks
@@ -92,7 +74,7 @@ The Lucee Dockerfiles project is maintained by the community. Chief protagonist 
 
 ### Spinning things up locally
 
-Using the [Daemon Docker Workbench](https://github.com/Daemonite/workbench) provided, or using your own Docker tooling.
+Using the [Daemon Docker Workbench](https://github.com/justincarter/docker-workbench) provided, or using your own Docker tooling.
 
 These instructions assume you have the parent Workbench up and running:
 ```
@@ -101,14 +83,14 @@ cd lucee-dockerfiles
 docker-compose up
 ```
 
-You don't have to bring up all the images in one fell swoop; for example, `vagrant up lucee50` to just build Lucee 5.0.
-
 Containers are forwarded onto the following addresses:
 ```
-lucee45 -> $ open http://workbench.192.168.99.100.xip.io:8045/
-lucee50 -> $ open http://workbench.192.168.99.100.xip.io:8050/
-nginx45 -> $ open http://nginx45.192.168.99.100.xip.io
-nginx50 -> $ open http://nginx50.192.168.99.100.xip.io
+lucee45 -> $ open http://workbench.192.168.99.100.nip.io:8045/
+lucee50 -> $ open http://workbench.192.168.99.100.nip.io:8050/
+lucee51 -> $ open http://workbench.192.168.99.100.nip.io:8051/
+nginx45 -> $ open http://nginx45.192.168.99.100.nip.io
+nginx50 -> $ open http://nginx50.192.168.99.100.nip.io
+nginx51 -> $ open http://nginx51.192.168.99.100.nip.io
 ```
 
 
