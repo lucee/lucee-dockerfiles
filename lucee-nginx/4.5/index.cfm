@@ -28,4 +28,11 @@
 <h3>HTTP Request Variables</h3>
 <cfdump var="#headers#" label="GetHttpRequestData().headers">
 
+<!--- Writes some data to the log files --->
+<cflog file="application" text="Testing application.log at #now()#" log="application">
+<cflog file="exception" text="Testing exception.log at #now()#" log="application">
+<cflog file="orm" text="Testing orm.log at #now()#" log="application">
+<cflog file="mail" text="Testing mail.log at #now()#" log="application">
+
+
 </cfoutput>
