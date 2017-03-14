@@ -10,10 +10,12 @@ Lucee provides a number of different base images for your Lucee project.
 
 ### Lucee 5.1
 
-- [NGINX / Tomcat 8.0-JRE8 Dockerfile](./lucee-nginx/5.1/) 
-  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5-nginx/) [![](https://badge.imagelayers.io/lucee/lucee5-nginx:latest.svg)](https://imagelayers.io/?images=lucee/lucee5-nginx:latest)
-- [Tomcat 8.0-JRE8](./5.1/)
-  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5/) [![](https://badge.imagelayers.io/lucee/lucee5:latest.svg)](https://imagelayers.io/?images=lucee/lucee5:latest)
+- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.1/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51-nginx/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee51-nginx.svg)](https://microbadger.com/images/lucee/lucee51-nginx)
+- [Tomcat 8.0-JRE8](./5.1/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee51.svg)](https://microbadger.com/images/lucee/lucee51)
 
 ### Lucee 5.0
 

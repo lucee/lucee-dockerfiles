@@ -1,8 +1,8 @@
-FROM tomcat:8.0.38-jre8
+FROM tomcat:8.0.41-jre8
 
 MAINTAINER Daemonites <hello@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.1.0.34
+ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.1.2.24
 ENV LUCEE_JAVA_OPTS "-Xms256m -Xmx512m"
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
