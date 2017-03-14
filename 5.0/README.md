@@ -1,6 +1,6 @@
 # Lucee 5 on Tomcat (JAR deployment)
 
-[![](https://badge.imagelayers.io/lucee/lucee5:latest.svg)](https://imagelayers.io/?images=lucee/lucee5:latest 'Get your own badge on imagelayers.io')
+[![](https://images.microbadger.com/badges/image/lucee/lucee5.svg)](https://microbadger.com/images/lucee/lucee5)
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat 8 JRE8](https://tomcat.apache.org/) J2EE application server.
 

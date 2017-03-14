@@ -19,10 +19,12 @@ Lucee provides a number of different base images for your Lucee project.
 
 ### Lucee 5.0
 
-- [NGINX / Tomcat 8.0-JRE8 Dockerfile](./lucee-nginx/5.0/) 
-  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5-nginx/) [![](https://badge.imagelayers.io/lucee/lucee5-nginx:5.0.0-t8.0.36.svg)](https://imagelayers.io/?images=lucee/lucee5-nginx:5.0.0-t8.0.36)
-- [Tomcat 8.0-JRE8](./5.0/)
-  &nbsp; &nbsp; [![Docker Pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=DockerHub+Images)](https://hub.docker.com/r/lucee/lucee5/) [![](https://badge.imagelayers.io/lucee/lucee5:5.0.0-t8.0.36.svg)](https://imagelayers.io/?images=lucee/lucee5:5.0.0-t8.0.36) 
+- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.0/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5-nginx/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee5-nginx.svg)](https://microbadger.com/images/lucee/lucee5-nginx)
+- [Tomcat 8.0-JRE8](./5.0/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee5.svg)](https://microbadger.com/images/lucee/lucee5)
 
 ### Lucee 4.5
 
