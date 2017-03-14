@@ -1,6 +1,6 @@
-FROM tomcat:8.0.36-jre8
+FROM tomcat:8.0.41-jre8
 
-MAINTAINER Geoff Bowers <modius@daemon.com.au>
+MAINTAINER Daemonites <hello@daemon.com.au>
 
 ENV LUCEE_JARS_URL http://cdn.lucee.org/lucee-4.5.5.006-jars.zip
 ENV LUCEE_JAVA_OPTS "-Xms256m -Xmx512m"
