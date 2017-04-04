@@ -14,7 +14,7 @@ FROM lucee/lucee51:latest
 _Consider using the compound container with NGINX and Tomcat pre-installed and configured._
 
 ```
-FROM lucee/lucee51-nginx:5.1.2.24
+FROM lucee/lucee51-nginx:5.1.3.18
 ```
 
 ## Features
