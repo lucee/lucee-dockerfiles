@@ -1,10 +1,8 @@
 # Lucee 5.1 on Tomcat 8-jre8 with nginx
 
-[![](https://badge.imagelayers.io/lucee/lucee-nginx:preview.svg)](https://imagelayers.io/?images=lucee/lucee5-nginx:preview 'Get your own badge on imagelayers.io')
+[![](https://images.microbadger.com/badges/image/lucee/lucee51-nginx.svg)](https://microbadger.com/images/lucee/lucee51)
 
 [Lucee](http://www.lucee.org/) application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server and [nginx](http://nginx.org/) HTTP server. 
-
-**Lucee 5.1 Preview: this image is the latest sneak-peek of the next generation Lucee server platform.  It is absolutely NOT ready for production use.**
 
 [Lucee](http://www.lucee.org/) application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server.
 
