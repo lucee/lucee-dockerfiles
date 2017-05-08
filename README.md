@@ -36,27 +36,17 @@ Lucee provides a number of different base images for your Lucee project.
   [![](https://images.microbadger.com/badges/image/lucee/lucee4.svg)](https://microbadger.com/images/lucee/lucee4)
 
 
-For an example of setting up a Lucee Docker project see [Lucee Docker Workbench](https://github.com/modius/lucee-docker-workbench).
-
 ## Example Project Dockerfile
 
-**Example FarCry application from [Chelsea Docker](https://github.com/modius/chelsea-docker)**
 ```
-FROM lucee/lucee4-nginx:latest
-
-MAINTAINER Geoff Bowers <modius@daemon.com.au>
-
-# TOMCAT CONFIGS
-# COPY catalina.properties server.xml web.xml /usr/local/tomcat/conf/
-# Custom setenv.sh to load Lucee
-# COPY setenv.sh /usr/local/tomcat/bin/
+FROM lucee/lucee51-nginx:latest
 
 # NGINX configs
 COPY config/nginx/ /etc/nginx/
 # Lucee server configs
 COPY config/lucee/ /opt/lucee/web/
 # Deploy codebase to container
-COPY code /var/www/farcry
+COPY www /var/www
 ```
 
 ## Features
