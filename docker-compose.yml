@@ -26,6 +26,14 @@ lucee45:
   #volumes:
     # - /workbench/lucee-dockerfiles/4.5/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/4.5/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
+
+nginx52:
+  build: ./lucee-nginx/5.2
+  environment:
+    - "VIRTUAL_HOST=nginx52.*"
+  #volumes:
+    # - /workbench/lucee-dockerfiles/lucee-nginx/5.2/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
+    # - /workbench/lucee-dockerfiles/lucee-nginx/5.2/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
 nginx51:
   build: ./lucee-nginx/5.1
   environment:

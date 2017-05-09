@@ -6,7 +6,16 @@ Lucee Docker images are available on Docker Hub: https://hub.docker.com/u/lucee/
 
 ## Lucee Base Images
 
-Lucee provides a number of different base images for your Lucee project.  
+Lucee provides a number of different base images for your Lucee project.
+
+### Lucee 5.2
+
+- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.2/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52-nginx/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee52-nginx.svg)](https://microbadger.com/images/lucee/lucee52-nginx)
+- [Tomcat 8.0-JRE8](./5.2/) &nbsp; &nbsp;
+  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52/)
+  [![](https://images.microbadger.com/badges/image/lucee/lucee52.svg)](https://microbadger.com/images/lucee/lucee52)
 
 ### Lucee 5.1
 
@@ -81,12 +90,14 @@ docker-compose up
 
 Containers are forwarded onto the following addresses:
 ```
-lucee45 -> $ open http://workbench.192.168.99.100.nip.io:8045/
-lucee50 -> $ open http://workbench.192.168.99.100.nip.io:8050/
-lucee51 -> $ open http://workbench.192.168.99.100.nip.io:8051/
+lucee45 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8045
+lucee50 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8050
+lucee51 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8051
+lucee52 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8052
 nginx45 -> $ open http://nginx45.192.168.99.100.nip.io
 nginx50 -> $ open http://nginx50.192.168.99.100.nip.io
 nginx51 -> $ open http://nginx51.192.168.99.100.nip.io
+nginx52 -> $ open http://nginx52.192.168.99.100.nip.io
 ```
 
 ## License
