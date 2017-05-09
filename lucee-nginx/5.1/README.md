@@ -8,14 +8,14 @@
 
 Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `latest` on Docker Hub.
 
-For latest preview release:
+For latest stable release:
 ```
-FROM lucee/lucee5-nginx:preview
+FROM lucee/lucee51-nginx:latest
 ```
 
 For a specific version:
 ```
-FROM lucee/lucee5-nginx:5.0.0.98
+FROM lucee/lucee51-nginx:5.1.4.19
 ```
 
 ## Features
