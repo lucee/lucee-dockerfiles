@@ -4,8 +4,6 @@
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat 8 JRE8](https://tomcat.apache.org/) J2EE application server.
 
-Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `latest` on Docker Hub.
-
 For latest stable release:
 ```
 FROM lucee/lucee51:latest
