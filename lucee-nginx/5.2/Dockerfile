@@ -3,7 +3,8 @@ FROM lucee/lucee52:latest
 MAINTAINER Daemonites <hello@daemon.com.au>
 
 # Install nginx and supervisord
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+COPY nginx_signing.key /tmp/nginx_signing.key
+RUN apt-key add /tmp/nginx_signing.key
 RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sources.list
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
