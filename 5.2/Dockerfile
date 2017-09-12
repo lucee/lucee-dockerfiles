@@ -1,8 +1,8 @@
-FROM tomcat:8.0.43-jre8
+FROM tomcat:8.0.46-jre8
 
 MAINTAINER Daemonites <hello@daemon.com.au>
 
-ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.2.1.9
+ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.2.3.35
 ENV LUCEE_JAVA_OPTS "-Xms256m -Xmx512m"
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
@@ -30,10 +30,9 @@ RUN mkdir -p /var/www
 COPY index.cfm /var/www/
 ONBUILD RUN rm -rf /var/www/*
 
-# lucee first time startup; explodes lucee and installs bundles/extensions
-RUN /usr/local/tomcat/bin/catalina.sh start && \
-    while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 2; done && \
-    /usr/local/tomcat/bin/catalina.sh stop
+# lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
+COPY prewarm.sh /usr/local/tomcat/bin/
+RUN chmod +x /usr/local/tomcat/bin/prewarm.sh && /usr/local/tomcat/bin/prewarm.sh && /usr/local/tomcat/bin/prewarm.sh
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from Debian
 #   ca-certificates package from the OS is the most recent authority

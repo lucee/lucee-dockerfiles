@@ -8,7 +8,7 @@ Path placeholders:
 	{system-directory}: path to thesystem directory
 	{web-context-hash}: hash of the web context
 
---><cfLuceeConfiguration salt="4FDA588E-318A-445C-898736AA1F229A69" version="4.2">
+--><cfLuceeConfiguration salt="4FDA588E-318A-445C-898736AA1F229A69" version="5.2">
 
 	<!--
 	system:
@@ -124,7 +124,7 @@ Path placeholders:
 		lock-timeout   - 	define how long a request wait for a lock
 		case-sensitive	-	is http handled case-sensitive or not
 	 	-->
-    	<resource-provider arguments="lock-timeout:10000;" class="lucee.commons.io.res.type.s3.S3ResourceProvider" scheme="s3"/>
+
     		
     	<!--
     	this providers uses the jcifs library. see http://jcifs.samba.org/
@@ -138,6 +138,7 @@ Path placeholders:
     		class="lucee.commons.io.res.type.smb.SMBResourceProvider"
     		arguments=""/>
     	-->
+        <resource-provider arguments="lock-timeout:10000" bundle-name="s3.extension" bundle-version="0.9.4.112" class="org.lucee.extension.resource.s3.S3ResourceProvider" scheme="s3"/>
     </resources>
 	
 
@@ -194,7 +195,9 @@ Path placeholders:
 		<mapping archive="" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-server}/context/" primary="physical" readonly="yes" virtual="/lucee-server/"/>
 		<mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/>
 
-	</mappings>	
+        <mapping archive="{lucee-config}/context/lucee-admin.lar" inspect-template="once" physical="{lucee-config}/context/admin" primary="physical" readonly="true" toplevel="true" virtual="/lucee/admin"/>
+        <mapping archive="{lucee-config}/context/lucee-doc.lar" inspect-template="once" primary="archive" readonly="true" toplevel="true" virtual="/lucee/doc"/>
+    </mappings>
 	
 	<custom-tag>
 		<mapping inspect-template="never" physical="{lucee-config}/customtags/"/>
@@ -241,7 +244,7 @@ Path placeholders:
 		timeserver: [example: swisstime.ethz.ch] default:local time
 			dns of a ntp time server
 	-->
-	<orm engine-class="lucee.runtime.orm.hibernate.HibernateORMEngine"/>
+    <orm engine-bundle-name="hibernate.extension" engine-bundle-version="3.5.5.63" engine-class="org.lucee.extension.orm.hibernate.HibernateORMEngine"/>
 	
 	<!--
 		enable and disable debugging
