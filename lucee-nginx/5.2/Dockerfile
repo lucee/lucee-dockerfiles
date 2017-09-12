@@ -6,8 +6,9 @@ MAINTAINER Daemonites <hello@daemon.com.au>
 COPY nginx_signing.key /tmp/nginx_signing.key
 RUN apt-key add /tmp/nginx_signing.key
 RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sources.list
-RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN set -x && \
+	apt-get update && \
+	apt-get install --no-install-recommends --no-install-suggests -y \
 		nginx \
 		supervisor && \
 	apt-get clean && \
