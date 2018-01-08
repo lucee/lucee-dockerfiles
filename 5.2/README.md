@@ -12,7 +12,7 @@ FROM lucee/lucee52:latest
 _Consider using the compound container with NGINX and Tomcat pre-installed and configured._
 
 ```
-FROM lucee/lucee52-nginx:5.2.4.37
+FROM lucee/lucee52-nginx:5.2.5.20
 ```
 
 ## Features

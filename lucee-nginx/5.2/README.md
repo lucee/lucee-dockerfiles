@@ -11,7 +11,7 @@ FROM lucee/lucee52-nginx:latest
 
 For a specific version:
 ```
-FROM lucee/lucee52-nginx:5.2.4.37
+FROM lucee/lucee52-nginx:5.2.5.20
 ```
 
 ## Features
