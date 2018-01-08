@@ -27,31 +27,31 @@ lucee45:
     # - /workbench/lucee-dockerfiles/4.5/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/4.5/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
 
-nginx52:
+lucee52-nginx:
   build: ./lucee-nginx/5.2
   environment:
-    - "VIRTUAL_HOST=nginx52.*"
+    - "VIRTUAL_HOST=lucee52-nginx.*"
   #volumes:
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.2/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.2/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
-nginx51:
+lucee51-nginx:
   build: ./lucee-nginx/5.1
   environment:
-    - "VIRTUAL_HOST=nginx51.*"
+    - "VIRTUAL_HOST=lucee51-nginx.*"
   #volumes:
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.1/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.1/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
-nginx50:
+lucee50-nginx:
   build: ./lucee-nginx/5.0
   environment:
-    - "VIRTUAL_HOST=nginx50.*"
+    - "VIRTUAL_HOST=lucee50-nginx.*"
   #volumes:
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.0/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/lucee-nginx/5.0/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
-nginx45:
+lucee4-nginx:
   build: ./lucee-nginx/4.5
   environment:
-    - "VIRTUAL_HOST=nginx45.*"
+    - "VIRTUAL_HOST=lucee4-nginx.*"
   #volumes:
     # - /workbench/lucee-dockerfiles/lucee-nginx/4.5/lucee-server.xml:/opt/lucee/server/lucee-server/context/lucee-server.xml
     # - /workbench/lucee-dockerfiles/lucee-nginx/4.5/lucee-web.xml:/opt/lucee/web/lucee-web.xml.cfm
