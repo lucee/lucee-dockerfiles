@@ -1,54 +1,92 @@
-# Dockerfiles for Lucee application servers
+# Supported tags and respective Dockerfile links
 
-Dockerfiles to build Lucee application servers.; used for the official LAS Lucee Docker images.
+- `5.2.7.62-tomcat8.0-jre8`, `5.2.7.62`, `5.2`, `latest`
+  - `5.2.7.62-light-tomcat8.0-jre8`, `5.2.7.62-light`, `light`, `5.2-light`
+  - `5.2.7.62-nginx-tomcat8.0-jre8`, `5.2.7.62-nginx`, `nginx`, `5.2-nginx`
+  - `5.2.7.62-light-nginx-tomcat8.0-jre8`, `5.2.7.62-light-nginx`, `light-nginx`, `5.2-light-nginx`
+- `5.2.7.62-tomcat8.0-jre8-alpine`, `alpine`, `5.2-alpine`
+  - `5.2.7.62-light-tomcat8.0-jre8-alpine`, `light-alpine`, `5.2-light-alpine`
+  - `5.2.7.62-nginx-tomcat8.0-jre8-alpine`, `nginx-alpine`, `5.2-nginx-alpine`
+  - `5.2.7.62-light-nginx-tomcat8.0-jre8-alpine`, `light-nginx-alpine`, `5.2-light-nginx-alpine`
+- `5.2.7.62-tomcat8.5-jre8`
+  - `5.2.7.62-light-tomcat8.5-jre8`
+  - `5.2.7.62-nginx-tomcat8.5-jre8`
+  - `5.2.7.62-light-nginx-tomcat8.5-jre8`
+  - `5.2.7.62-tomcat8.5-jre8-alpine`
+  - `5.2.7.62-light-tomcat8.5-jre8-alpine`
+  - `5.2.7.62-nginx-tomcat8.5-jre8-alpine`
+  - `5.2.7.62-light-nginx-tomcat8.5-jre8-alpine`
+  - `5.2.7.62-tomcat8.5-jre9`
+  - `5.2.7.62-light-tomcat8.5-jre9`
+  - `5.2.7.62-nginx-tomcat8.5-jre9`
+  - `5.2.7.62-light-nginx-tomcat8.5-jre9`
+  - `5.2.7.62-tomcat8.5-jre10`
+  - `5.2.7.62-light-tomcat8.5-jre10`
+  - `5.2.7.62-nginx-tomcat8.5-jre10`
+  - `5.2.7.62-light-nginx-tomcat8.5-jre10`
+- `5.2.7.62-tomcat9.0-jre8`
+  - `5.2.7.62-light-tomcat9.0-jre8`
+  - `5.2.7.62-nginx-tomcat9.0-jre8`
+  - `5.2.7.62-light-nginx-tomcat9.0-jre8`
+  - `5.2.7.62-tomcat9.0-jre8-alpine`
+  - `5.2.7.62-light-tomcat9.0-jre8-alpine`
+  - `5.2.7.62-nginx-tomcat9.0-jre8-alpine`
+  - `5.2.7.62-light-nginx-tomcat9.0-jre8-alpine`
+  - `5.2.7.62-tomcat9.0-jre9`
+  - `5.2.7.62-light-tomcat9.0-jre9`
+  - `5.2.7.62-nginx-tomcat9.0-jre9`
+  - `5.2.7.62-light-nginx-tomcat9.0-jre9`
+  - `5.2.7.62-tomcat9.0-jre10`
+  - `5.2.7.62-light-tomcat9.0-jre10`
+  - `5.2.7.62-nginx-tomcat9.0-jre10`
+  - `5.2.7.62-light-nginx-tomcat9.0-jre10`
 
-Lucee Docker images are available on Docker Hub: https://hub.docker.com/u/lucee/
+- `5.3.0.86-BETA-tomcat8.0-jre8`, `5.3.0.86-BETA`, `5.3`, `beta`
+  - `5.3.0.86-BETA-light-tomcat8.0-jre8`, `5.3.0.86-BETA-light`, `beta-light`, `5.3-light`
+  - `5.3.0.86-BETA-nginx-tomcat8.0-jre8`, `5.3.0.86-BETA-nginx`, `beta-nginx`, `5.3-nginx`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.0-jre8`, `5.3.0.86-BETA-light-nginx`, `beta-light-nginx`, `5.3-light-nginx`
+- `5.3.0.86-BETA-tomcat8.0-jre8-alpine`, `beta-alpine`, `5.3-alpine`
+  - `5.3.0.86-BETA-light-tomcat8.0-jre8-alpine`, `beta-light-alpine`, `5.3-light-alpine`
+  - `5.3.0.86-BETA-nginx-tomcat8.0-jre8-alpine`, `beta-nginx-alpine`, `5.3-nginx-alpine`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.0-jre8-alpine`, `beta-light-nginx-alpine`, `5.3-light-nginx-alpine`
+- `5.3.0.86-BETA-tomcat8.5-jre8`
+  - `5.3.0.86-BETA-light-tomcat8.5-jre8`
+  - `5.3.0.86-BETA-nginx-tomcat8.5-jre8`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.5-jre8`
+  - `5.3.0.86-BETA-tomcat8.5-jre8-alpine`
+  - `5.3.0.86-BETA-light-tomcat8.5-jre8-alpine`
+  - `5.3.0.86-BETA-nginx-tomcat8.5-jre8-alpine`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.5-jre8-alpine`
+  - `5.3.0.86-BETA-tomcat8.5-jre9`
+  - `5.3.0.86-BETA-light-tomcat8.5-jre9`
+  - `5.3.0.86-BETA-nginx-tomcat8.5-jre9`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.5-jre9`
+  - `5.3.0.86-BETA-tomcat8.5-jre10`
+  - `5.3.0.86-BETA-light-tomcat8.5-jre10`
+  - `5.3.0.86-BETA-nginx-tomcat8.5-jre10`
+  - `5.3.0.86-BETA-light-nginx-tomcat8.5-jre10`
+- `5.3.0.86-BETA-tomcat9.0-jre8`
+  - `5.3.0.86-BETA-light-tomcat9.0-jre8`
+  - `5.3.0.86-BETA-nginx-tomcat9.0-jre8`
+  - `5.3.0.86-BETA-light-nginx-tomcat9.0-jre8`
+  - `5.3.0.86-BETA-tomcat9.0-jre8-alpine`
+  - `5.3.0.86-BETA-light-tomcat9.0-jre8-alpine`
+  - `5.3.0.86-BETA-nginx-tomcat9.0-jre8-alpine`
+  - `5.3.0.86-BETA-light-nginx-tomcat9.0-jre8-alpine`
+  - `5.3.0.86-BETA-tomcat9.0-jre9`
+  - `5.3.0.86-BETA-light-tomcat9.0-jre9`
+  - `5.3.0.86-BETA-nginx-tomcat9.0-jre9`
+  - `5.3.0.86-BETA-light-nginx-tomcat9.0-jre9`
+  - `5.3.0.86-BETA-tomcat9.0-jre10`
+  - `5.3.0.86-BETA-light-tomcat9.0-jre10`
+  - `5.3.0.86-BETA-nginx-tomcat9.0-jre10`
+  - `5.3.0.86-BETA-light-nginx-tomcat9.0-jre10`
 
-## Lucee Base Images
 
-Lucee provides a number of different base images for your Lucee project.
-
-### Lucee 5.2
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.2/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee52-nginx.svg)](https://microbadger.com/images/lucee/lucee52-nginx)
-- [Tomcat 8.0-JRE8](./5.2/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee52.svg)](https://microbadger.com/images/lucee/lucee52)
-
-### Lucee 5.1
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.1/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee51-nginx.svg)](https://microbadger.com/images/lucee/lucee51-nginx)
-- [Tomcat 8.0-JRE8](./5.1/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee51.svg)](https://microbadger.com/images/lucee/lucee51)
-
-### Lucee 5.0
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.0/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee5-nginx.svg)](https://microbadger.com/images/lucee/lucee5-nginx)
-- [Tomcat 8.0-JRE8](./5.0/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee5.svg)](https://microbadger.com/images/lucee/lucee5)
-
-### Lucee 4.5
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/4.5/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee4-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee4-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee4-nginx.svg)](https://microbadger.com/images/lucee/lucee4-nginx)
-- [Tomcat 8.0-JRE8](./4.5/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee4.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee4/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee4.svg)](https://microbadger.com/images/lucee/lucee4)
-
-
-## Example Project Dockerfile
+# Example Project Dockerfile
 
 ```
-FROM lucee/lucee51-nginx:latest
+FROM lucee/lucee:5.2-light-nginx-alpine
 
 # NGINX configs
 COPY config/nginx/ /etc/nginx/
@@ -58,48 +96,25 @@ COPY config/lucee/ /opt/lucee/web/
 COPY www /var/www
 ```
 
-## Features
+# Features
 
-### Java optimisation tweaks
+## Java optimisation tweaks
 
-- Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
+- In the Lucee 4 image, the [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
 
 - JVM is set to [use /dev/urandom as an entropy source for secure random numbers](http://support.run.pivotal.io/entries/59869725-Java-Web-Applications-Slow-Startup-or-Failing) to avoid blocking Tomcat on startup.
 
 - Tomcat is configured to [skip the default scanning of Jar files on startup](http://www.gpickin.com/index.cfm/blog/how-to-get-your-tomcat-to-pounce-on-startup-not-crawl), significantly improving startup time.
 
-### Optimised for single-site application
+## Optimised for single-site application
 
 The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the `server.xml` in the Tomcat config.
 
 
-## Contributing to this Project
+# Contributing to this Project
 
 The Lucee Dockerfiles project is maintained by the community. Chief protagonist is @modius ([Geoff Bowers](https://github.com/modius) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
 
-### Spinning things up locally
-
-Using the [Daemon Docker Workbench](https://github.com/justincarter/docker-workbench) provided, or using your own Docker tooling.
-
-These instructions assume you have the parent Workbench up and running:
-```
-git clone git@github.com:lucee/lucee-dockerfiles.git
-cd lucee-dockerfiles
-docker-compose up
-```
-
-Containers are forwarded onto the following addresses:
-```
-lucee45 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8045
-lucee50 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8050
-lucee51 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8051
-lucee52 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8052
-nginx45 -> $ open http://nginx45.192.168.99.100.nip.io
-nginx50 -> $ open http://nginx50.192.168.99.100.nip.io
-nginx51 -> $ open http://nginx51.192.168.99.100.nip.io
-nginx52 -> $ open http://nginx52.192.168.99.100.nip.io
-```
-
-## License
+# License
 
 The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
