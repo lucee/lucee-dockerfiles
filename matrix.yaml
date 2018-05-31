@@ -1,0 +1,222 @@
+travis:
+  sudo: required
+  services:
+    - docker
+  language: python
+  python: 3.6
+  before_script:
+    - 'echo TRAVIS_BRANCH: $TRAVIS_BRANCH'
+    - 'echo TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST'
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - pip3 install -r requirements.txt
+    # exit the build if the travis config is different from the matrix config
+    - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
+  script:
+    - python3 -u build-images.py
+
+
+config:
+  docker_hub_namespace: 'kryestofer'
+  docker_hub_image: 'lucee'
+
+
+default_tomcat: &tomcat
+  TOMCAT_VERSION: '8.0'
+  TOMCAT_JAVA_VERSION: 'jre8'
+  TOMCAT_BASE_IMAGE: ''
+
+
+tags:
+  '4.5': &4_5
+    TOMCAT_VERSION: '8.0'
+    TOMCAT_JAVA_VERSION: 'jre8'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_VERSION: '4.5.5.015'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
+  '5.2': &5_2
+    TOMCAT_VERSION: '8.0'
+    TOMCAT_JAVA_VERSION: 'jre8'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_VERSION: '5.2.7.62'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
+  '5.3': &5_3
+    TOMCAT_VERSION: '8.0'
+    TOMCAT_JAVA_VERSION: 'jre8'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_VERSION: '5.3.0.86-BETA'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
+  latest: &latest
+    <<: *5_2
+  light:
+    <<: *latest
+    LUCEE_VARIANT: '-light'
+  alpine:
+    <<: *latest
+    TOMCAT_BASE_IMAGE: '-alpine'
+  nginx:
+    <<: *latest
+    LUCEE_SERVER: '-nginx'
+  nginx-alpine:
+    <<: *latest
+    LUCEE_SERVER: '-nginx'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  light-nginx:
+    <<: *latest
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+  light-alpine:
+    <<: *latest
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  light-nginx-alpine:
+    <<: *latest
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+  beta: &beta
+    <<: *5_3
+  beta-light:
+    <<: *beta
+    LUCEE_VARIANT: '-light'
+  beta-alpine:
+    <<: *beta
+    TOMCAT_BASE_IMAGE: '-alpine'
+  beta-nginx:
+    <<: *beta
+    LUCEE_SERVER: '-nginx'
+  beta-nginx-alpine:
+    <<: *beta
+    LUCEE_SERVER: '-nginx'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  beta-light-nginx:
+    <<: *beta
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+  beta-light-alpine:
+    <<: *beta
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  beta-light-nginx-alpine:
+    <<: *beta
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+  4.5-alpine:
+    <<: *4_5
+    TOMCAT_BASE_IMAGE: '-alpine'
+  4.5-nginx:
+    <<: *4_5
+    LUCEE_SERVER: '-nginx'
+  4.5-nginx-alpine:
+    <<: *4_5
+    LUCEE_SERVER: '-nginx'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+  5.2-light:
+    <<: *5_2
+    LUCEE_VARIANT: '-light'
+  5.2-alpine:
+    <<: *5_2
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.2-nginx:
+    <<: *5_2
+    LUCEE_SERVER: '-nginx'
+  5.2-nginx-alpine:
+    <<: *5_2
+    LUCEE_SERVER: '-nginx'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.2-light-nginx:
+    <<: *5_2
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+  5.2-light-alpine:
+    <<: *5_2
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.2-light-nginx-alpine:
+    <<: *5_2
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+  5.3-light:
+    <<: *5_3
+    LUCEE_VARIANT: '-light'
+  5.3-alpine:
+    <<: *5_3
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.3-nginx:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+  5.3-nginx-alpine:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.3-light-nginx:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+  5.3-light-alpine:
+    <<: *5_3
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.3-light-nginx-alpine:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+    LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+
+matrix:
+  TOMCAT_VERSION:
+    - '8.0'
+    - '8.5'
+    - '9.0'
+
+  TOMCAT_JAVA_VERSION:
+    - 'jre8'
+    - 'jre9'
+    - 'jre10'
+
+  TOMCAT_BASE_IMAGE:
+    - ''
+    - '-alpine'
+
+  LUCEE_VERSION:
+    # - '4.5.5.015'
+    - '5.2.7.62'
+    - '5.3.0.86-BETA'
+
+  LUCEE_SERVER:
+    - ''
+    - '-nginx'
+
+  LUCEE_VARIANT:
+    - ''
+    - '-light'
+
+
+exclusions:
+  # Tomcat 8.0 is only Java 7 + 8
+  - TOMCAT_VERSION: '8.0'
+    TOMCAT_JAVA_VERSION: 'jre9'
+  - TOMCAT_VERSION: '8.0'
+    TOMCAT_JAVA_VERSION: 'jre10'
+
+  # Alpine does not yet have Java 9 or 10
+  - TOMCAT_JAVA_VERSION: 'jre9'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  - TOMCAT_JAVA_VERSION: 'jre10'
+    TOMCAT_BASE_IMAGE: '-alpine'
+
+  # -light is only available for 5.1+
+  - LUCEE_VARIANT: '-light'
+    LUCEE_VERSION: '4.5'
