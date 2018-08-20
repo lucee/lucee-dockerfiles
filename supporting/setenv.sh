@@ -5,7 +5,7 @@
 # -XX:MaxPermSize sets the java PermGen size
 
 # Default memory settings if not specified in $LUCEE_JAVA_OPTS
-: ${LUCEE_JAVA_OPTS:="-Xms256m -Xmx512m"}
+: ${LUCEE_JAVA_OPTS:="-Xms64m -Xmx512m"}
 
 # Use /dev/urandom for EGD (http://wiki.apache.org/tomcat/HowTo/FasterStartUp)
 JAVA_OPTS="${LUCEE_JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom";
