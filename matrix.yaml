@@ -178,13 +178,13 @@ tags:
 matrix:
   TOMCAT_VERSION:
     - '8.0'
-    - '8.5'
-    - '9.0'
+    #- '8.5'
+    #- '9.0'
 
   TOMCAT_JAVA_VERSION:
     - 'jre8'
-    - 'jre9'
-    - 'jre10'
+    #- 'jre9'
+    #- 'jre10'
 
   TOMCAT_BASE_IMAGE:
     - ''
@@ -193,7 +193,7 @@ matrix:
   LUCEE_VERSION:
     # - '4.5.5.015'
     - '5.2.7.62'
-    - '5.3.0.86-BETA'
+    #- '5.3.0.86-BETA'
 
   LUCEE_SERVER:
     - ''
@@ -201,7 +201,7 @@ matrix:
 
   LUCEE_VARIANT:
     - ''
-    - '-light'
+    #- '-light'
 
 
 exclusions:
