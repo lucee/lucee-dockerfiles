@@ -26,7 +26,7 @@ def get_minor_version(ver):
 
 def get_jar_url(ver, variant):
 	if get_minor_version(ver) == "4.5":
-		return f"https://cdn.lucee.org/lucee-${ver}.jar"
+		return f"https://cdn.lucee.org/lucee-{ver}.jar"
 	elif variant == '-light':
 		return f"https://release.lucee.org/rest/update/provider/loader/light-{ver}"
 	else:
