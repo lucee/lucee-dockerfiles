@@ -27,14 +27,6 @@ default_tomcat: &tomcat
 
 
 tags:
-  '4.5': &4_5
-    TOMCAT_VERSION: '8.0'
-    TOMCAT_JAVA_VERSION: 'jre8'
-    TOMCAT_BASE_IMAGE: ''
-    LUCEE_VERSION: '4.5.5.015'
-    LUCEE_SERVER: ''
-    LUCEE_VARIANT: ''
-
   '5.2': &5_2
     TOMCAT_VERSION: '8.0'
     TOMCAT_JAVA_VERSION: 'jre8'
@@ -109,17 +101,6 @@ tags:
     LUCEE_VARIANT: '-light'
     TOMCAT_BASE_IMAGE: '-alpine'
 
-  4.5-alpine:
-    <<: *4_5
-    TOMCAT_BASE_IMAGE: '-alpine'
-  4.5-nginx:
-    <<: *4_5
-    LUCEE_SERVER: '-nginx'
-  4.5-nginx-alpine:
-    <<: *4_5
-    LUCEE_SERVER: '-nginx'
-    TOMCAT_BASE_IMAGE: '-alpine'
-
   5.2-light:
     <<: *5_2
     LUCEE_VARIANT: '-light'
@@ -191,7 +172,6 @@ matrix:
     - '-alpine'
 
   LUCEE_VERSION:
-    - '4.5.5.015'
     - '5.2.8.50'
     - '5.3.1.15-BETA'
 
@@ -216,7 +196,3 @@ exclusions:
     TOMCAT_BASE_IMAGE: '-alpine'
   - TOMCAT_JAVA_VERSION: 'jre10'
     TOMCAT_BASE_IMAGE: '-alpine'
-
-  # -light is only available for 5.1+
-  - LUCEE_VARIANT: '-light'
-    LUCEE_VERSION: '4.5'

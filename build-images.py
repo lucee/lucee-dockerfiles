@@ -25,9 +25,7 @@ def get_minor_version(ver):
 	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
 def get_jar_url(ver, variant):
-	if get_minor_version(ver) == "4.5":
-		return f"https://cdn.lucee.org/lucee-{ver}-jars.zip"
-	elif variant == '-light':
+	if variant == '-light':
 		return f"https://release.lucee.org/rest/update/provider/loader/light-{ver}"
 	else:
 		return f"https://release.lucee.org/rest/update/provider/loader/{ver}"
