@@ -24,6 +24,14 @@ def flatten(lst):
 def get_minor_version(ver):
 	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
+def get_jar_url(ver, variant):
+	if get_minor_version(ver) == "4.5":
+		return f"https://cdn.lucee.org/lucee-${ver}.jar"
+	elif variant == '-light':
+		return f"https://release.lucee.org/rest/update/provider/loader/light-{ver}"
+	else:
+		return f"https://release.lucee.org/rest/update/provider/loader/{ver}"
+
 def run(cmd):
 	return subprocess.run(cmd, check=True, universal_newlines=True)
 
@@ -72,7 +80,7 @@ def find_tags_for_image(config, default_tomcat, tags):
 
 def config_to_build_args(config, namespace, image_name):
 	if config.LUCEE_SERVER == '':
-		build_args = {**attr.asdict(config), 'LUCEE_MINOR': get_minor_version(config.LUCEE_VERSION)}
+		build_args = {**attr.asdict(config), 'LUCEE_MINOR': get_minor_version(config.LUCEE_VERSION), 'LUCEE_JAR_URL': get_jar_url(config.LUCEE_VERSION, config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
 		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{config.LUCEE_VERSION}{config.LUCEE_VARIANT}-{tomcat(config)}"}
 	else:
