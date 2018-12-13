@@ -17,8 +17,8 @@ travis:
 
 
 config:
-  docker_hub_namespace: 'justincarter'
-  docker_hub_image: 'lucee-dockerfiles'
+  docker_hub_namespace: 'lucee'
+  docker_hub_image: 'lucee'
 
 
 tags:
