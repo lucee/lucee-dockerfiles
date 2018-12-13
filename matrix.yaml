@@ -39,64 +39,29 @@ tags:
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
 
+  # all other plain tags
   latest: &latest
     <<: *5_2
-  light:
-    <<: *latest
-    LUCEE_VARIANT: '-light'
-  alpine:
-    <<: *latest
-    TOMCAT_BASE_IMAGE: '-alpine'
   nginx:
     <<: *latest
     LUCEE_SERVER: '-nginx'
+  alpine:
+    <<: *latest
+    TOMCAT_BASE_IMAGE: '-alpine'
   nginx-alpine:
     <<: *latest
     LUCEE_SERVER: '-nginx'
     TOMCAT_BASE_IMAGE: '-alpine'
-  light-nginx:
+  light:
     <<: *latest
-    LUCEE_SERVER: '-nginx'
     LUCEE_VARIANT: '-light'
   light-alpine:
     <<: *latest
     LUCEE_VARIANT: '-light'
     TOMCAT_BASE_IMAGE: '-alpine'
-  light-nginx-alpine:
-    <<: *latest
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
-    TOMCAT_BASE_IMAGE: '-alpine'
 
-  beta: &beta
-    <<: *5_3
-  beta-light:
-    <<: *beta
-    LUCEE_VARIANT: '-light'
-  beta-alpine:
-    <<: *beta
-    TOMCAT_BASE_IMAGE: '-alpine'
-  beta-nginx:
-    <<: *beta
-    LUCEE_SERVER: '-nginx'
-  beta-nginx-alpine:
-    <<: *beta
-    LUCEE_SERVER: '-nginx'
-    TOMCAT_BASE_IMAGE: '-alpine'
-  beta-light-nginx:
-    <<: *beta
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
-  beta-light-alpine:
-    <<: *beta
-    LUCEE_VARIANT: '-light'
-    TOMCAT_BASE_IMAGE: '-alpine'
-  beta-light-nginx-alpine:
-    <<: *beta
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
-    TOMCAT_BASE_IMAGE: '-alpine'
 
+  # 5.2 tags
   5.2-light:
     <<: *5_2
     LUCEE_VARIANT: '-light'
@@ -110,20 +75,12 @@ tags:
     <<: *5_2
     LUCEE_SERVER: '-nginx'
     TOMCAT_BASE_IMAGE: '-alpine'
-  5.2-light-nginx:
-    <<: *5_2
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
   5.2-light-alpine:
     <<: *5_2
     LUCEE_VARIANT: '-light'
     TOMCAT_BASE_IMAGE: '-alpine'
-  5.2-light-nginx-alpine:
-    <<: *5_2
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
-    TOMCAT_BASE_IMAGE: '-alpine'
 
+  # 5.3 tags
   5.3-light:
     <<: *5_3
     LUCEE_VARIANT: '-light'
@@ -137,20 +94,10 @@ tags:
     <<: *5_3
     LUCEE_SERVER: '-nginx'
     TOMCAT_BASE_IMAGE: '-alpine'
-  5.3-light-nginx:
-    <<: *5_3
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
   5.3-light-alpine:
     <<: *5_3
     LUCEE_VARIANT: '-light'
     TOMCAT_BASE_IMAGE: '-alpine'
-  5.3-light-nginx-alpine:
-    <<: *5_3
-    LUCEE_SERVER: '-nginx'
-    LUCEE_VARIANT: '-light'
-    TOMCAT_BASE_IMAGE: '-alpine'
-
 
 matrix:
 
