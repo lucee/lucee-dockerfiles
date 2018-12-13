@@ -178,16 +178,16 @@ matrix:
     - ''
     - '-light'
 
-
 exclusions:
-  # Tomcat 8.0 is only Java 7 + 8
-  - TOMCAT_VERSION: '8.0'
-    TOMCAT_JAVA_VERSION: 'jre9'
-  - TOMCAT_VERSION: '8.0'
-    TOMCAT_JAVA_VERSION: 'jre10'
 
-  # Alpine does not yet have Java 9 or 10
+  # Tomcat 8.5 is not needed for Lucee 5.3
+  - TOMCAT_VERSION: '8.5'
+    LUCEE_MINOR: '5.3'
+
+  # Java 9/10/11 are not available on the Alpine version of Tomcat base images
   - TOMCAT_JAVA_VERSION: 'jre9'
     TOMCAT_BASE_IMAGE: '-alpine'
   - TOMCAT_JAVA_VERSION: 'jre10'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  - TOMCAT_JAVA_VERSION: 'jre11'
     TOMCAT_BASE_IMAGE: '-alpine'
