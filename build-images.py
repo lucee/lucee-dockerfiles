@@ -22,6 +22,11 @@ class Config(object):
 def flatten(lst):
 	return [x for y in lst for x in y]
 
+def is_release_build(ver):
+	# release builds are a version number string only
+	# non-release builds contain a build type suffix such as -BETA/-RC/-SNAPSHOT
+	return re.sub(r"^\d+\.\d+\.\d+\.\d+(.*)$", r"\1", ver) == ""
+
 def get_minor_version(ver):
 	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
@@ -70,11 +75,14 @@ def find_tags_for_image(config, default_tomcat, tags):
 		yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}"
 
 	config_dict = attr.asdict(config)
-	yield from [
-		tag_name
-		for tag_name, tag_requirements in tags.items()
-		if all([config_dict[key] == tag_requirements[key] for key in set(config_dict.keys())])
-	]
+
+	# only apply plain tags to release builds (exclude plain tags for non-release builds)
+	if is_release_build(os.getenv('LUCEE_VERSION')):
+		yield from [
+			tag_name
+			for tag_name, tag_requirements in tags.items()
+			if all([config_dict[key] == tag_requirements[key] for key in set(config_dict.keys())])
+		]
 
 
 def config_to_build_args(config, namespace, image_name):
