@@ -5,8 +5,12 @@ import itertools
 import argparse
 import sys
 import os
+import re
 import yaml
 
+
+def get_minor_version(ver):
+	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
 def should_include_combo(combination, exclusions):
 	for exclusion in exclusions:
@@ -15,21 +19,20 @@ def should_include_combo(combination, exclusions):
 
 	return True
 
-
 def find_all_matrix_rows(matrix):
 	matrix_vars = matrix['matrix']
 
 	for TOMCAT_VERSION in matrix_vars['TOMCAT_VERSION']:
 		for TOMCAT_JAVA_VERSION in matrix_vars['TOMCAT_JAVA_VERSION']:
 			for TOMCAT_BASE_IMAGE in matrix_vars['TOMCAT_BASE_IMAGE']:
-				for LUCEE_VERSION in matrix_vars['LUCEE_VERSION']:
+				for LUCEE_MINOR in matrix_vars['LUCEE_MINOR']:
 					for LUCEE_SERVER in matrix_vars['LUCEE_SERVER']:
 						for LUCEE_VARIANT in matrix_vars['LUCEE_VARIANT']:
 							yield {
 								'TOMCAT_VERSION': TOMCAT_VERSION,
 								'TOMCAT_JAVA_VERSION': TOMCAT_JAVA_VERSION,
 								'TOMCAT_BASE_IMAGE': TOMCAT_BASE_IMAGE,
-								'LUCEE_VERSION': LUCEE_VERSION,
+								'LUCEE_MINOR': LUCEE_MINOR,
 								'LUCEE_SERVER': LUCEE_SERVER,
 								'LUCEE_VARIANT': LUCEE_VARIANT,
 							}
@@ -44,13 +47,13 @@ def combine_rows_by_tomcat(rows):
 			'TOMCAT_VERSION': tomcat[0],
 			'TOMCAT_JAVA_VERSION': tomcat[1],
 			'TOMCAT_BASE_IMAGE': tomcat[2],
-			'LUCEE_VERSION': set(),
+			'LUCEE_MINOR': set(),
 			'LUCEE_SERVER': set(),
 			'LUCEE_VARIANT': set(),
 		}
 
 		for row in combination:
-			result['LUCEE_VERSION'].add(str(row['LUCEE_VERSION']))
+			result['LUCEE_MINOR'].add(str(row['LUCEE_MINOR']))
 			result['LUCEE_SERVER'].add(str(row['LUCEE_SERVER']))
 			result['LUCEE_VARIANT'].add(str(row['LUCEE_VARIANT']))
 
@@ -59,7 +62,7 @@ def combine_rows_by_tomcat(rows):
 
 def coalesce_combinations(combinations):
 	for combo in combinations:
-		lucee_versions = ",".join(sorted(combo['LUCEE_VERSION']))
+		lucee_minors = ",".join(sorted(combo['LUCEE_MINOR']))
 		lucee_servers = ",".join(sorted(combo['LUCEE_SERVER']))
 		lucee_variants = ",".join(sorted(combo['LUCEE_VARIANT']))
 
@@ -67,7 +70,7 @@ def coalesce_combinations(combinations):
 			'TOMCAT_VERSION': combo['TOMCAT_VERSION'],
 			'TOMCAT_JAVA_VERSION': combo['TOMCAT_JAVA_VERSION'],
 			'TOMCAT_BASE_IMAGE': combo['TOMCAT_BASE_IMAGE'],
-			'LUCEE_VERSION': lucee_versions,
+			'LUCEE_MINOR': lucee_minors,
 			'LUCEE_SERVER': lucee_servers,
 			'LUCEE_VARIANTS': lucee_variants,
 		}
