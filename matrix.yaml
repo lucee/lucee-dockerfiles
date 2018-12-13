@@ -12,6 +12,7 @@ travis:
     # exit the build if the travis config is different from the matrix config
     - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
   script:
+    - echo $LUCEE_VERSION
     - python3 -u build-images.py
 
 
