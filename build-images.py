@@ -3,6 +3,7 @@
 from collections import namedtuple
 import argparse
 import subprocess
+import sys
 import os
 import re
 import yaml
@@ -100,6 +101,8 @@ def pick_dockerfile(config):
 
 def main():
 	parser = argparse.ArgumentParser(description='Start the build process.')
+	parser.add_argument('version', nargs='?', default=os.getenv('LUCEE_VERSION'),
+						help='the version string to build (default: $LUCEE_VERSION)')
 	parser.add_argument('--no-build', dest='build', action='store_false', default=True,
 						help='do not run the build')
 	parser.add_argument('--no-push', dest='push', action='store_false', default=True,
@@ -111,6 +114,10 @@ def main():
 	if args.list_tags:
 		args.push = False
 		args.build = False
+
+	if args.version == None:
+		print("version argument missing or $LUCEE_VERSION not set")
+		sys.exit(1)
 
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
