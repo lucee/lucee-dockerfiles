@@ -11,7 +11,7 @@ import attr
 
 @attr.s(frozen=True)
 class Config(object):
-	LUCEE_VERSION = attr.ib()
+	LUCEE_MINOR = attr.ib()
 	LUCEE_SERVER = attr.ib()
 	LUCEE_VARIANT = attr.ib()
 	TOMCAT_VERSION = attr.ib()
@@ -38,18 +38,18 @@ def tomcat(config):
 	return f"tomcat{config.TOMCAT_VERSION}-{config.TOMCAT_JAVA_VERSION}{config.TOMCAT_BASE_IMAGE}"
 
 def discover_images():
-	LUCEE_VERSIONS = os.getenv('LUCEE_VERSION').split(',')
+	LUCEE_MINORS = os.getenv('LUCEE_MINOR').split(',')
 	LUCEE_SERVERS = os.getenv('LUCEE_SERVER').split(',')
 	LUCEE_VARIANTS = os.getenv('LUCEE_VARIANTS').split(',')
 	TOMCAT_VERSION = os.getenv('TOMCAT_VERSION')
 	TOMCAT_JAVA_VERSION = os.getenv('TOMCAT_JAVA_VERSION')
 	TOMCAT_BASE_IMAGE = os.getenv('TOMCAT_BASE_IMAGE')
 
-	for LUCEE_VERSION in LUCEE_VERSIONS:
+	for LUCEE_MINOR in LUCEE_MINORS:
 		for LUCEE_SERVER in LUCEE_SERVERS:
 			for LUCEE_VARIANT in LUCEE_VARIANTS:
 				yield Config(
-					LUCEE_VERSION=LUCEE_VERSION,
+					LUCEE_MINOR=LUCEE_MINOR,
 					LUCEE_SERVER=LUCEE_SERVER,
 					LUCEE_VARIANT=LUCEE_VARIANT,
 					TOMCAT_VERSION=TOMCAT_VERSION,
@@ -59,7 +59,7 @@ def discover_images():
 
 
 def find_tags_for_image(config, default_tomcat, tags):
-	yield f"{config.LUCEE_VERSION}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}"
+	yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}"
 
 	is_default_tomcat = \
 		config.TOMCAT_JAVA_VERSION == default_tomcat['TOMCAT_JAVA_VERSION'] and \
@@ -67,7 +67,7 @@ def find_tags_for_image(config, default_tomcat, tags):
 		config.TOMCAT_BASE_IMAGE == default_tomcat['TOMCAT_BASE_IMAGE']
 
 	if is_default_tomcat:
-		yield f"{config.LUCEE_VERSION}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}"
+		yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}"
 
 	config_dict = attr.asdict(config)
 	yield from [
@@ -79,9 +79,9 @@ def find_tags_for_image(config, default_tomcat, tags):
 
 def config_to_build_args(config, namespace, image_name):
 	if config.LUCEE_SERVER == '':
-		build_args = {**attr.asdict(config), 'LUCEE_MINOR': get_minor_version(config.LUCEE_VERSION), 'LUCEE_JAR_URL': get_jar_url(config.LUCEE_VERSION, config.LUCEE_VARIANT)}
+		build_args = {**attr.asdict(config), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
-		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{config.LUCEE_VERSION}{config.LUCEE_VARIANT}-{tomcat(config)}"}
+		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}"}
 	else:
 		build_args = {}
 
@@ -130,36 +130,37 @@ def main():
 	image_name = matrix['config']['docker_hub_image']
 
 	for config in discover_images():
-		build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name))
-		dockerfile = pick_dockerfile(config)
+		if config.LUCEE_MINOR == get_minor_version(os.getenv('LUCEE_VERSION')):
+			build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name))
+			dockerfile = pick_dockerfile(config)
 
-		tags = find_tags_for_image(config, default_tomcat=matrix['default_tomcat'], tags=matrix['tags'])
+			tags = find_tags_for_image(config, default_tomcat=matrix['tags'][config.LUCEE_MINOR], tags=matrix['tags'])
 
-		if args.list_tags:
-			print(", ".join(tags))
-			continue
+			if args.list_tags:
+				print(", ".join(tags))
+				continue
 
-		plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
-		tag_args = flatten([["-t", tag] for tag in plain_tags])
-		command = [
-			"docker", "build",
-			*build_args,
-			"-f", dockerfile,
-			*tag_args,
-			".",
-		]
+			plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
+			tag_args = flatten([["-t", tag] for tag in plain_tags])
+			command = [
+				"docker", "build",
+				*build_args,
+				"-f", dockerfile,
+				*tag_args,
+				".",
+			]
 
-		print(' '.join(command))
+			print(' '.join(command))
 
-		if args.build:
-			run(command)
+			if args.build:
+				run(command)
 
-		for tag in plain_tags:
-			if is_master_build and args.push:
-				print('pushing', tag)
-				run(["docker", "push", tag])
-			else:
-				print('not on master; skipping deployment of', tag)
+			for tag in plain_tags:
+				if is_master_build and args.push:
+					print('pushing', tag)
+					run(["docker", "push", tag])
+				else:
+					print('not on master; skipping deployment of', tag)
 
 if __name__ == '__main__':
 	main()
