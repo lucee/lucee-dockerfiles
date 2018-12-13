@@ -101,11 +101,15 @@ def main():
 
 	if args.list_tags:
 		for row in coalesced:
+			if os.name == "nt":
+				run_args = [sys.executable, "./build-images.py", "--list-tags"]
+			else:
+				run_args = ["./build-images.py", "--list-tags"],
 			subprocess.run(
-				["./build-images.py", "--list-tags"],
+                run_args,
 				universal_newlines=True,
 				check=True,
-				env={**row, 'PATH': os.getenv('PATH')},
+				env={**row, 'LUCEE_VERSION': os.getenv('LUCEE_VERSION'), 'PATH': os.getenv('PATH'), 'SYSTEMROOT': os.getenv('SYSTEMROOT')},
 			)
 		return
 
