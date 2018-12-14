@@ -14,8 +14,7 @@ RUN echo ver: $LUCEE_VERSION minor: $LUCEE_MINOR server: $LUCEE_SERVER variant: 
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from Debian
 #   ca-certificates package from the OS is the most recent authority
-RUN mkdir -p /opt/lucee/server/lucee-server/context/security/cacerts \
-	&& cp -f /etc/ssl/certs/java/cacerts /opt/lucee/server/lucee-server/context/security/cacerts
+RUN cp -f /etc/ssl/certs/java/cacerts /opt/lucee/server/lucee-server/context/security/cacerts
 
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
