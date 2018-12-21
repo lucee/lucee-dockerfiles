@@ -13,7 +13,7 @@
 - `5.2.9.31-tomcat8.5-jre8`, `5.2.9.31`, `5.2`, `latest` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile))
   - `5.2.9.31-nginx-tomcat8.5-jre8`, `5.2.9.31-nginx`, `5.2-nginx` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile.nginx))
   - `5.2.9.31-tomcat8.5-jre8-alpine`, `5.2.9.31-alpine`, `5.2-alpine` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile))
-  - `5.2.9.31-ginx-tomcat8.5-jre8-alpine`, `5.2.9.31-nginx-alpine`, `5.2-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile.nginx.alpine))
+  - `5.2.9.31-nginx-tomcat8.5-jre8-alpine`, `5.2.9.31-nginx-alpine`, `5.2-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile.nginx.alpine))
 
 ### Bleeding edge Snapshot / RC / Beta (5.3)
 
