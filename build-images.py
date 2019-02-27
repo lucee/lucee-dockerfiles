@@ -32,7 +32,7 @@ def get_minor_version(ver):
 
 def get_jar_url(ver, variant):
 	if variant == '-light':
-		return f"https://release.lucee.org/rest/update/provider/loader/light-{ver}"
+		return f"https://release.lucee.org/rest/update/provider/light/{ver}"
 	else:
 		return f"https://release.lucee.org/rest/update/provider/loader/{ver}"
 
