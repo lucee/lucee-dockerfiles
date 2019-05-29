@@ -1,68 +1,58 @@
-# Dockerfiles for Lucee application servers
+# Lucee Docker Images
 
-Dockerfiles to build Lucee application servers.; used for the official LAS Lucee Docker images.
+[![](https://api.travis-ci.org/lucee/lucee-dockerfiles.svg?branch=travis-build-matrix)](https://travis-ci.org/lucee/lucee-dockerfiles)
+[![](https://images.microbadger.com/badges/image/lucee/lucee.svg)](https://microbadger.com/images/lucee/lucee)
 
-Lucee Docker images are available on Docker Hub: https://hub.docker.com/u/lucee/
+[Lucee](http://www.lucee.org/) application engine running on [Apache Tomcat](https://tomcat.apache.org/) J2EE application server.
 
-## Lucee Base Images
 
-Lucee provides a number of different base images for your Lucee project.
+## Supported tags and respective Dockerfile links
 
-### Lucee 5.2
+### Latest stable release (5.2)
 
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.2/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee52-nginx.svg)](https://microbadger.com/images/lucee/lucee52-nginx)
-- [Tomcat 8.0-JRE8](./5.2/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee52.svg)](https://microbadger.com/images/lucee/lucee52)
+- `5.2.9.31-tomcat8.5-jre8`, `5.2.9.31`, `5.2`, `latest` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile))
+  - `5.2.9.31-nginx-tomcat8.5-jre8`, `5.2.9.31-nginx`, `5.2-nginx` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile.nginx))
+  - `5.2.9.31-tomcat8.5-jre8-alpine`, `5.2.9.31-alpine`, `5.2-alpine` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile))
+  - `5.2.9.31-nginx-tomcat8.5-jre8-alpine`, `5.2.9.31-nginx-alpine`, `5.2-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/travis-build-matrix/Dockerfile.nginx.alpine))
 
-### Lucee 5.1
+### Bleeding edge Snapshot / RC / Beta (5.3)
 
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.1/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee51-nginx.svg)](https://microbadger.com/images/lucee/lucee51-nginx)
-- [Tomcat 8.0-JRE8](./5.1/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee51.svg)](https://microbadger.com/images/lucee/lucee51)
-
-### Lucee 5.0
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.0/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee5-nginx.svg)](https://microbadger.com/images/lucee/lucee5-nginx)
-- [Tomcat 8.0-JRE8](./5.0/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee5.svg)](https://microbadger.com/images/lucee/lucee5)
-
-### Lucee 4.5
-
-- [nginx + Tomcat 8.0-JRE8](./lucee-nginx/4.5/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee4-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee4-nginx/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee4-nginx.svg)](https://microbadger.com/images/lucee/lucee4-nginx)
-- [Tomcat 8.0-JRE8](./4.5/) &nbsp; &nbsp;
-  [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee4.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee4/)
-  [![](https://images.microbadger.com/badges/image/lucee/lucee4.svg)](https://microbadger.com/images/lucee/lucee4)
+- `5.3.2.33-SNAPSHOT-tomcat9.0-jre11`, `5.3.2.33-SNAPSHOT`
+  - `5.3.2.33-SNAPSHOT-nginx-tomcat9.0-jre11`, `5.3.2.33-SNAPSHOT-nginx`
+  - `5.3.2.33-SNAPSHOT-tomcat9.0-jre8-alpine`, `5.3.2.33-SNAPSHOT-alpine`
+  - `5.3.2.33-SNAPSHOT-nginx-tomcat9.0-jre8-alpine`, `5.3.2.33-SNAPSHOT-nginx-alpine`
 
 
 ## Example Project Dockerfile
 
-```
-FROM lucee/lucee51-nginx:latest
+For the latest stable release with Tomcat only:
 
-# NGINX configs
-COPY config/nginx/ /etc/nginx/
-# Lucee server configs
+```
+FROM lucee/lucee:5.2
+
+# Lucee configs
 COPY config/lucee/ /opt/lucee/web/
-# Deploy codebase to container
+# Code
 COPY www /var/www
 ```
 
+For the latest stable release with NGINX and Tomcat:
+
+```
+FROM lucee/lucee:5.2-nginx
+
+# NGINX configs
+COPY config/nginx/ /etc/nginx/
+# Lucee configs
+COPY config/lucee/ /opt/lucee/web/
+# Code
+COPY www /var/www
+```
+
+
 ## Features
 
-### Java optimisation tweaks
-
-- Lucee 4's [Java Agent](http://blog.getrailo.com/post.cfm/railo-4-1-smarter-template-compilation) is enabled for better memory management of compiled CFML code.
+### Java optisation tweaks
 
 - JVM is set to [use /dev/urandom as an entropy source for secure random numbers](http://support.run.pivotal.io/entries/59869725-Java-Web-Applications-Slow-Startup-or-Failing) to avoid blocking Tomcat on startup.
 
@@ -70,36 +60,56 @@ COPY www /var/www
 
 ### Optimised for single-site application
 
-The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the `server.xml` in the Tomcat config.
+The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the server.xml in the Tomcat config.
 
 
-## Contributing to this Project
+## Using this image
 
-The Lucee Dockerfiles project is maintained by the community. Chief protagonist is @modius ([Geoff Bowers](https://github.com/modius) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
+### Accessing the service
 
-### Spinning things up locally
+Lucee server's Tomcat installation listens on port 8888.
 
-Using the [Daemon Docker Workbench](https://github.com/justincarter/docker-workbench) provided, or using your own Docker tooling.
+This base image exposes port 8080 to linked containers but its **not used**.You must publish or expose port 8888 if you wish to access Tomcat from your installation.
 
-These instructions assume you have the parent Workbench up and running:
-```
-git clone git@github.com:lucee/lucee-dockerfiles.git
-cd lucee-dockerfiles
-docker-compose up
-```
+### Accessing the Web admin
 
-Containers are forwarded onto the following addresses:
-```
-lucee45 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8045
-lucee50 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8050
-lucee51 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8051
-lucee52 -> $ open http://lucee-dockerfiles.192.168.99.100.nip.io:8052
-nginx45 -> $ open http://nginx45.192.168.99.100.nip.io
-nginx50 -> $ open http://nginx50.192.168.99.100.nip.io
-nginx51 -> $ open http://nginx51.192.168.99.100.nip.io
-nginx52 -> $ open http://nginx52.192.168.99.100.nip.io
-```
+The Lucee admin URL is `/lucee/admin/` from the exposed port. No admin passwords are set.
 
-## License
+**THIS IS NOT A SECURE CONFIGURATION FOR PRODUCTION ENVIRONMENTS!** It is **strongly** recommended that you secure the container by:
+
+- Changing the server password
+- Using IP or URL filtering to restrict access to the Lucee web admin
+- Following recommended security practices such as the [Lucee Lockdown Guide](https://bitbucket.org/lucee/lucee/wiki/tips_and_tricks_Lockdown_Guide)
+
+The NGINX tagged Docker images are configured to deny access to the Lucee admin by default in the nginx `default.conf`.
+
+### Folder locations
+
+Web root for default site: /var/www
+
+Configuration folders:
+
+- Tomcat config: /usr/local/tomcat/conf
+- Lucee config for default site: /opt/lucee/web
+- Lucee server context: /opt/lucee/server/lucee-server/context
+
+Log folders:
+
+- Tomcat logs: /usr/local/tomcat/logs
+- Lucee logs for default site: /opt/lucee/web/logs
+
+### Environment variables
+
+The default image contains scripts that use the following environment variables if they are set in the container.
+
+`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms64m -Xmx512m".
+
+# Contributing to this Project
+
+The Lucee Dockerfiles project is maintained by the community. Chief protagonist is @justincarter ([Justin Carter](https://github.com/justincarter) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
+
+Special thanks to @rye ([Kristofer Rye](https://github.com/rye)) and @hawkrives ([Hawken Rives](https://github.com/hawkrives)) for their work on the Travis build matrix.
+
+# License
 
 The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
