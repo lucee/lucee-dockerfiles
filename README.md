@@ -11,10 +11,10 @@
 
 ### Latest stable release (5.3)
 
-Tomcat 9.0 with OpenJDK 11 (recommended)
+**Tomcat 9.0 with OpenJDK 11 (recommended)**
 
-- `5.3.2.77-tomcat9.0-jre11`, `5.3.2.77`, `5.3`, `latest` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.3.2.77-nginx-tomcat9.0-jre11`, `5.3.2.77-nginx`, `5.3-nginx` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.3.2.77-tomcat9.0-jre11`, `5.3.2.77`, **`5.3`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.3.2.77-nginx-tomcat9.0-jre11`, `5.3.2.77-nginx`, **`5.3-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
   - `5.3.2.77-tomcat9.0-jre11-alpine`, `5.3.2.77-alpine`, `5.3-alpine` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.3.2.77-nginx-tomcat9.0-jre11-alpine`, `5.3.2.77-nginx-alpine`, `5.3-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx.alpine))
 
@@ -43,7 +43,7 @@ The tag naming convention is;
 
 
 
-#### Previous stable release (5.2)
+### Previous stable release (5.2)
 
 Tomcat 8.5 with OpenJDK 8
 
@@ -53,7 +53,7 @@ Tomcat 8.5 with OpenJDK 8
   - `5.2.9.31-nginx-tomcat8.5-jre8-alpine`, `5.2.9.31-nginx-alpine`, `5.2-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx.alpine))
 
 
-#### Bleeding edge Snapshot / RC / Beta (5.3)
+### Bleeding edge Snapshot / RC / Beta (5.3)
 
 - `5.3.3.34-SNAPSHOT-tomcat9.0-jre11`, `5.3.3.34-SNAPSHOT`
   - `5.3.3.34-SNAPSHOT-nginx-tomcat9.0-jre11`, `5.3.3.34-SNAPSHOT-nginx`
@@ -147,7 +147,7 @@ The default image contains scripts that use the following environment variables 
 `LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms64m -Xmx512m".
 
 
-# Legacy Lucee Base Images
+## Legacy Lucee Base Images
 
 The older Lucee Base Images will remain available for the projects that are using them, though the build process for those images is considered "legacy" as they have been superseded by the new build matrix builds.
 
