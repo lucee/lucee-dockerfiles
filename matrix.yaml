@@ -42,7 +42,7 @@ tags:
 
   # all other plain tags
   latest: &latest
-    <<: *5_2
+    <<: *5_3
   nginx:
     <<: *latest
     LUCEE_SERVER: '-nginx'
@@ -59,6 +59,11 @@ tags:
   light-alpine:
     <<: *latest
     LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  light-nginx-alpine:
+    <<: *latest
+    LUCEE_VARIANT: '-light'
+    LUCEE_SERVER: '-nginx'
     TOMCAT_BASE_IMAGE: '-alpine'
 
 
@@ -98,6 +103,11 @@ tags:
   5.3-light-alpine:
     <<: *5_3
     LUCEE_VARIANT: '-light'
+    TOMCAT_BASE_IMAGE: '-alpine'
+  5.3-light-nginx-alpine:
+    <<: *5_3
+    LUCEE_VARIANT: '-light'
+    LUCEE_SERVER: '-nginx'
     TOMCAT_BASE_IMAGE: '-alpine'
 
 matrix:
