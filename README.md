@@ -15,8 +15,6 @@
 
 - `5.3.2.77-tomcat9.0-jre11`, `5.3.2.77`, **`5.3`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.3.2.77-nginx-tomcat9.0-jre11`, `5.3.2.77-nginx`, **`5.3-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
-  - `5.3.2.77-tomcat9.0-jre11-alpine`, `5.3.2.77-alpine`, `5.3-alpine` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.3.2.77-nginx-tomcat9.0-jre11-alpine`, `5.3.2.77-nginx-alpine`, `5.3-nginx-alpine` ([Dockerfile.nginx.alpine](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx.alpine))
 
 Tomcat 9.0 with OpenJDK 8
 
@@ -39,8 +37,7 @@ The tag naming convention is;
 - `-light` (optional) is a build with the Lucee "Light" JAR file, WITHOUT any extensions (users must install extensions separately, this includes database drivers, ORM, ESAPI, S3, image handling, etc)
 - `-nginx` (optional) is a build with the NGINX web server bundled and configured
 - `-TOMCAT_VERSION-JRE_VERSION` is the Tomcat major and minor version and OpenJDK major version of the build to allow users to choose between different combinations (e.g. `tomcat9.0-jre11` vs `tomcat9.0-jre8`). This is omitted for "simple tags" where the recommended Tomcat and OpenJDK versions are used.
-- `-alpine` (optional) is a build using Alpine Linux as the base image. This results in a smaller Docker image which may be useful in some scenarios. **NOTE:** Alpine images currently support `jre8` only, `jre11` / Java 11 is not available.
-
+- `-alpine` (optional) is a build using Alpine Linux as the base image. This results in a smaller Docker image which may be useful in some scenarios. **NOTE:** Alpine images currently support `jre8` only, `jre11` / Java 11 is not available. Alpine "simple tags" such as `5.3-alpine` will be added in future builds
 
 
 ### Previous stable release (5.2)
