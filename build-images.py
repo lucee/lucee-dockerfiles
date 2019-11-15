@@ -151,7 +151,7 @@ def main():
 			plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
 			tag_args = flatten([["-t", tag] for tag in plain_tags])
 			command = [
-				"docker", "build",
+				"docker", "build", "--pull",
 				*build_args,
 				"-f", dockerfile,
 				*tag_args,
