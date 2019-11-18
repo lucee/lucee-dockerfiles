@@ -26,7 +26,7 @@ tags:
   # plain tags for minor verions
   '5.2': &5_2
     TOMCAT_VERSION: '8.5'
-    TOMCAT_JAVA_VERSION: 'jre8'
+    TOMCAT_JAVA_VERSION: 'jdk8-openjdk'
     TOMCAT_BASE_IMAGE: ''
     LUCEE_MINOR: '5.2'
     LUCEE_SERVER: ''
@@ -34,7 +34,7 @@ tags:
 
   '5.3': &5_3
     TOMCAT_VERSION: '9.0'
-    TOMCAT_JAVA_VERSION: 'jre11'
+    TOMCAT_JAVA_VERSION: 'jdk11-openjdk'
     TOMCAT_BASE_IMAGE: ''
     LUCEE_MINOR: '5.3'
     LUCEE_SERVER: ''
@@ -117,8 +117,8 @@ matrix:
     - '9.0'
 
   TOMCAT_JAVA_VERSION:
-    - 'jre8'
-    - 'jre11'
+    - 'jdk8-openjdk'
+    - 'jdk11-openjdk'
 
   TOMCAT_BASE_IMAGE:
     - ''
@@ -147,5 +147,5 @@ exclusions:
     TOMCAT_BASE_IMAGE: '-alpine'
   - TOMCAT_JAVA_VERSION: 'jre10'
     TOMCAT_BASE_IMAGE: '-alpine'
-  - TOMCAT_JAVA_VERSION: 'jre11'
+  - TOMCAT_JAVA_VERSION: 'jdk11-openjdk'
     TOMCAT_BASE_IMAGE: '-alpine'
