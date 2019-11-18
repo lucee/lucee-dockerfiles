@@ -99,10 +99,7 @@ def config_to_build_args(config, namespace, image_name):
 
 def pick_dockerfile(config):
 	if config.LUCEE_SERVER == '-nginx':
-		if config.TOMCAT_BASE_IMAGE == '-alpine':
-			return './Dockerfile.nginx.alpine'
-		else:
-			return './Dockerfile.nginx'
+		return './Dockerfile.nginx'
 	else:
 		return './Dockerfile'
 
