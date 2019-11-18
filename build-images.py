@@ -113,6 +113,8 @@ def main():
 						help='the version string to build (default: $LUCEE_VERSION)')
 	parser.add_argument('--no-build', dest='build', action='store_false', default=True,
 						help='do not run the build')
+	parser.add_argument('--no-cache', dest='cache', action='store_false', default=True,
+						help='do not use the cache when building')
 	parser.add_argument('--no-push', dest='push', action='store_false', default=True,
 						help='do not push the tags')
 	parser.add_argument('--list-tags', action='store_true', default=False,
@@ -139,6 +141,10 @@ def main():
 
 	for config in discover_images():
 		if config.LUCEE_MINOR == get_minor_version(os.getenv('LUCEE_VERSION')):
+			docker_args = ["--pull"]
+			if args.cache == False:
+				docker_args.append("--no-cache")
+
 			build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name))
 			dockerfile = pick_dockerfile(config)
 
@@ -150,8 +156,9 @@ def main():
 
 			plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
 			tag_args = flatten([["-t", tag] for tag in plain_tags])
+
 			command = [
-				"docker", "build", "--pull",
+				"docker", "build", *docker_args,
 				*build_args,
 				"-f", dockerfile,
 				*tag_args,
