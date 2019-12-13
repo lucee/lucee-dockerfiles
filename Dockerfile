@@ -14,7 +14,8 @@ RUN echo ver: $LUCEE_VERSION minor: $LUCEE_MINOR server: $LUCEE_SERVER variant: 
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from Java
 RUN mkdir -p /opt/lucee/server/lucee-server/context/security \
-	&& cp -f $JAVA_HOME/lib/security/cacerts /opt/lucee/server/lucee-server/context/security/cacerts
+	&& test -e $JAVA_HOME/jre/lib/security/cacerts && cp -f $JAVA_HOME/jre/lib/security/cacerts /opt/lucee/server/lucee-server/context/security/cacerts || true \
+	&& test -e $JAVA_HOME/lib/security/cacerts && cp -f $JAVA_HOME/lib/security/cacerts /opt/lucee/server/lucee-server/context/security/cacerts || true
 
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
