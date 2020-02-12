@@ -23,7 +23,7 @@ COPY nginx/supervisord.conf /etc/supervisor/conf.d/
 
 # Provide test page
 RUN mkdir -p /var/www
-COPY supporting/index.cfm /var/www/
+COPY www/ /var/www/
 ONBUILD RUN rm -rf /var/www/*
 
 # Expose HTTP and HTTPS ports

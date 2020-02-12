@@ -25,6 +25,9 @@
 <h3>Server Variables</h3>
 <cfdump var="#server#" label="Server">
 
+<h3>CGI Variables</h3>
+<cfdump var="#cgi#" label="CGI">
+
 <h3>HTTP Request Variables</h3>
 <cfdump var="#headers#" label="GetHttpRequestData().headers">
 

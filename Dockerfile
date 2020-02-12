@@ -49,7 +49,7 @@ COPY ${LUCEE_MINOR}/lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
 
 # Provide test page
 RUN mkdir -p /var/www
-COPY ./supporting/index.cfm /var/www/
+COPY www/ /var/www/
 ONBUILD RUN rm -rf /var/www/*
 
 # lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
