@@ -51,14 +51,14 @@ Tomcat 8.5 with OpenJDK 8
 
 ### Bleeding edge Snapshot / RC / Beta (5.3)
 
-- `5.3.5.36-SNAPSHOT-tomcat9.0-jdk11-openjdk`, `5.3.5.36-SNAPSHOT`
-  - `5.3.5.36-SNAPSHOT-nginx-tomcat9.0-jdk11-openjdk`, `5.3.5.36-SNAPSHOT-nginx`
-- `5.3.4.54-RC-tomcat9.0-jdk11-openjdk`, `5.3.4.54-RC`
-  - `5.3.4.54-RC-nginx-tomcat9.0-jdk11-openjdk`, `5.3.4.54-RC-nginx`
+- `5.3.5.78-SNAPSHOT-tomcat9.0-jdk11-openjdk`, `5.3.5.78-SNAPSHOT`
+  - `5.3.5.78-SNAPSHOT-nginx-tomcat9.0-jdk11-openjdk`, `5.3.5.78-SNAPSHOT-nginx`
+- `5.3.5.78-RC-tomcat9.0-jdk11-openjdk`, `5.3.5.78-RC`
+  - `5.3.5.78-RC-nginx-tomcat9.0-jdk11-openjdk`, `5.3.5.78-RC-nginx`
 - `5.3.1.15-BETA-tomcat9.0-jre11`, `5.3.1.15-BETA`
   - `5.3.1.15-BETA-nginx-tomcat9.0-jre11`, `5.3.1.15-BETA-nginx`
 
-The `SNAPSHOTS` Docker image builds are automatically generated after a successful Lucee build. The `5.3.5.36` version number above is just an example of the latest SNAPSHOT version number; check the [Docker Hub tags](https://hub.docker.com/r/lucee/lucee/tags) and/or the [Lucee Downloads](https://download.lucee.org/) page to see the latest SNAPSHOT version numbers.
+The `SNAPSHOTS` Docker image builds are automatically generated after a successful Lucee build. The `5.3.5.78` version number above is just an example of the latest SNAPSHOT version number; check the [Docker Hub tags](https://hub.docker.com/r/lucee/lucee/tags) and/or the [Lucee Downloads](https://download.lucee.org/) page to see the latest SNAPSHOT version numbers.
 
 The `RC` and `Beta` builds are manually triggered when they are announced.
 
