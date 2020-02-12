@@ -1,14 +1,14 @@
 <cfscript>
 	refURL="http://docs.lucee.org";
-	wikiURL="https://bitbucket.org/lucee/lucee/wiki/Home";
-	bbURL="https://bitbucket.org/lucee/lucee";
+	wikiURL="https://docs.lucee.org/index.html";
+	gitURL="https://github.com/lucee/Lucee";
 	adminURL="#CGI.CONTEXT_PATH#/lucee/admin.cfm";
 	webAdminURL="#CGI.CONTEXT_PATH#/lucee/admin/web.cfm";
 	serverAdminURL="#CGI.CONTEXT_PATH#/lucee/admin/server.cfm";
 	docURL="#CGI.CONTEXT_PATH#/lucee/doc.cfm";
-	mailinglistURL="https://groups.google.com/forum/##!forum/lucee";
-	profURL="https://www.lucee.org/support.html";
-	issueURL="https://bitbucket.org/lucee/lucee/issues";
+	mailinglistURL="https://dev.lucee.org/";
+	profURL="https://lucee.org/get-support/consulting.html";
+	issueURL="https://luceeserver.atlassian.net/projects/LDEV/issues";
 	newURL="http://docs.lucee.org/guides/lucee-5.html";
 </cfscript><cfoutput><!DOCTYPE html>
 <html>
@@ -125,7 +125,7 @@
 										<a href="#wikiURL#">First steps</a>
 									</h2>
 
-									<p>If you are new to Lucee, please check our <a href="#wikiURL#" target="_blank">Wiki</a> where you will find useful resources to get you started with Lucee including a Cookbook with a growing list of examples.</p>
+									<p>If you are new to Lucee, please check our <a href="#wikiURL#" target="_blank">Docs</a> where you will find useful resources to get you started with Lucee including a Cookbook with a growing list of examples.</p>
 							
 
 								</div>
@@ -209,9 +209,9 @@ In addition you should set a default password in the Server admin for all web ad
 							<p class="file-link"><a href="##">Get Involved</a></p>
 							<p>
 								Get involved in the Lucee Project!<br />
-							- Engage with other Lucee community members via our <a href="#mailinglistURL#">mailing list</a><br />
+							- Engage with other Lucee community members via our <a href="#mailinglistURL#">forums/mailing list</a><br />
 							- <a href="#issueURL#">Submitting</a> bugs and feature requests<br />
-							- <a href="#bbURL#">Contribute</a> to the code<br />
+							- <a href="#gitURL#">Contribute</a> to the code<br />
 							- <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LKLC7KH4JRQ8J&">Support</a> the project<br />
 							</p>
 							
