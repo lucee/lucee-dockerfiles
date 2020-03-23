@@ -12,10 +12,12 @@ ARG LUCEE_JAR_URL
 
 RUN echo ver: $LUCEE_VERSION minor: $LUCEE_MINOR server: $LUCEE_SERVER variant: $LUCEE_VARIANT jar: $LUCEE_JAR_URL
 
-# Replace the Trusted SSL Certificates packaged with Lucee with those from Java
-RUN mkdir -p /opt/lucee/server/lucee-server/context/security \
-	&& test -e $JAVA_HOME/jre/lib/security/cacerts && cp -f $JAVA_HOME/jre/lib/security/cacerts /opt/lucee/server/lucee-server/context/security/cacerts || true \
-	&& test -e $JAVA_HOME/lib/security/cacerts && cp -f $JAVA_HOME/lib/security/cacerts /opt/lucee/server/lucee-server/context/security/cacerts || true
+# Replace the Trusted SSL Certificates packaged with Lucee with those from
+# Java. Different OpenJDK versions have different paths for cacerts
+RUN mkdir -p /opt/lucee/server/lucee-server/context/security && \
+	if   [ -e "$JAVA_HOME/jre/lib/security/cacerts" ]; then ln -s "$JAVA_HOME/jre/lib/security/cacerts" -t /opt/lucee/server/lucee-server/context/security/; \
+	elif [ -e "$JAVA_HOME/lib/security/cacerts" ]; then ln -s "$JAVA_HOME/lib/security/cacerts" -t /opt/lucee/server/lucee-server/context/security/; \
+	else echo "Unable to find/symlink cacerts."; exit 1; fi
 
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
