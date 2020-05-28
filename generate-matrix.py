@@ -120,7 +120,7 @@ def main():
 	config = {
 		**matrix['travis'],
 		'env': {
-			'matrix': travis_env_rows,
+			'jobs': travis_env_rows,
 		},
 	}
 

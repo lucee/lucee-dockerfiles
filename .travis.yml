@@ -4,7 +4,6 @@ before_script:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - pip3 install -r requirements.txt
 - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
-os: linux
 dist: bionic
 env:
   jobs:
@@ -13,6 +12,7 @@ env:
   - TOMCAT_VERSION=9.0 TOMCAT_JAVA_VERSION=jdk8-openjdk TOMCAT_BASE_IMAGE= LUCEE_MINOR=5.2,5.3 LUCEE_SERVER=,-nginx LUCEE_VARIANTS=,-light
   - TOMCAT_VERSION=9.0 TOMCAT_JAVA_VERSION=jdk11-openjdk TOMCAT_BASE_IMAGE= LUCEE_MINOR=5.2,5.3 LUCEE_SERVER=,-nginx LUCEE_VARIANTS=,-light
 language: python
+os: linux
 python: 3.6
 script:
 - echo $LUCEE_VERSION
