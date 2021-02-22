@@ -194,7 +194,7 @@ https://github.com/lucee/lucee-dockerfiles/tree/legacy
 
 # Contributing to this Project
 
-The Lucee Dockerfiles project is maintained by the community. Chief protagonist is @justincarter ([Justin Carter](https://github.com/justincarter) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
+The [Lucee Dockerfiles project](https://github.com/lucee/lucee-dockerfiles) is maintained by the community. Chief protagonist is @justincarter ([Justin Carter](https://github.com/justincarter) of [Daemon](http://www.daemon.com.au)). Bug reports and pull requests are most welcome.
 
 Special thanks to @rye ([Kristofer Rye](https://github.com/rye)) and @hawkrives ([Hawken Rives](https://github.com/hawkrives)) for their work on the Travis build matrix.
 
