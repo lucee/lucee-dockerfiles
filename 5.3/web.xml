@@ -4622,7 +4622,7 @@
         </init-param>
         <init-param>
             <param-name>lucee-web-directory</param-name>
-            <param-value>/opt/lucee/web/</param-value>
+            <param-value>/opt/lucee/web/{web-context-label}</param-value>
             <description>Lucee Web Directory (for Website-specific configurations, settings, and libraries)</description>
         </init-param>
         <load-on-startup>1</load-on-startup>
