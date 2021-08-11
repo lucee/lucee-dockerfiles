@@ -5,6 +5,18 @@ travis:
   python: 3.6
   dist: bionic
   os: linux
+  before_install:
+    - set -e
+    - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - sudo rm -rf /var/lib/apt/lists/*
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+    - sudo apt-get update
+    - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+    - mkdir -vp ~/.docker/cli-plugins/
+    - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+    - chmod a+x ~/.docker/cli-plugins/docker-buildx
   before_script:
     - 'echo TRAVIS_BRANCH: $TRAVIS_BRANCH'
     - 'echo TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST'
@@ -12,10 +24,6 @@ travis:
     - pip3 install -r requirements.txt
     # exit the build if the travis config is different from the matrix config
     - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
-    # install buildx
-    - mkdir -vp ~/.docker/cli-plugins/
-    - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
-    - chmod a+x ~/.docker/cli-plugins/docker-buildx
     - docker buildx version
     - docker buildx create --use
   script:
