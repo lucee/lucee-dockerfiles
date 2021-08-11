@@ -4,6 +4,11 @@ before_script:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - pip3 install -r requirements.txt
 - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
+- mkdir -vp ~/.docker/cli-plugins/
+- curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+- chmod a+x ~/.docker/cli-plugins/docker-buildx
+- docker buildx version
+- docker buildx create --use
 dist: bionic
 env:
   jobs:

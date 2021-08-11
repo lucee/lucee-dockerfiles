@@ -116,11 +116,24 @@ def main():
 						help='do not push the tags')
 	parser.add_argument('--list-tags', action='store_true', default=False,
 						help='only list the tags that would be generated')
+	parser.add_argument('--buildx-platform', dest='platform', action='store', default='linux/amd64,linux/arm64',
+						help='the target platform(s) to build, e.g. linux/amd64,linux/arm64')
+	parser.add_argument('--buildx-load', dest='load', action='store_true', default=False,
+						help='load the image into Docker from the builder')
 	args = parser.parse_args()
 
 	if args.list_tags:
 		args.push = False
 		args.build = False
+
+	if os.getenv('LUCEE_TARGETPLATFORM', None):
+		args.platform = os.getenv('LUCEE_TARGETPLATFORM', 'linux/amd64,linux/arm64')
+
+	if args.load:
+		args.push = False
+		if ',' in args.platform:
+			 sys.exit("A single target platform must be specified when using load")
+
 
 	if args.version == None:
 		print("version argument missing or $LUCEE_VERSION not set")
@@ -131,7 +144,7 @@ def main():
 
 	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false'
 	if os.getenv('CI', None):
-		print('will we deploy:', 'yes' if is_master_build else 'no')
+		print('will we deploy:', 'yes' if is_master_build and args.push else 'no')
 
 	namespace = matrix['config']['docker_hub_namespace']
 	image_name = matrix['config']['docker_hub_image']
@@ -154,11 +167,24 @@ def main():
 			plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
 			tag_args = flatten([["-t", tag] for tag in plain_tags])
 
+			buildx_args = []
+			if args.load:
+				buildx_args = [f"--load"]
+
+			if is_master_build and args.push:
+				buildx_args = [f"--push"]
+				print('pushing', plain_tags)
+			else: 
+				print('not a master build; skipping deployment of', plain_tags)
+
 			command = [
-				"docker", "build", *docker_args,
+				"docker", "buildx", "build", *docker_args,
 				*build_args,
+				"--platform", args.platform,
+				*buildx_args,
 				"-f", dockerfile,
 				*tag_args,
+				*buildx_args,
 				".",
 			]
 
@@ -167,12 +193,6 @@ def main():
 			if args.build:
 				run(command)
 
-			for tag in plain_tags:
-				if is_master_build and args.push:
-					print('pushing', tag)
-					run(["docker", "push", tag])
-				else:
-					print('not on master; skipping deployment of', tag)
 
 if __name__ == '__main__':
 	main()
