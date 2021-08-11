@@ -24,8 +24,8 @@ travis:
 
 
 config:
-  docker_hub_namespace: 'lucee'
-  docker_hub_image: 'lucee'
+  docker_hub_namespace: 'justincarter'
+  docker_hub_image: 'lucee-multiarch-test'
 
 
 tags:
