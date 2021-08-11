@@ -17,6 +17,7 @@ travis:
     - mkdir -vp ~/.docker/cli-plugins/
     - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
     - chmod a+x ~/.docker/cli-plugins/docker-buildx
+    - docker run --privileged --rm tonistiigi/binfmt --install arm64
   before_script:
     - 'echo TRAVIS_BRANCH: $TRAVIS_BRANCH'
     - 'echo TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST'
