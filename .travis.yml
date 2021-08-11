@@ -10,16 +10,17 @@ before_install:
 - mkdir -vp ~/.docker/cli-plugins/
 - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
 - chmod a+x ~/.docker/cli-plugins/docker-buildx
-- docker run --privileged --rm tonistiigi/binfmt --install arm64
 before_script:
 - 'echo TRAVIS_BRANCH: $TRAVIS_BRANCH'
 - 'echo TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST'
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - pip3 install -r requirements.txt
 - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
+- docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 - docker buildx version
-- docker buildx create --use
-dist: bionic
+- docker buildx create --name multiarch --driver docker-container --use
+- docker buildx inspect --bootstrap
+dist: focal
 env:
   jobs:
   - TOMCAT_VERSION=8.5 TOMCAT_JAVA_VERSION=jdk8-openjdk TOMCAT_BASE_IMAGE= LUCEE_MINOR=5.2 LUCEE_SERVER=,-nginx LUCEE_VARIANTS=,-light

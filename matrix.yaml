@@ -3,7 +3,7 @@ travis:
     - docker
   language: python
   python: 3.6
-  dist: bionic
+  dist: focal
   os: linux
   before_install:
     - set -e
@@ -17,7 +17,6 @@ travis:
     - mkdir -vp ~/.docker/cli-plugins/
     - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
     - chmod a+x ~/.docker/cli-plugins/docker-buildx
-    - docker run --privileged --rm tonistiigi/binfmt --install arm64
   before_script:
     - 'echo TRAVIS_BRANCH: $TRAVIS_BRANCH'
     - 'echo TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST'
@@ -25,8 +24,10 @@ travis:
     - pip3 install -r requirements.txt
     # exit the build if the travis config is different from the matrix config
     - python3 ./generate-matrix.py >/dev/null && git diff --exit-code
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
     - docker buildx version
-    - docker buildx create --use
+    - docker buildx create --name multiarch --driver docker-container --use
+    - docker buildx inspect --bootstrap
   script:
     - echo $LUCEE_VERSION
     - python3 -u build-images.py
