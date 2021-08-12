@@ -6,13 +6,7 @@ travis:
   dist: focal
   os: linux
   before_install:
-    - set -e
     - export DOCKER_CLI_EXPERIMENTAL=enabled
-    - sudo rm -rf /var/lib/apt/lists/*
-    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-    - sudo apt-get update
-    - sudo apt-get install --only-upgrade docker-ce -y
     - mkdir -vp ~/.docker/cli-plugins/
     - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
     - chmod a+x ~/.docker/cli-plugins/docker-buildx
