@@ -13,18 +13,18 @@
 
 **Tomcat 9.0 with OpenJDK 11 (recommended)**
 
-- `5.3.8.189-tomcat9.0-jdk11-openjdk`, `5.3.8.189`, **`5.3`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.3.8.189-nginx-tomcat9.0-jdk11-openjdk`, `5.3.8.189-nginx`, **`5.3-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.3.8.206-tomcat9.0-jdk11-openjdk`, `5.3.8.206`, **`5.3`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.3.8.206-nginx-tomcat9.0-jdk11-openjdk`, `5.3.8.206-nginx`, **`5.3-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 Tomcat 9.0 with OpenJDK 8
 
-- `5.3.8.189-tomcat9.0-jdk8-openjdk`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.3.8.189-nginx-tomcat9.0-jdk8-openjdk` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.3.8.206-tomcat9.0-jdk8-openjdk`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.3.8.206-nginx-tomcat9.0-jdk8-openjdk` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 
 ## How the tags work
 
-The Lucee Docker image tags follow a naming convention which is used to produce "simple tags" that are updated with each release (e.g. `5.3`, `5.3-nginx`) as well as "full tags" which allow for very specific version targeting (e.g. `5.3.8.189-tomcat9.0-jdk11-openjdk`).
+The Lucee Docker image tags follow a naming convention which is used to produce "simple tags" that are updated with each release (e.g. `5.3`, `5.3-nginx`) as well as "full tags" which allow for very specific version targeting (e.g. `5.3.8.206-tomcat9.0-jdk11-openjdk`).
 
 The tag naming convention is;
 
