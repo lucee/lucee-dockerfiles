@@ -30,7 +30,7 @@ The tag naming convention is;
 
 `LUCEE_VERSION[-RELEASE_TYPE][-light][-nginx][-TOMCAT_VERSION-JRE_VERSION]`
 
-- `LUCEE_VERSION` is the Lucee Version number string. For simple tags it may optionally be in the `MAJOR.MINOR` format (e.g. `5.3`) and for full tags it's in the `MAJOR.MINOR.PATCH.BUILD` format (e.g. `5.3.8.189`). Snapshot, RC and Beta builds always include the full version number.
+- `LUCEE_VERSION` is the Lucee Version number string. For simple tags it may optionally be in the `MAJOR.MINOR` format (e.g. `5.3`) and for full tags it's in the `MAJOR.MINOR.PATCH.BUILD` format (e.g. `5.3.8.206`). Snapshot, RC and Beta builds always include the full version number.
 - `RELEASE_TYPE` is the type of release; omitted for Releases, otherwise `SNAPSHOT`, `RC` or `BETA`
 - `-light` (optional) is a build with the Lucee "Light" JAR file, WITHOUT any extensions (users must install extensions separately, this includes database drivers, ORM, ESAPI, S3, image handling, etc)
 - `-nginx` (optional) is a build with the NGINX web server bundled and configured
