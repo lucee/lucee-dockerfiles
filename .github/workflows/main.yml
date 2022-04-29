@@ -12,6 +12,11 @@ on:
         required: true
         type: string
 
+env:
+  LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
+  # Dummy flag to pretend this is a Travis PR; build-images.py needs to be updated
+  TRAVIS_PULL_REQUEST: true
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -36,7 +41,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Setup env
         run: |
-          echo LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
+          echo LUCEE_VERSION: $LUCEE_VERSION
           echo BRANCH: $BRANCH
           echo PULL_REQUEST: $PULL_REQUEST
           pip3 install -r requirements.txt
@@ -46,7 +51,6 @@ jobs:
       - name: Build Lucee docker image [jdk 8, tomcat 8.5]
         run: python3 -u build-images.py
         env:
-          LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
           TOMCAT_VERSION: 8.5
           TOMCAT_JAVA_VERSION: jdk8-openjdk
           TOMCAT_BASE_IMAGE: ""
@@ -57,7 +61,6 @@ jobs:
       - name: Build Lucee docker image [jdk 11, tomcat 8.5]
         run: python3 -u build-images.py
         env:
-          LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
           TOMCAT_VERSION: 8.5
           TOMCAT_JAVA_VERSION: jdk11-openjdk
           TOMCAT_BASE_IMAGE: ""
@@ -68,7 +71,6 @@ jobs:
       - name: Build Lucee docker image [jdk 8, tomcat 9.0]
         run: python3 -u build-images.py
         env:
-          LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
           TOMCAT_VERSION: 9.0
           TOMCAT_JAVA_VERSION: jdk8-openjdk
           TOMCAT_BASE_IMAGE: ""
@@ -79,7 +81,6 @@ jobs:
       - name: Build Lucee docker image [jdk 11, tomcat 9.0]
         run: python3 -u build-images.py
         env:
-          LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
           TOMCAT_VERSION: 9.0
           TOMCAT_JAVA_VERSION: jdk11-openjdk
           TOMCAT_BASE_IMAGE: ""
