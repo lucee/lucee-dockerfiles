@@ -36,6 +36,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Setup env
         run: |
+          export LUCEE_VERSION=${{ github.event.inputs.LUCEE_VERSION }}
           echo LUCEE_VERSION: $LUCEE_VERSION
           echo BRANCH: $BRANCH
           echo PULL_REQUEST: $PULL_REQUEST
