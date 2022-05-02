@@ -16,6 +16,8 @@ on:
       LUCEE_VERSION:
         required: true
         type: string
+  repository_dispatch:
+     types: [build-docker-images]
 
 env:
   LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
