@@ -48,8 +48,9 @@ jobs:
       - name: Copy repository_dispatch event clientpayload to ENV
         if: ${{ github.event_name == 'repository_dispatch' }}
         env:
-          LUCEE_VERSION: ${{ github.event.client_payload.LUCEE_VERSION }}
+          LUCEE_VERSION: ${{ github.event.client_payload.LUCEE_VERSION }}          
           BRANCH: ${{ github.event.client_payload.BRANCH }}
+        run: echo $LUCEE_VERSION
 
       # Runs a single command using the runners shell
       - name: Setup env
