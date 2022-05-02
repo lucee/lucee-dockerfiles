@@ -11,6 +11,11 @@ on:
       LUCEE_VERSION:
         required: true
         type: string
+  workflow_call:
+    inputs:
+      LUCEE_VERSION:
+        required: true
+        type: string
 
 env:
   LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
