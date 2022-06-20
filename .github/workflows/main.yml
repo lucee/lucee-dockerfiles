@@ -100,3 +100,13 @@ jobs:
           LUCEE_MINOR: "5.2,5.3"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
+
+      - name: Build Lucee docker image [jdk 11, tomcat 9.0, Debian buster (oldstable)]
+        run: python3 -u build-images.py
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk11-openjdk
+          TOMCAT_BASE_IMAGE: "-buster"
+          LUCEE_MINOR: "5.3"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
