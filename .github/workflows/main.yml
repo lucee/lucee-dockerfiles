@@ -14,6 +14,13 @@ on:
       REBUILD_DATE:
         required: false
         type: string
+      DRY_RUN:
+        required: false
+        default: 'no'
+        type: choice
+        options:
+        - yes
+        - no
   workflow_call:
     inputs:
       LUCEE_VERSION:
@@ -22,12 +29,20 @@ on:
       REBUILD_DATE:
         required: false
         type: string
+      DRY_RUN:
+        required: false
+        default: 'no'
+        type: choice
+        options:
+        - yes
+        - no
   repository_dispatch:
      types: [build-docker-images]
 
 env:
   LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
   REBUILD_DATE: ${{ github.event.inputs.REBUILD_DATE }}
+  DRY_RUN: ${{ github.event.inputs.DRY_RUN }}
   # Dummy flag to allow Docker images to be pushed; build-images.py needs to be updated
   TRAVIS_PULL_REQUEST: false
 

@@ -101,7 +101,7 @@ def config_to_build_args(config, namespace, image_name):
 	if config.LUCEE_SERVER == '':
 		build_args = {**attr.asdict(config), 'LUCEE_VERSION': os.getenv('LUCEE_VERSION'), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
-		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}{rebuild_tag(config)}"}
+		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}{rebuild_tag()}"}
 	else:
 		build_args = {}
 
@@ -154,7 +154,7 @@ def main():
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
 
-	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('BRANCH', None) == 'master'
+	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('DRY_RUN', 'no') == 'no'
 	if os.getenv('CI', None):
 		print('will we deploy:', 'yes' if is_master_build and args.push else 'no')
 
