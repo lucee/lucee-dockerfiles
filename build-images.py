@@ -87,7 +87,7 @@ def find_tags_for_image(config, default_tomcat, tags):
 
 def config_to_build_args(config, namespace, image_name):
 	if config.LUCEE_SERVER == '':
-		build_args = {**attr.asdict(config), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
+		build_args = {**attr.asdict(config), 'LUCEE_VERSION': os.getenv('LUCEE_VERSION'), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
 		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}"}
 	else:
