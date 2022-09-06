@@ -23,6 +23,11 @@ def flatten(lst):
 	return [x for y in lst for x in y]
 
 def is_release_build(ver):
+	# builds with REBUILD_DATE should not apply plain tags
+	# because they are typically older builds, not the latest
+	if os.getenv('REBUILD_DATE', None) != None:
+		return False
+
 	# release builds are a version number string only
 	# non-release builds contain a build type suffix such as -BETA/-RC/-SNAPSHOT
 	return re.sub(r"^\d+\.\d+\.\d+\.\d+(.*)$", r"\1", ver) == ""
@@ -42,6 +47,12 @@ def run(cmd):
 def tomcat(config):
 	return f"tomcat{config.TOMCAT_VERSION}-{config.TOMCAT_JAVA_VERSION}{config.TOMCAT_BASE_IMAGE}"
 
+def rebuild_tag(config):
+	if config.REBUILD_DATE != '':
+		return f"-{config.REBUILD_DATE}"
+
+	return ""
+
 def discover_images():
 	LUCEE_MINORS = os.getenv('LUCEE_MINOR').split(',')
 	LUCEE_SERVERS = os.getenv('LUCEE_SERVER').split(',')
@@ -49,6 +60,7 @@ def discover_images():
 	TOMCAT_VERSION = os.getenv('TOMCAT_VERSION')
 	TOMCAT_JAVA_VERSION = os.getenv('TOMCAT_JAVA_VERSION')
 	TOMCAT_BASE_IMAGE = os.getenv('TOMCAT_BASE_IMAGE')
+	REBUILD_DATE = os.getenv('REBUILD_DATE', '')
 
 	for LUCEE_MINOR in LUCEE_MINORS:
 		for LUCEE_SERVER in LUCEE_SERVERS:
@@ -60,11 +72,12 @@ def discover_images():
 					TOMCAT_VERSION=TOMCAT_VERSION,
 					TOMCAT_JAVA_VERSION=TOMCAT_JAVA_VERSION,
 					TOMCAT_BASE_IMAGE=TOMCAT_BASE_IMAGE,
+					REBUILD_DATE=REBUILD_DATE,
 				)
 
 
 def find_tags_for_image(config, default_tomcat, tags):
-	yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}"
+	yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}{rebuild_tag(config)}"
 
 	is_default_tomcat = \
 		config.TOMCAT_JAVA_VERSION == default_tomcat['TOMCAT_JAVA_VERSION'] and \
@@ -89,7 +102,7 @@ def config_to_build_args(config, namespace, image_name):
 	if config.LUCEE_SERVER == '':
 		build_args = {**attr.asdict(config), 'LUCEE_VERSION': os.getenv('LUCEE_VERSION'), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
-		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}"}
+		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}{rebuild_tag(config)}"}
 	else:
 		build_args = {}
 

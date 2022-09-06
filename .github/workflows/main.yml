@@ -11,10 +11,16 @@ on:
       LUCEE_VERSION:
         required: true
         type: string
+      REBUILD_DATE:
+        required: false
+        type: string
   workflow_call:
     inputs:
       LUCEE_VERSION:
         required: true
+        type: string
+      REBUILD_DATE:
+        required: false
         type: string
   repository_dispatch:
      types: [build-docker-images]
