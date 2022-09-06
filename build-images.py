@@ -24,7 +24,7 @@ def flatten(lst):
 def is_release_build(ver):
 	# builds with REBUILD_DATE should not apply plain tags
 	# because they are typically older builds, not the latest
-	if os.getenv('REBUILD_DATE', None) != None:
+	if os.getenv('REBUILD_DATE', '') == '':
 		return False
 
 	# release builds are a version number string only
@@ -154,7 +154,7 @@ def main():
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
 
-	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('DRY_RUN', 'false') != 'false'
+	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('DRY_RUN', 'false') == 'false'
 	if os.getenv('CI', None):
 		print('will we deploy:', 'yes' if is_master_build and args.push else 'no')
 
