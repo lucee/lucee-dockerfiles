@@ -16,11 +16,8 @@ on:
         type: string
       DRY_RUN:
         required: false
-        default: 'no'
-        type: choice
-        options:
-        - 'yes'
-        - 'no'
+        default: false
+        type: boolean
   workflow_call:
     inputs:
       LUCEE_VERSION:
@@ -31,11 +28,8 @@ on:
         type: string
       DRY_RUN:
         required: false
-        default: 'no'
-        type: choice
-        options:
-        - 'yes'
-        - 'no'
+        default: false
+        type: boolean
   repository_dispatch:
      types: [build-docker-images]
 
