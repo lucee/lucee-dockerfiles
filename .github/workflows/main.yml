@@ -36,6 +36,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+            platforms: amd64,arm64
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          config: .github/buildkitd.toml
+
       - name: Setup Python v3
         uses: actions/setup-python@v3.1.2
         
@@ -61,26 +72,6 @@ jobs:
           python3 ./generate-matrix.py >/dev/null && git diff --exit-code
 
       # Runs a set of commands using the runners shell
-      - name: Build Lucee docker image [jdk 8, tomcat 8.5]
-        run: python3 -u build-images.py
-        env:
-          TOMCAT_VERSION: "8.5"
-          TOMCAT_JAVA_VERSION: jdk8-openjdk
-          TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.2"
-          LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
-
-      - name: Build Lucee docker image [jdk 11, tomcat 8.5]
-        run: python3 -u build-images.py
-        env:
-          TOMCAT_VERSION: "8.5"
-          TOMCAT_JAVA_VERSION: jdk11-openjdk
-          TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.2"
-          LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
-
       - name: Build Lucee docker image [jdk 8, tomcat 9.0]
         run: python3 -u build-images.py
         env:
@@ -98,15 +89,5 @@ jobs:
           TOMCAT_JAVA_VERSION: jdk11-openjdk
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "5.2,5.3"
-          LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
-
-      - name: Build Lucee docker image [jdk 11, tomcat 9.0, Debian buster (oldstable)]
-        run: python3 -u build-images.py
-        env:
-          TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jdk11-openjdk
-          TOMCAT_BASE_IMAGE: "-buster"
-          LUCEE_MINOR: "5.3"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
