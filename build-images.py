@@ -17,7 +17,6 @@ class Config(object):
 	TOMCAT_VERSION = attr.ib()
 	TOMCAT_JAVA_VERSION = attr.ib()
 	TOMCAT_BASE_IMAGE = attr.ib()
-	REBUILD_DATE =  attr.ib()
 
 def flatten(lst):
 	return [x for y in lst for x in y]
@@ -48,8 +47,8 @@ def tomcat(config):
 	return f"tomcat{config.TOMCAT_VERSION}-{config.TOMCAT_JAVA_VERSION}{config.TOMCAT_BASE_IMAGE}"
 
 def rebuild_tag(config):
-	if config.REBUILD_DATE != '':
-		return f"-{config.REBUILD_DATE}"
+	if os.getenv('REBUILD_DATE', '') != '':
+		return f"-{os.getenv('REBUILD_DATE', '')}"
 
 	return ""
 
@@ -60,7 +59,6 @@ def discover_images():
 	TOMCAT_VERSION = os.getenv('TOMCAT_VERSION')
 	TOMCAT_JAVA_VERSION = os.getenv('TOMCAT_JAVA_VERSION')
 	TOMCAT_BASE_IMAGE = os.getenv('TOMCAT_BASE_IMAGE')
-	REBUILD_DATE = os.getenv('REBUILD_DATE', '')
 
 	for LUCEE_MINOR in LUCEE_MINORS:
 		for LUCEE_SERVER in LUCEE_SERVERS:
@@ -72,7 +70,6 @@ def discover_images():
 					TOMCAT_VERSION=TOMCAT_VERSION,
 					TOMCAT_JAVA_VERSION=TOMCAT_JAVA_VERSION,
 					TOMCAT_BASE_IMAGE=TOMCAT_BASE_IMAGE,
-					REBUILD_DATE=REBUILD_DATE,
 				)
 
 
