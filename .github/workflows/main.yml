@@ -19,8 +19,8 @@ on:
         default: 'no'
         type: choice
         options:
-        - yes
-        - no
+        - 'yes'
+        - 'no'
   workflow_call:
     inputs:
       LUCEE_VERSION:
@@ -34,8 +34,8 @@ on:
         default: 'no'
         type: choice
         options:
-        - yes
-        - no
+        - 'yes'
+        - 'no'
   repository_dispatch:
      types: [build-docker-images]
 
