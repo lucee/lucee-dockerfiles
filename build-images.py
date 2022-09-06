@@ -46,11 +46,12 @@ def run(cmd):
 def tomcat(config):
 	return f"tomcat{config.TOMCAT_VERSION}-{config.TOMCAT_JAVA_VERSION}{config.TOMCAT_BASE_IMAGE}"
 
-def rebuild_tag(config):
-	if os.getenv('REBUILD_DATE', '') != '':
-		return f"-{os.getenv('REBUILD_DATE', '')}"
+def rebuild_tag():
+	if os.getenv('REBUILD_DATE', '') == '':
+		return f""
+	
+	return f"-{os.getenv('REBUILD_DATE')}"
 
-	return ""
 
 def discover_images():
 	LUCEE_MINORS = os.getenv('LUCEE_MINOR').split(',')
@@ -74,12 +75,13 @@ def discover_images():
 
 
 def find_tags_for_image(config, default_tomcat, tags):
-	yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}{rebuild_tag(config)}"
+	yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}-{tomcat(config)}{rebuild_tag()}"
 
 	is_default_tomcat = \
 		config.TOMCAT_JAVA_VERSION == default_tomcat['TOMCAT_JAVA_VERSION'] and \
 		config.TOMCAT_VERSION == default_tomcat['TOMCAT_VERSION'] and \
-		config.TOMCAT_BASE_IMAGE == default_tomcat['TOMCAT_BASE_IMAGE']
+		config.TOMCAT_BASE_IMAGE == default_tomcat['TOMCAT_BASE_IMAGE'] and \
+		os.getenv('REBUILD_DATE', '') != ''
 
 	if is_default_tomcat:
 		yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}"
