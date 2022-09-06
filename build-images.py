@@ -17,7 +17,7 @@ class Config(object):
 	TOMCAT_VERSION = attr.ib()
 	TOMCAT_JAVA_VERSION = attr.ib()
 	TOMCAT_BASE_IMAGE = attr.ib()
-
+	REBUILD_DATE =  attr.ib()
 
 def flatten(lst):
 	return [x for y in lst for x in y]
