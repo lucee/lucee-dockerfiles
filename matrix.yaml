@@ -41,6 +41,7 @@ tags:
     LUCEE_MINOR: '5.2'
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
+    REBUILD_DATE: ''
 
   '5.3': &5_3
     TOMCAT_VERSION: '9.0'
@@ -49,6 +50,7 @@ tags:
     LUCEE_MINOR: '5.3'
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
+    REBUILD_DATE: ''
 
   # all other plain tags
   latest: &latest
@@ -101,6 +103,9 @@ matrix:
   LUCEE_VARIANT:
     - ''
     - '-light'
+
+  REBUILD_DATE:
+    - ''
 
 exclusions:
 
