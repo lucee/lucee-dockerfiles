@@ -142,7 +142,7 @@ def main():
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
 
-	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false'
+	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('BRANCH', None) == 'master'
 	if os.getenv('CI', None):
 		print('will we deploy:', 'yes' if is_master_build and args.push else 'no')
 
