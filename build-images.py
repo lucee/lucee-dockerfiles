@@ -24,7 +24,7 @@ def flatten(lst):
 def is_release_build(ver):
 	# builds with REBUILD_DATE should not apply plain tags
 	# because they are typically older builds, not the latest
-	if os.getenv('REBUILD_DATE', '') == '':
+	if os.getenv('REBUILD_DATE', '') != '':
 		return False
 
 	# release builds are a version number string only
@@ -81,7 +81,7 @@ def find_tags_for_image(config, default_tomcat, tags):
 		config.TOMCAT_JAVA_VERSION == default_tomcat['TOMCAT_JAVA_VERSION'] and \
 		config.TOMCAT_VERSION == default_tomcat['TOMCAT_VERSION'] and \
 		config.TOMCAT_BASE_IMAGE == default_tomcat['TOMCAT_BASE_IMAGE'] and \
-		os.getenv('REBUILD_DATE', '') != ''
+		os.getenv('REBUILD_DATE', '') == ''
 
 	if is_default_tomcat:
 		yield f"{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}{config.LUCEE_SERVER}"
