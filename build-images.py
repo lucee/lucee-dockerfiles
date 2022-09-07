@@ -128,8 +128,8 @@ def main():
 						help='do not push the tags')
 	parser.add_argument('--list-tags', action='store_true', default=False,
 						help='only list the tags that would be generated')
-	parser.add_argument('--buildx-platform', dest='platform', action='store', default='linux/amd64',
-						help='the target platform(s) to build, e.g. linux/amd64')
+	parser.add_argument('--buildx-platform', dest='platform', action='store', default='linux/amd64,linux/arm64',
+						help='the target platform(s) to build, e.g. linux/amd64,linux/arm64')
 	parser.add_argument('--buildx-load', dest='load', action='store_true', default=False,
 						help='load the image into Docker from the builder')
 	args = parser.parse_args()
@@ -139,7 +139,7 @@ def main():
 		args.build = False
 
 	if os.getenv('LUCEE_TARGETPLATFORM', None):
-		args.platform = os.getenv('LUCEE_TARGETPLATFORM', 'linux/amd64')
+		args.platform = os.getenv('LUCEE_TARGETPLATFORM', 'linux/amd64,linux/arm64')
 
 	if args.load:
 		args.push = False
