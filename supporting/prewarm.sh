@@ -25,6 +25,7 @@ if [ "$LUCEE_MINOR" = "5.2" ]; then
 else
 
     # native warmup support
-    LUCEE_ENABLE_WARMUP=true /usr/local/tomcat/bin/catalina.sh start
+    export LUCEE_ENABLE_WARMUP=true
+    /usr/local/tomcat/bin/catalina.sh start
 
 fi
