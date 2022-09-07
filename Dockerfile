@@ -60,4 +60,4 @@ ONBUILD RUN rm -rf /var/www/*
 # lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
 COPY supporting/prewarm.sh /usr/local/tomcat/bin/
 RUN chmod +x /usr/local/tomcat/bin/prewarm.sh
-RUN /usr/local/tomcat/bin/prewarm.sh && /usr/local/tomcat/bin/prewarm.sh
+RUN /usr/local/tomcat/bin/prewarm.sh ${LUCEE_MINOR}
