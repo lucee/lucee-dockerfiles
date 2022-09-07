@@ -5,9 +5,6 @@ FROM --platform=$BUILDPLATFORM ${LUCEE_IMAGE}
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-
 # Install nginx and supervisord
 COPY nginx/nginx_signing.key /tmp/nginx_signing.key
 RUN apt-key add /tmp/nginx_signing.key
