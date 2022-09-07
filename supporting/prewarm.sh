@@ -26,6 +26,6 @@ else
 
     # native warmup support
     export LUCEE_ENABLE_WARMUP=true
-    /usr/local/tomcat/bin/catalina.sh start
+    /usr/local/tomcat/bin/catalina.sh run
 
 fi
