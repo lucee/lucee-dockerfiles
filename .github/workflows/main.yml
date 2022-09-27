@@ -28,8 +28,8 @@ on:
         type: string
       DRY_RUN:
         required: false
-        default: false
-        type: boolean
+        default: "false"
+        type: string
   repository_dispatch:
      types: [build-docker-images]
 
