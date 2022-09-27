@@ -4,7 +4,6 @@ name: Build Lucee Docker Images
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -14,10 +13,12 @@ on:
       REBUILD_DATE:
         required: false
         type: string
+      # DRY_RUN is a boolean for the dispatch UI, seems to work fine
       DRY_RUN:
         required: false
         default: false
         type: boolean
+  # Triggers the workflow on push or pull request events but only for the master branch
   workflow_call:
     inputs:
       LUCEE_VERSION:
@@ -26,10 +27,11 @@ on:
       REBUILD_DATE:
         required: false
         type: string
+      # DRY_RUN is a string for the workflow call so that the default is set properly
       DRY_RUN:
         required: false
-        default: false
-        type: boolean
+        default: "false"
+        type: string
   repository_dispatch:
      types: [build-docker-images]
 
