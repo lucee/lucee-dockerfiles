@@ -82,7 +82,7 @@ Path placeholders:
 							The option must be enabled prior to entering the blocking operation to have effect. 
 							The timeout must be > 0. A timeout of zero is interpreted as an infinite timeout.
 							(in milliseconds)
-		client-timeout - 	how long a conection kep established (in milliseconds)
+		client-timeout - 	how long a connection is kept established (in milliseconds)
 		lock-timeout   - 	define how long a request wait for a lock (in milliseconds)
 	 	-->
     	<resource-provider arguments="lock-timeout:20000;socket-timeout:-1;client-timeout:60000" class="lucee.commons.io.res.type.ftp.FTPResourceProvider" scheme="ftp"/>
@@ -181,7 +181,7 @@ Path placeholders:
 			example: /somedir/
 			
 		physical: 
-			physical path to the apllication
+			physical path to the application
 			example: d:/projects/app1/webroot/somedir/
 			
 		archive:
@@ -276,7 +276,7 @@ Path placeholders:
 		caster-class: shortcut (modern,classic) or AMFCaster class.
 		- classic (default): Build in AMFCaster follows the implementation of other engines.
 		- modern: Build in AMFCaster based on classic AMFCaster improved in functionality.  
-		- <class-name>: full class path of class implemeting interface AMFCaster (http://www.lucee.org/javadoc/lucee/runtime/net/amf/AMFCaster.html)
+		- <class-name>: full class path of class implementing interface AMFCaster (http://www.lucee.org/javadoc/lucee/runtime/net/amf/AMFCaster.html)
 		caster-class-arguments: init arguments provided to the AMFCaster init method, use "CSS" syntax.
 	-->
 	<flex configuration="manual"/>
