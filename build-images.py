@@ -36,9 +36,9 @@ def get_minor_version(ver):
 
 def get_jar_url(ver, variant):
 	if variant == '-light':
-		return f"https://release.lucee.org/rest/update/provider/light/{ver}"
+		return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
 	else:
-		return f"https://release.lucee.org/rest/update/provider/loader/{ver}"
+		return f"https://cdn.lucee.org/lucee-{ver}.jar"
 
 def run(cmd):
 	return subprocess.run(cmd, check=True, universal_newlines=True)
