@@ -50,6 +50,22 @@ tags:
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
 
+  '5.4': &5_4
+    TOMCAT_VERSION: '9.0'
+    TOMCAT_JAVA_VERSION: 'jdk11-openjdk'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_MINOR: '5.4'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
+  '6.0': &6_0
+    TOMCAT_VERSION: '9.0'
+    TOMCAT_JAVA_VERSION: 'jdk11-openjdk'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_MINOR: '6.0'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
   # all other plain tags
   latest: &latest
     <<: *5_3
@@ -77,11 +93,27 @@ tags:
     <<: *5_3
     LUCEE_SERVER: '-nginx'
 
+  # 5.4 tags
+  5.4-light:
+    <<: *5_3
+    LUCEE_VARIANT: '-light'
+  5.4-nginx:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+
+  # 6.0 tags
+  5.4-light:
+    <<: *5_3
+    LUCEE_VARIANT: '-light'
+  5.4-nginx:
+    <<: *5_3
+    LUCEE_SERVER: '-nginx'
+
 matrix:
 
   TOMCAT_VERSION:
-    - '8.5'
     - '9.0'
+    # - '10.1'
 
   TOMCAT_JAVA_VERSION:
     - 'jdk8-openjdk'
@@ -93,6 +125,8 @@ matrix:
   LUCEE_MINOR:
     - '5.2'
     - '5.3'
+    - '5.4'
+    - '6.0'
 
   LUCEE_SERVER:
     - ''
@@ -104,6 +138,13 @@ matrix:
 
 exclusions:
 
-  # Tomcat 8.5 is not needed for Lucee 5.3
-  - TOMCAT_VERSION: '8.5'
+
+  # Tomcat 10.1 is not needed for Lucee 5.2
+  - TOMCAT_VERSION: '10.1'
+    LUCEE_MINOR: '5.2'
+  # Tomcat 10.1 is not needed for Lucee 5.3
+  - TOMCAT_VERSION: '10.1'
     LUCEE_MINOR: '5.3'
+  # Java 8 is not needed for Lucee 6.0
+  - TOMCAT_JAVA_VERSION: 'jdk8-openjdk'
+    LUCEE_MINOR: '6.0'
