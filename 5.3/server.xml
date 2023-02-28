@@ -124,6 +124,9 @@
                remoteIpHeader="X-Forwarded-For"
                requestAttributesEnabled="true" />
 
+        <Valve className="org.apache.catalina.valves.ErrorReportValve" 
+               showReport="false" showServerInfo="false" />
+
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
         <!--
