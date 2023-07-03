@@ -94,9 +94,9 @@ jobs:
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jdk8-openjdk
+          TOMCAT_JAVA_VERSION: jre8-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.2,5.3,5.4"
+          LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
@@ -104,8 +104,8 @@ jobs:
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jdk11-openjdk
+          TOMCAT_JAVA_VERSION: jre11-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.2,5.3,5.4,6.0"
+          LUCEE_MINOR: "5.3,5.4,6.0"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
