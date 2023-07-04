@@ -25,8 +25,7 @@ RUN mkdir -p /opt/lucee/server/lucee-server/context/security && \
 # Delete the default Tomcat webapps so they aren't deployed at startup
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Custom setenv.sh to load Lucee
-# Tomcat memory settings
+# Tomcat/Lucee memory settings
 # -Xms<size> set initial Java heap size
 # -Xmx<size> set maximum Java heap size
 ENV LUCEE_JAVA_OPTS "-Xms64m -Xmx512m"
@@ -34,9 +33,6 @@ ENV LUCEE_JAVA_OPTS "-Xms64m -Xmx512m"
 # Download Lucee JAR
 RUN mkdir -p /usr/local/tomcat/lucee
 ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar
-
-# Delete the default Tomcat webapps so they aren't deployed at startup
-RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Set Tomcat config to load Lucee
 COPY ${LUCEE_MINOR}/catalina.properties \
@@ -57,7 +53,7 @@ RUN mkdir -p /var/www
 COPY www/ /var/www/
 ONBUILD RUN rm -rf /var/www/*
 
-# lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
+# Lucee first time startup; explodes lucee and installs bundles/extensions
 COPY supporting/prewarm.sh /usr/local/tomcat/bin/
 RUN chmod +x /usr/local/tomcat/bin/prewarm.sh
 RUN /usr/local/tomcat/bin/prewarm.sh ${LUCEE_MINOR}

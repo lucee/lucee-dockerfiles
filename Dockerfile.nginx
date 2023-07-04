@@ -6,9 +6,6 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
 # Install nginx and supervisord
-COPY nginx/nginx_signing.key /tmp/nginx_signing.key
-RUN apt-key add /tmp/nginx_signing.key
-RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sources.list
 RUN set -x && \
 	apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -y \
