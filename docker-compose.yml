@@ -1,10 +1,10 @@
 lucee:
-  image: lucee/lucee:5.4
+  image: lucee/lucee:5.4.0.80-nginx
   environment:
     - VIRTUAL_HOST=lucee-dockerfiles.*
   volumes:
-    - "/workbench/lucee-dockerfiles/nginx/default.conf:/etc/nginx/conf.d/default.conf"
-    - "/workbench/lucee-dockerfiles/www:/var/www"
+    # - "/mnt/e/workbench/lucee/lucee-dockerfiles/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    - "/mnt/e/workbench/lucee/lucee-dockerfiles/www:/var/www"
   ports: 
     # - "8853:8888"
     # - "8053:80"
