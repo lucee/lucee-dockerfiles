@@ -164,6 +164,10 @@ def main():
 	for config in discover_images():
 		if config.LUCEE_MINOR == get_minor_version(os.getenv('LUCEE_VERSION')):
 			docker_args = ["--pull"]
+			if args.load:
+				# don't try to pull images from the registry when using buildx load
+				docker_args = []
+
 			if args.cache == False:
 				docker_args.append("--no-cache")
 
