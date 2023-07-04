@@ -15,6 +15,12 @@ ARG LUCEE_JAR_URL
 
 RUN echo ver: $LUCEE_VERSION minor: $LUCEE_MINOR server: $LUCEE_SERVER variant: $LUCEE_VARIANT jar: $LUCEE_JAR_URL
 
+# Update packages
+RUN DEBIAN_FRONTEND=noninteractive apt update && \
+	apt upgrade -y && \
+	apt-get install -y --no-install-recommends zip unzip && \
+	rm -rf /var/lib/apt/lists/*
+
 # Replace the Trusted SSL Certificates packaged with Lucee with those from
 # Java. Different OpenJDK versions have different paths for cacerts
 RUN mkdir -p /opt/lucee/server/lucee-server/context/security && \
