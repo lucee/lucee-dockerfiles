@@ -67,6 +67,9 @@ tags:
   light:
     <<: *latest
     LUCEE_VARIANT: '-light'
+  zero:
+    <<: *latest
+    LUCEE_VARIANT: '-zero'
 
 
   # 5.3 tags
@@ -89,6 +92,9 @@ tags:
   6.0-light:
     <<: *6_0
     LUCEE_VARIANT: '-light'
+  6.0-zero:
+    <<: *6_0
+    LUCEE_VARIANT: '-zero'
   6.0-nginx:
     <<: *6_0
     LUCEE_SERVER: '-nginx'
@@ -118,7 +124,7 @@ matrix:
   LUCEE_VARIANT:
     - ''
     - '-light'
-    # - '-zero'
+    - '-zero'
 
 exclusions:
 

@@ -37,6 +37,8 @@ def get_minor_version(ver):
 def get_jar_url(ver, variant):
 	if variant == '-light':
 		return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
+	elif variant == '-zero':
+		return f"https://cdn.lucee.org/lucee-zero-{ver}.jar"
 	else:
 		return f"https://cdn.lucee.org/lucee-{ver}.jar"
 
