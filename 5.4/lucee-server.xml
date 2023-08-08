@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- 
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><!-- 
 Path placeholders: 
-	{lucee-server}: path to the lucee server directory typical where the lucee.jar is located
+	{lucee-server}: path to the Lucee server directory typical where the Lucee.jar is located
 	{lucee-config}: same as {lucee-server} in server context and same as {lucee-web} in web context}
 	{temp-directory}: path to the temp directory of the current user of the system
 	{home-directory}: path to the home directory of the current user of the system
@@ -8,24 +8,26 @@ Path placeholders:
 	{system-directory}: path to thesystem directory
 	{web-context-hash}: hash of the web context
 
---><cfLuceeConfiguration salt="4FDA588E-318A-445C-898736AA1F229A69" version="5.2">
+--><cfLuceeConfiguration salt="4FDA588E-318A-445C-898736AA1F229A69" version="5.4">
 
 	<!--
 	system:
 	
 		out (output-stream)
-			- default (write out to default output stream)
+			- system (write out to default output stream)
+			- log (logs to out.log in lucee-server/context/logs)
 			- null (write no output)
 			- class:<class> (class that implements java.io.PrintWriter)
 			- file:<file> (file to write in)
 	
 		err (err-stream)
-			- default (write out to default output stream)
+			- system (write out to default output stream)
+			- log (logs to err.log in lucee-server/context/logs)
 			- null (write no output)
 			- class:<class> (class that implements java.io.PrintWriter)
 			- file:<file> (file to write in)
 	-->
-	<system err="default" out="null"/>
+	<system err="system" out="system"/>
 
 
 <!--	definition of all database used inside your application. 										-->
@@ -36,6 +38,7 @@ Path placeholders:
 <!--	or ask your database distributor 																-->
 	<data-sources psq="false">
 	</data-sources>
+	<mode develop="false"/>
 
 	<!--
 		deploy-directory - directory where java classes will be deployed
@@ -43,7 +46,7 @@ Path placeholders:
 		tld-directory / fld-directory - directory where additional Function and Tag Library Deskriptor are.
 		temp-directory - directory for temporary files (upload aso.)
 	 -->
-	<file-system fld-directory="{lucee-config}/library/fld/" function-directory="{lucee-config}/library/function/" tag-directory="{lucee-config}/library/tag/" temp-directory="{lucee-config}/temp/" tld-directory="{lucee-config}/library/tld/">
+	<file-system fld-default-directory="{lucee-config}/library/fld/" function-default-directory="{lucee-config}/library/function/" tag-default-directory="{lucee-config}/library/tag/" temp-directory="{lucee-config}/temp/" tld-default-directory="{lucee-config}/library/tld/">
 	</file-system>
 	
 	
@@ -124,7 +127,7 @@ Path placeholders:
 		lock-timeout   - 	define how long a request wait for a lock
 		case-sensitive	-	is http handled case-sensitive or not
 	 	-->
-
+    	<resource-provider arguments="lock-timeout:10000" bundle-name="s3.extension" bundle-version="2.0.0.112" class="org.lucee.extension.resource.s3.S3ResourceProvider" scheme="s3"/>
     		
     	<!--
     	this providers uses the jcifs library. see http://jcifs.samba.org/
@@ -138,7 +141,6 @@ Path placeholders:
     		class="lucee.commons.io.res.type.smb.SMBResourceProvider"
     		arguments=""/>
     	-->
-        <resource-provider arguments="lock-timeout:10000" bundle-name="s3.extension" bundle-version="2.0.0.97-RC" class="org.lucee.extension.resource.s3.S3ResourceProvider" scheme="s3"/>
     </resources>
 	
 
@@ -186,7 +188,7 @@ Path placeholders:
 			example: d:/projects/app1/webroot/somedir/
 			
 		archive:
-			path to a archive file:
+			path to an archive file:
 			example: d:/projects/app1/rasfiles/somedir.ras
 		primary: archive|physical
 			define where lucee first look for a called cfml file.
@@ -194,10 +196,8 @@ Path placeholders:
  -->	
 		<mapping archive="" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-server}/context/" primary="physical" readonly="yes" virtual="/lucee-server/"/>
 		<mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/>
-
-        <mapping archive="{lucee-config}/context/lucee-admin.lar" inspect-template="once" physical="{lucee-config}/context/admin" primary="physical" readonly="true" toplevel="true" virtual="/lucee/admin"/>
-        <mapping archive="{lucee-config}/context/lucee-doc.lar" inspect-template="once" primary="archive" readonly="true" toplevel="true" virtual="/lucee/doc"/>
-    </mappings>
+		<mapping archive="{lucee-config}/context/lucee-admin.lar" inspect-template="once" listener-mode="curr2root" listener-type="modern" physical="{lucee-config}/context/admin" primary="physical" readonly="true" toplevel="true" virtual="/lucee/admin"/>
+		<mapping archive="{lucee-config}/context/lucee-doc.lar" inspect-template="once" primary="archive" readonly="true" toplevel="true" virtual="/lucee/doc"/></mappings>	
 	
 	<custom-tag>
 		<mapping inspect-template="never" physical="{lucee-config}/customtags/"/>
@@ -215,9 +215,24 @@ Path placeholders:
 		data-member-default-access: remote|public|package|private
 			access type of component data member (variables in this scope)
 	-->
-	<component base="/lucee/Component.cfc" data-member-default-access="public" dump-template="/lucee/component-dump.cfm">
+	<component base-cfml="/lucee/Component.cfc" base-lucee="/lucee/Component.lucee" data-member-default-access="public" dump-template="/lucee/component-dump.cfm">
   		<mapping inspect-template="never" physical="{lucee-web}/components/" primary="physical" virtual="/default"/>
-	<mapping inspect-template="never" physical="{lucee-server}/components/" primary="physical" readonly="true" virtual="/default-server"/></component>
+  		<mapping inspect-template="never" physical="{lucee-server}/components/" primary="physical" virtual="/default-server"/>
+	</component>
+	
+	<!--
+	cache handlers:
+		
+		base: 
+			path to base component for every component that have no base component defined 
+		data-member-default-access: remote|public|package|private
+			access type of component data member (variables in this scope)
+	-->
+	<cache-handlers>
+  		<cache-handler class="lucee.runtime.cache.tag.request.RequestCacheHandler" id="request"/>
+  		<cache-handler class="lucee.runtime.cache.tag.timespan.TimespanCacheHandler" id="timespan"/>
+	</cache-handlers>
+	
 	
 	<!--
 	regional configuration:
@@ -244,7 +259,7 @@ Path placeholders:
 		timeserver: [example: swisstime.ethz.ch] default:local time
 			dns of a ntp time server
 	-->
-    <orm engine-bundle-name="hibernate.extension" engine-bundle-version="5.4.29.18-BETA" engine-class="org.lucee.extension.orm.hibernate.HibernateORMEngine"/>
+	<orm engine-class="lucee.runtime.orm.DummyORMEngine"/>
 	
 	<!--
 		enable and disable debugging
@@ -268,21 +283,7 @@ Path placeholders:
 	-->
 	<application listener-mode="curr2root" listener-type="mixed"/>
 	
-	<update location="http://stable.lucee.org" type="manual"/>
-	<!--
-	flex:
-		
-		configuration: xml|manual (default: xml)
-			xml:		deploy default configuration for the MessageBrokerServlet as xml to th WEB-INF directory
-			manual:		the configuration is up to the user, lucee does nothing
-			
-		caster-class: shortcut (modern,classic) or AMFCaster class.
-		- classic (default): Build in AMFCaster follows the implementation of other engines.
-		- modern: Build in AMFCaster based on classic AMFCaster improved in functionality.  
-		- <class-name>: full class path of class implemeting interface AMFCaster (http://www.lucee.org/javadoc/lucee/runtime/net/amf/AMFCaster.html)
-		caster-class-arguments: init arguments provided to the AMFCaster init method, use "CSS" syntax.
-	-->
-	<flex configuration="manual"/>
+	<update location="https://update.lucee.org" type="manual"/>
 		
 <!--
 LOGGING
@@ -309,7 +310,7 @@ A flexible layout configurable with pattern string.
 - pattern: This is the string which controls formatting and consists of a mix of literal content and conversion specifiers. for more details see: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html
 
 <layout-class>:
-A full class path to a Layout class available in the enviroemnt with a empty constructor.
+A full class path to a Layout class available in the enviroment with an empty constructor.
 for every argument defined lucee tries to call a matching setter method
 
 
@@ -328,27 +329,28 @@ Logs error to a resource (locale file, ftp, zip, ...)
 - maxfilesize (default:1024*1024*10): the maxial size of a log file created
 
 <appender-class>:
-A full class path to a Appender class available in the enviroemnt with a empty constructor.
+A full class path to an Appender class available in the enviroment with an empty constructor.
 for every argument defined lucee tries to call a matching setter method
 
  -->
 	<logging>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mapping.log" layout="classic" name="mapping"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/rest.log" layout="classic" name="rest"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/gateway.log" layout="classic" name="gateway"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/remoteclient.log" layout="classic" level="info" name="remoteclient"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/orm.log" layout="classic" name="orm"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mail.log" layout="classic" name="mail"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/search.log" layout="classic" name="search"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scheduler.log" layout="classic" name="scheduler"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scope.log" layout="classic" name="scope"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/application.log" layout="classic" name="application"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/exception.log" layout="classic" name="exception"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/trace.log" layout="classic" name="trace"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/thread.log" layout="classic" name="thread"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/deploy.log" layout="classic" name="deploy"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/requesttimeout.log" layout="classic" name="requesttimeout"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/memory.log" layout="classic" name="memory"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mapping.log" layout="classic" level="error" name="mapping"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/rest.log" layout="classic" level="error" name="rest"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/gateway.log" layout="classic" level="error" name="gateway"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/remoteclient.log" layout="classic" level="error" name="remoteclient"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/orm.log" layout="classic" level="error" name="orm"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mail.log" layout="classic" level="error" name="mail"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/search.log" layout="classic" level="error" name="search"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scheduler.log" layout="classic" level="error" name="scheduler"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scope.log" layout="classic" level="error" name="scope"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/application.log" layout="classic" level="info" name="application"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/exception.log" layout="classic" level="error" name="exception"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/trace.log" layout="classic" level="error" name="trace"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/thread.log" layout="classic" level="error" name="thread"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/deploy.log" layout="classic" level="error" name="deploy"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/requesttimeout.log" layout="classic" level="error" name="requesttimeout"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/memory.log" layout="classic" level="error" name="memory"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/datasource.log" layout="classic" level="error" name="datasource"/>
 	</logging>
 	
 </cfLuceeConfiguration>
