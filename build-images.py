@@ -214,6 +214,8 @@ def main():
 
 			if args.build:
 				run(command)
+		else:
+			print('mismatch of LUCEE_MINOR and LUCEE_VERSION: [', config.LUCEE_MINOR, '/', os.getenv('LUCEE_VERSION'), ']')
 
 
 if __name__ == '__main__':
