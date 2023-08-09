@@ -90,16 +90,6 @@ jobs:
           python3 ./generate-matrix.py >/dev/null && git diff --exit-code
 
       # Runs a set of commands using the runners shell
-      - name: Build Lucee docker image [JRE8, Tomcat 9.0]
-        run: python3 -u build-images.py
-        env:
-          TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jre8-temurin-jammy
-          TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.3,5.4"
-          LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
-
       - name: Build Lucee docker image [JRE11, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
@@ -110,11 +100,11 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JDK8, Tomcat 9.0]
+      - name: Build Lucee docker image [JRE8, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jdk8-temurin-jammy
+          TOMCAT_JAVA_VERSION: jre8-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
@@ -130,11 +120,11 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JDK8, Tomcat 9.0, older Ubuntu 20.04 LTS]
+      - name: Build Lucee docker image [JDK8, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jdk8-temurin-focal
+          TOMCAT_JAVA_VERSION: jdk8-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
@@ -150,3 +140,12 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
+      - name: Build Lucee docker image [JDK8, Tomcat 9.0, older Ubuntu 20.04 LTS]
+        run: python3 -u build-images.py
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk8-temurin-focal
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
