@@ -128,6 +128,7 @@ jobs:
           LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
 
       - name: Build Lucee docker image [JDK11, Tomcat 9.0, older Ubuntu 20.04 LTS]
         run: python3 -u build-images.py
@@ -138,6 +139,7 @@ jobs:
           LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
 
       - name: Build Lucee docker image [JDK8, Tomcat 9.0, older Ubuntu 20.04 LTS]
         run: python3 -u build-images.py
@@ -148,3 +150,4 @@ jobs:
           LUCEE_MINOR: "5.3,5.4"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
