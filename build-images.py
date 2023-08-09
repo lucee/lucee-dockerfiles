@@ -151,6 +151,12 @@ def main():
 		print("version argument missing or $LUCEE_VERSION not set")
 		sys.exit(1)
 
+	if os.getenv('SKIP_SNAPSHOTS', None):
+		if "SNAPSHOT" in args.version:
+			print("skipping SNAPSHOT build this run because SKIP_SNAPSHOTS env was set")
+			sys.exit(1)
+
+
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
 
