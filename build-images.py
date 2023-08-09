@@ -152,10 +152,16 @@ def main():
 		print("version argument missing or $LUCEE_VERSION not set")
 		sys.exit(1)
 
+	if os.getenv('SKIP_SNAPSHOTS', None):
+		if "SNAPSHOT" in args.version:
+			print("skipping SNAPSHOT build this run because SKIP_SNAPSHOTS env was set")
+			sys.exit(1)
+
+
 	with open('./matrix.yaml') as matrix_file:
 		matrix = yaml.safe_load(matrix_file)
 
-	is_master_build = os.getenv('TRAVIS_PULL_REQUEST', None) == 'false' and os.getenv('DRY_RUN', 'false') == 'false'
+	is_master_build = os.getenv('DRY_RUN', 'false') != 'true'
 	if os.getenv('CI', None):
 		print('will we deploy:', 'yes' if is_master_build and args.push else 'no')
 
@@ -209,6 +215,8 @@ def main():
 
 			if args.build:
 				run(command)
+		else:
+			print('mismatch of LUCEE_MINOR and LUCEE_VERSION: [', config.LUCEE_MINOR, '/', os.getenv('LUCEE_VERSION'), ']')
 
 
 if __name__ == '__main__':
