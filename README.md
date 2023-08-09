@@ -34,9 +34,12 @@ The tag naming convention is;
 - `RELEASE_TYPE` is the type of release; omitted for Releases, otherwise `SNAPSHOT`, `RC` or `BETA`
 - `-light` (optional) is a build with the Lucee "Light" JAR file, WITHOUT any extensions (users must install extensions separately, this includes database drivers, ORM, ESAPI, S3, image handling, etc)
 - `-nginx` (optional) is a build with the NGINX web server bundled and configured
-- `-TOMCAT_VERSION-JRE_VERSION` is the Tomcat major and minor version and OpenJDK major version of the build to allow users to choose between different combinations (e.g. `tomcat9.0-jre11-temurin-jammy` vs `tomcat9.0-jre8-temurin-jammy`). This is omitted for "simple tags" where the recommended Tomcat and OpenJDK versions are used.
+- `-TOMCAT_VERSION-JRE_VERSION` is the Tomcat major and minor version and Java major version of the build to allow users to choose between different combinations (e.g. `tomcat9.0-jre11-temurin-jammy` vs `tomcat9.0-jre8-temurin-jammy`). This is omitted for "simple tags" where the recommended Tomcat and Java versions are used.
 
-**Note:** The official Tomcat images have [removed support for Alpine](https://github.com/docker-library/tomcat/issues/166) and so the Lucee `-alpine` variant can no longer be supported. If the Tomcat base images add support for Alpine in the future then we will look to support the `-alpine` variant again.
+**Base Image / Operating System Notes:** 
+- The Lucee images are based on the [Docker Tomcat images](https://hub.docker.com/_/tomcat).
+- The Docker Tomcat images were previously based on OpenJDK images which used Debian as the underlying OS. The OpenJDK Debian images have been [discontinued for Java 8 and Java 11](https://github.com/docker-library/tomcat/issues/262) so the next best match in the Docker Tomcat images are now the Ubuntu Jammy (22.04 LTS) and Focal (20.04 LTS) images using the OpenJDK baed Temurin Java distributions.
+- The Docker Tomcat images [removed support for Alpine](https://github.com/docker-library/tomcat/issues/166) and so the Lucee `-alpine` variant can no longer be supported. If the Tomcat base images add support for Alpine in the future then we will look to support the `-alpine` variant again.
 
 
 ### Previous stable release (5.3)
