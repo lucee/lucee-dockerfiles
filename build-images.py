@@ -154,7 +154,7 @@ def main():
 	if os.getenv('SKIP_SNAPSHOTS', None):
 		if "SNAPSHOT" in args.version:
 			print("skipping SNAPSHOT build this run because SKIP_SNAPSHOTS env was set")
-			sys.exit(1)
+			sys.exit(0)
 
 
 	with open('./matrix.yaml') as matrix_file:
