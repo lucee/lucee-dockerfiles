@@ -144,7 +144,7 @@ def main():
 	if args.load:
 		args.push = False
 		if ',' in args.platform:
-			 sys.exit("A single target platform must be specified when using load")
+			sys.exit("A single target platform must be specified when using load")
 
 
 	if args.version == None:
