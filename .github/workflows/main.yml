@@ -99,6 +99,16 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
+      - name: Build Lucee 6+ docker image [JRE11, Tomcat 9.0]
+        run: python3 -u build-images.py
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre11-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light,-zero"
+
       - name: Build Lucee docker image [JRE8, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
@@ -123,7 +133,7 @@ jobs:
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
-          TOMCAT_JAVA_VERSION: jre11-temurin-jammy
+          TOMCAT_JAVA_VERSION: jdk11-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "6.0"
           LUCEE_SERVER: ",-nginx"
