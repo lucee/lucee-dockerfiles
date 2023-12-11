@@ -13,24 +13,24 @@
 
 **Tomcat 9.0 with Java 11 (recommended)**
 
-- `5.4.1.8-tomcat9.0-jre11-temurin-jammy`, `5.4.1.8`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.4.1.8-nginx-tomcat9.0-jre11-temurin-jammy`, `5.4.1.8-nginx`, **`5.4-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.4.4.38-tomcat9.0-jre11-temurin-jammy`, `5.4.4.38`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.4.4.38-nginx-tomcat9.0-jre11-temurin-jammy`, `5.4.4.38-nginx`, **`5.4-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 Tomcat 9.0 with Java 8
 
-- `5.4.1.8-tomcat9.0-jre8-temurin-jammy`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.4.1.8-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.4.4.38-tomcat9.0-jre8-temurin-jammy`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.4.4.38-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 
 ## How the tags work
 
-The Lucee Docker image tags follow a naming convention which is used to produce "simple tags" that are updated with each release (e.g. `5.4`, `5.4-nginx`) as well as "full tags" which allow for very specific version targeting (e.g. `5.4.1.8-tomcat9.0-jre11-temurin-jammy`).
+The Lucee Docker image tags follow a naming convention which is used to produce "simple tags" that are updated with each release (e.g. `5.4`, `5.4-nginx`) as well as "full tags" which allow for very specific version targeting (e.g. `5.4.4.38-tomcat9.0-jre11-temurin-jammy`).
 
 The tag naming convention is;
 
 `LUCEE_VERSION[-RELEASE_TYPE][-light][-nginx][-TOMCAT_VERSION-JRE_VERSION]`
 
-- `LUCEE_VERSION` is the Lucee Version number string. For simple tags it may optionally be in the `MAJOR.MINOR` format (e.g. `5.4`) and for full tags it's in the `MAJOR.MINOR.PATCH.BUILD` format (e.g. `5.4.1.8`). Snapshot, RC and Beta builds always include the full version number.
+- `LUCEE_VERSION` is the Lucee Version number string. For simple tags it may optionally be in the `MAJOR.MINOR` format (e.g. `5.4`) and for full tags it's in the `MAJOR.MINOR.PATCH.BUILD` format (e.g. `5.4.4.38`). Snapshot, RC and Beta builds always include the full version number.
 - `RELEASE_TYPE` is the type of release; omitted for Releases, otherwise `SNAPSHOT`, `RC` or `BETA`
 - `-light` (optional) is a build with the Lucee "Light" JAR file, WITHOUT any extensions (users must install extensions separately, this includes database drivers, ORM, ESAPI, S3, image handling, etc)
 - `-nginx` (optional) is a build with the NGINX web server bundled and configured
@@ -162,7 +162,7 @@ export LUCEE_MINOR=5.4
 export LUCEE_SERVER=,-nginx
 export LUCEE_VARIANTS=
 
-export LUCEE_VERSION=5.4.1.8
+export LUCEE_VERSION=5.4.4.38
 ```
 
 Then use the default builder with buildx and run the `build-images` script using a single target platform only (matching your native platform), e.g.
@@ -174,7 +174,7 @@ docker buildx use default
 Specify the newly built image tag in a Docker Compose file to run and test the container image with `docker-compose up`;
 ```
 lucee:
-  image: lucee/lucee:5.4.1.8
+  image: lucee/lucee:5.4.4.38
   ports: 
     - "8854:8888"
     - "8054:80"
