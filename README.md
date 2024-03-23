@@ -241,4 +241,4 @@ Special thanks to @rye ([Kristofer Rye](https://github.com/rye)) and @hawkrives 
 
 # License
 
-The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other softwares are available under their respective licenses.
+The Docker files and config files are available under the [MIT License](LICENSE). The Lucee engine, Tomcat, NGINX and any other software are available under their respective licenses.
