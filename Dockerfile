@@ -41,9 +41,9 @@ RUN mkdir -p /usr/local/tomcat/lucee
 ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar
 
 # Set Tomcat config to load Lucee
-COPY ${LUCEE_MINOR}/catalina.properties \
-	${LUCEE_MINOR}/server.xml \
-	${LUCEE_MINOR}/web.xml \
+COPY config/tomcat/catalina.properties \
+	config/tomcat/server.xml \
+	config/tomcat//web.xml \
 	/usr/local/tomcat/conf/
 
 # Custom setenv.sh to load Lucee
@@ -51,8 +51,9 @@ COPY supporting/setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
 # Create Lucee configs
-COPY ${LUCEE_MINOR}/lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
-COPY ${LUCEE_MINOR}/lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
+COPY config/lucee/server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
+COPY config/lucee/web.xml /opt/lucee/web/lucee-web.xml.cfm
+COPY config/lucee/config.json /opt/lucee/server/lucee-server/context/.CFConfig.json
 
 # Provide test page
 RUN mkdir -p /var/www
