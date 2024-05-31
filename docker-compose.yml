@@ -1,6 +1,5 @@
 services:
   lucee:
-    #image: lucee/lucee:5.4.0.80-nginx
     image: lucee/lucee:6.0.1.83-nginx
     environment:
       - VIRTUAL_HOST=lucee-dockerfiles.*
