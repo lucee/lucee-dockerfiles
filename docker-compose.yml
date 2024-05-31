@@ -4,7 +4,7 @@ services:
     environment:
       - VIRTUAL_HOST=lucee-dockerfiles.*
     volumes:
-      - ./www:/var/www:delegated
+      - ./www:/var/www
     ports:
       - "8054:80"
       - "8854:8888"
