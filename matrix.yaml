@@ -152,7 +152,7 @@ exclusions:
   # - LUCEE_MINOR: '5.4'
   #   LUCEE_VARIANT: '-zero'
 
-  # Java 8 is not needed for Lucee 6.0
+  # i don't think all this exclusion is needed, because the main do not list this version in the first place
   - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
     LUCEE_MINOR: '6.0'
   - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
