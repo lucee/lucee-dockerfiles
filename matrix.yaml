@@ -157,3 +157,7 @@ exclusions:
     LUCEE_MINOR: '6.0'
   - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
     LUCEE_MINOR: '6.1'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    LUCEE_MINOR: '5.3'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    LUCEE_MINOR: '5.4'
