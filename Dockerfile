@@ -50,11 +50,6 @@ COPY config/tomcat/catalina.properties \
 COPY supporting/setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
-# Create Lucee configs
-COPY config/lucee/server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
-COPY config/lucee/web.xml /opt/lucee/web/lucee-web.xml.cfm
-COPY config/lucee/config.json /opt/lucee/server/lucee-server/context/.CFConfig.json
-
 # Provide test page
 RUN mkdir -p /var/www
 COPY www/ /var/www/
