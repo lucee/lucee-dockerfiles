@@ -47,13 +47,13 @@ COPY config/tomcat/catalina.properties \
 	/usr/local/tomcat/conf/
 
 # Conditional copying of lucee-server.xml
-RUN if [ -f "${LUCEE_MINOR}/lucee-server.xml" ]; then \
-	cp "${LUCEE_MINOR}/lucee-server.xml" /opt/lucee/server/lucee-server/context/lucee-server.xml; \
+RUN if [ -f "config/lucee/${LUCEE_MINOR}/lucee-server.xml" ]; then \
+	cp "config/lucee/${LUCEE_MINOR}/lucee-server.xml" /opt/lucee/server/lucee-server/context/lucee-server.xml; \
 	fi
 
 # Conditional copying of lucee-web.xml.cfm
-RUN if [ -f "${LUCEE_MINOR}/lucee-web.xml.cfm" ]; then \
-	cp "${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
+RUN if [ -f "config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" ]; then \
+	cp "config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
 	fi
 
 
