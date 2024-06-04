@@ -140,7 +140,7 @@ matrix:
     - '-light'
     # - '-zero'
 
-exclusions:
+#exclusions:
 
   # Tomcat 10.1 is not needed for Lucee 5.3
   # - TOMCAT_VERSION: '10.1'
@@ -153,11 +153,11 @@ exclusions:
   #   LUCEE_VARIANT: '-zero'
 
   # i don't think all this exclusion is needed, because the main do not list this version in the first place
-  - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
-    LUCEE_MINOR: '6.0'
-  - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
-    LUCEE_MINOR: '6.1'
-  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
-    LUCEE_MINOR: '5.3'
-  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
-    LUCEE_MINOR: '5.4'
+  #- TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
+  #  LUCEE_MINOR: '6.0'
+  #- TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
+  #  LUCEE_MINOR: '6.1'
+  #- TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+  #  LUCEE_MINOR: '5.3'
+  #- TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+  #  LUCEE_MINOR: '5.4'
