@@ -46,6 +46,17 @@ COPY config/tomcat/catalina.properties \
 	config/tomcat//web.xml \
 	/usr/local/tomcat/conf/
 
+# Conditional copying of lucee-server.xml
+RUN if [ -f "${LUCEE_MINOR}/lucee-server.xml" ]; then \
+	cp "${LUCEE_MINOR}/lucee-server.xml" /opt/lucee/server/lucee-server/context/lucee-server.xml; \
+	fi
+
+# Conditional copying of lucee-web.xml.cfm
+RUN if [ -f "${LUCEE_MINOR}/lucee-web.xml.cfm" ]; then \
+	cp "${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
+	fi
+
+
 # Custom setenv.sh to load Lucee
 COPY supporting/setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
