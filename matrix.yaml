@@ -33,7 +33,7 @@ config:
 
 tags:
 
-  # plain tags for minor verions
+  # plain tags for minor versions
   '5.3': &5_3
     TOMCAT_VERSION: '9.0'
     TOMCAT_JAVA_VERSION: 'jre11-temurin-jammy'

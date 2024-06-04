@@ -15,7 +15,7 @@ Path placeholders:
     <!--
     arguments:
 		close-connection - 	write connection-close to response header
-		suppress-whitespace	-	supress white space in response
+		suppress-whitespace	-	suppress white space in response
 		show-version - show lucee version uin response header
 	 -->
 	<setting/>
@@ -99,7 +99,7 @@ Path placeholders:
 			example: /somedir/
 
 		physical:
-			physical path to the apllication
+			physical path to the application
 			example: d:/projects/app1/webroot/somedir/
 
 		archive:
