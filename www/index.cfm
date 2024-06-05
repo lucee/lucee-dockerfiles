@@ -11,6 +11,8 @@
 	profURL="https://lucee.org/get-support/consulting.html";
 	issueURL="https://luceeserver.atlassian.net/projects/LDEV/issues";
 	newURL="http://docs.lucee.org/guides/lucee-5.html";
+	majorVersion=listFirst(server.lucee.version,".");
+
 
 	function getExtensionsAsArray() {
 		var qry=extensionlist();
@@ -27,7 +29,7 @@
 		var pc=getPageContext();
 		var cf=pc.getConfig();
 		var result={};
-		result.single=listFirst(server.lucee.version,".")>5 && cf.getMode()==	1;
+		result.single=majorVersion>5 && cf.getMode()==	1;
 		result.server=cf.getConfigFile()&"";
 
 		if(!result.single) {
@@ -145,7 +147,7 @@ config=getConfig();
 								
 								<div class="clearfix"></div>
 							</li>
-
+							<cfif majorVersion GT 5>
 							<li class="listing-item thumb-large">
 								<div class="listing-thumb">
 									<a href="#configURL#">
@@ -169,7 +171,7 @@ config=getConfig();
 								
 								<div class="clearfix"></div>
 							</li>
-
+						</cfif>
 
 
 							
@@ -189,7 +191,7 @@ config=getConfig();
 
 							<h3 class="widget-title">General Information</h3>
 							<p>#server.coldfusion.productname# #server.lucee.version#<br>
-							Mode: #config.single?"Single":"Multi"#<br>
+							<cfif majorVersion GT 5>Mode: #config.single?"Single":"Multi"#<br></cfif>
 							OS: #server.os.name# #server.os.version?:""# (#server.os.archModel#bit)<br>
 							Java: #server.java.version?:""# (#server.java.vendor?:""#)<br>
 							Time Zone: #getTimeZone()#<br>
@@ -202,8 +204,10 @@ config=getConfig();
 							<p class="file-link"><a href="http://www.lucee.org">Lucee Association Switzerland</a></p>
 							<p>Non-profit custodians and maintainers of the Lucee Project</p>
 							
-							
-							<!--- lucee.org --->
+							<p class="file-link"><a href="https://hub.docker.com/r/lucee/lucee">Lucee on Docker Hub</a></p>
+							<p>Explore the official Lucee Docker images, providing a ready-to-use environment for running Lucee CFML applications. Easily deploy and manage your Lucee server with Docker containers.</p>
+
+							<!--- lucee-dockerfiles --->
 							<p class="file-link"><a href="https://github.com/lucee/lucee-dockerfiles">Lucee Docker Files</a></p>
 							<p>A project that provides the code needed to build and run Lucee Docker instances for your CFML applications.</p>
 
