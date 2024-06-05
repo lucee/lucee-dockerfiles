@@ -211,6 +211,8 @@ config=getConfig();
 							<p class="file-link"><a href="https://github.com/lucee/lucee-dockerfiles">Lucee Docker Files</a></p>
 							<p>A project that provides the code needed to build and run Lucee Docker instances for your CFML applications.</p>
 
+							<p class="file-link"><a href="/lucee/admin.cfm">Lucee Administrator</a></p>
+							<p>Note: The Lucee Administrator interface is accessible only when not using Nginx as a web server.</p>
 
 							<!--- Bitbucket 
 							<p class="file-link">Lucee Bitbucket</a></p>
