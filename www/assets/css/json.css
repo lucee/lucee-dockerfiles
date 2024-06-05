@@ -1,0 +1,48 @@
+
+        pre.json-display {
+            background-color: #2e3b4e;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            overflow-y: auto;
+            line-height: 1.5;
+            white-space: pre-wrap; /* Allows the JSON to wrap within the container */
+            width: 600px; /* Fixed width */
+            height: 400px; /* Fixed height */
+            position: relative;
+        }
+
+        .key {
+            color: #d19a66; /* Orange color for keys */
+        }
+
+        .string {
+            color: #98c379; /* Green color for strings */
+        }
+
+        .number {
+            color: #e5c07b; /* Yellow color for numbers */
+        }
+
+        .boolean {
+            color: #56b6c2; /* Blue color for booleans */
+        }
+
+        .null {
+            color: #c678dd; /* Purple color for null */
+        }
+
+        .copy-button {
+            background-color: #5999b2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #417a8a;
+        }

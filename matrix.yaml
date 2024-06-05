@@ -58,6 +58,14 @@ tags:
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
 
+  '6.1': &6_1
+    TOMCAT_VERSION: '9.0'
+    TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_MINOR: '6.1'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
   # all other plain tags
   latest: &latest
     <<: *5_3
@@ -91,6 +99,14 @@ tags:
     LUCEE_VARIANT: '-light'
   6.0-nginx:
     <<: *6_0
+    LUCEE_SERVER: '-nginx'
+
+  # 6.1 tags
+  6.1-light:
+    <<: *6_1
+    LUCEE_VARIANT: '-light'
+  6.1-nginx:
+    <<: *6_1
     LUCEE_SERVER: '-nginx'
 
 matrix:
@@ -136,6 +152,12 @@ exclusions:
   # - LUCEE_MINOR: '5.4'
   #   LUCEE_VARIANT: '-zero'
 
-  # Java 8 is not needed for Lucee 6.0
+  # this exclusion is NOT needed, because the main do not list this version in the first place, but the phyton code does reference it, so we keep it for the moment
   - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
     LUCEE_MINOR: '6.0'
+  - TOMCAT_JAVA_VERSION: 'jre8-temurin-jammy'
+    LUCEE_MINOR: '6.1'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    LUCEE_MINOR: '5.3'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    LUCEE_MINOR: '5.4'
