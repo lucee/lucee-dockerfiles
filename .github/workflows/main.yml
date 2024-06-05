@@ -89,13 +89,23 @@ jobs:
           python3 ./generate-matrix.py >/dev/null && git diff --exit-code
 
       # Runs a set of commands using the runners shell
+      - name: Build Lucee docker image [JRE21, Tomcat 9.0]
+        run: python3 -u build-images.py
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
       - name: Build Lucee docker image [JRE11, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jre11-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
@@ -109,13 +119,23 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
+      - name: Build Lucee docker image [JDK21, Tomcat 9.0]
+        run: python3 -u build-images.py
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
       - name: Build Lucee docker image [JDK11, Tomcat 9.0]
         run: python3 -u build-images.py
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk11-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
@@ -136,7 +156,7 @@ jobs:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk11-temurin-focal
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
           SKIP_SNAPSHOTS: true
