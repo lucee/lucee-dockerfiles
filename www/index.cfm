@@ -28,7 +28,6 @@
 		var cf=pc.getConfig();
 		var result={};
 		result.single=listFirst(server.lucee.version,".")>5 && cf.getMode()==	1;
-		result.single=false;
 		result.server=cf.getConfigFile()&"";
 
 		if(!result.single) {
