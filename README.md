@@ -88,6 +88,10 @@ COPY www /var/www
 ```
 
 
+More examples [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
+
+
+
 ## Features
 
 ### Java optimisation tweaks
@@ -181,7 +185,7 @@ lucee:
     - "8054:80"
 ```
 
-YOu can also finnd examples that show you how to for example add your own configuration or custom extensions [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
+You can also find examples that show you how to for example add your own configuration or custom extensions [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
 
 
 ### Advanced build changes
