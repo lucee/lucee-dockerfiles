@@ -16,8 +16,8 @@ This repositories focus is on building and maintaining the Lucee Docker Images p
 
 **Tomcat 9.0 with Java 11 (recommended)**
 
-- `6.0.1.83-tomcat9.0-jre11-temurin-jammy`, `6.0.1.83`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `6.0.1.83-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.1.83-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `6.0.3.1-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 ### Previous stable release (LTS)
 
