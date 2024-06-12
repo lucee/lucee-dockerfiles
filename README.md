@@ -26,7 +26,7 @@ This repository focuses on building and maintaining the Lucee Docker Images prov
 
 Lucee 5.4.x - Tomcat 9.0 with Java 8
 
-- `5.4.5.23-tomcat9.0-jre8-temurin-jammy`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `5.4.5.23-tomcat9.0-jre8-temurin-jammy` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.4.5.23-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 ### Bleeding edge Snapshot / RC / Beta
@@ -100,11 +100,12 @@ The default configuration serves a single application for any hostname on the li
 
 Lucee 6 by default runs in single mode (only one configuration and Administrator), if you prefer to run it in multi mode you need to to set the flag "mode" to "multi" in the of the .CFConfig.json file.
 
+
 ## Using this image
 
 ### Accessing the service
 
-Lucee server's Tomcat installation listens on port 8888.
+Lucee server's Tomcat installation listens on port 8888, and optional NGINX listens on port 80.
 
 This base image exposes port 8080 to linked containers but its **not used**. You must publish or expose port 8888 if you wish to access Tomcat from your installation.
 
@@ -187,6 +188,7 @@ You can also find examples that show you how to for example add your own configu
 If adding new Tomcat base (OS) images, Tomcat versions, Java versions, or Lucee versions or variants, the matrix.yaml needs to be edited so that several features
 like the tag building/lookups will work. After modifying the matrix.yaml run the script `./generate-matrix.py` to generate the new Travis configuration (note: Travis CI is deprecated as builds have transitioned to GitHub Actions, however this part of the build hasn't been fully removed yet).
 
+
 ## Older Lucee Base Images
 
 The older versions of Lucee remain available as tags in the `lucee/lucee` Docker Hub repository. Listed are the newest releases for each minor version.
@@ -210,29 +212,28 @@ The base images can be accessed in the existing Docker Hub repositories and the 
 
 https://github.com/lucee/lucee-dockerfiles/tree/legacy
 
-
-### Lucee 5.2 (Legacy builds)
+Lucee 5.2 (Legacy builds)
 
 - [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.2/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52-nginx/)
 - [Tomcat 8.0-JRE8](./5.2/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee52.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee52/)
 
-### Lucee 5.1 (Legacy builds)
+Lucee 5.1 (Legacy builds)
 
 - [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.1/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51-nginx/)
 - [Tomcat 8.0-JRE8](./5.1/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee51.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee51/)
 
-### Lucee 5.0 (Legacy builds)
+Lucee 5.0 (Legacy builds)
 
 - [nginx + Tomcat 8.0-JRE8](./lucee-nginx/5.0/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5-nginx/)
 - [Tomcat 8.0-JRE8](./5.0/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee5.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee5/)
 
-### Lucee 4.5 (Legacy builds)
+Lucee 4.5 (Legacy builds)
 
 - [nginx + Tomcat 8.0-JRE8](./lucee-nginx/4.5/) &nbsp; &nbsp;
   [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee4-nginx.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee4-nginx/)
