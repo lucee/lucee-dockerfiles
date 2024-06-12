@@ -31,8 +31,8 @@ Lucee 5.4.x - Tomcat 9.0 with Java 8
 
 ### Bleeding edge Snapshot / RC / Beta
 
-- `6.1.0.175-BETA-tomcat9.0-jre21-temurin-jammy`, `6.1.0.175-BETA`
-  - `6.1.0.175-BETA-nginx-tomcat9.0-jre21-temurin-jammy`, `6.1.0.175-BETA-nginx`
+- `6.1.0.193-RC-tomcat9.0-jre21-temurin-jammy`, `6.1.0.193-RC`
+  - `6.1.0.193-RC-nginx-tomcat9.0-jre21-temurin-jammy`, `6.1.0.193-RC-nginx`
 - `6.0.2.41-RC-tomcat9.0-jre11-temurin-jammy`, `6.0.2.41-RC`
   - `6.0.2.41-RC-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.2.41-RC-nginx`
 
