@@ -1,6 +1,6 @@
 # Lucee Docker Images
 
-This repositories focus is on building and maintaining the Lucee Docker Images provided on [Lucee](http://www.lucee.org/)  
+This repository focuses on building and maintaining the Lucee Docker Images provided for [Lucee](http://www.lucee.org/).
 
 
 [![Build Lucee Docker Images](https://github.com/lucee/lucee-dockerfiles/actions/workflows/main.yml/badge.svg)](https://github.com/lucee/lucee-dockerfiles/actions/workflows/main.yml)
@@ -14,24 +14,24 @@ This repositories focus is on building and maintaining the Lucee Docker Images p
 
 ### Latest stable release
 
-**Tomcat 9.0 with Java 11 (recommended)**
+**Lucee 6.0.x - Tomcat 9.0 with Java 11 (recommended)**
 
-- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`6.0`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `6.0.3.1-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 ### Previous stable release (LTS)
 
-**Tomcat 9.0 with Java 11 (recommended)**
+**Lucee 5.4.x - Tomcat 9.0 with Java 11 (recommended)**
 
-- `5.4.5.23-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23`, **`5.4`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `5.4.5.23-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23`, **`5.4`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.4.5.23-nginx-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23-nginx`, **`5.4-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
-Tomcat 9.0 with Java 8
+Lucee 5.4.x - Tomcat 9.0 with Java 8
 
 - `5.4.5.23-tomcat9.0-jre8-temurin-jammy`, ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.4.5.23-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
-### Bleeding edge Snapshot / RC / Beta (6.0)
+### Bleeding edge Snapshot / RC / Beta
 
 - `6.1.0.175-BETA-tomcat9.0-jre21-temurin-jammy`, `6.1.0.175-BETA`
   - `6.1.0.175-BETA-nginx-tomcat9.0-jre21-temurin-jammy`, `6.1.0.175-BETA-nginx`
@@ -64,8 +64,6 @@ The tag naming convention is;
 - The Docker Tomcat images [removed support for Alpine](https://github.com/docker-library/tomcat/issues/166) and so the Lucee `-alpine` variant can no longer be supported. If the Tomcat base images add support for Alpine in the future then we will look to support the `-alpine` variant again.
 
 
-
-
 ## Example Project Dockerfile
 
 For the latest stable release with Tomcat only:
@@ -87,9 +85,7 @@ COPY config/lucee/ /opt/lucee/web/
 COPY www /var/www
 ```
 
-
 More examples [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
-
 
 
 ## Features
@@ -146,11 +142,12 @@ Log folders:
 
 Following some helpful Environment variables you can use with the Lucee docker image.
 
-`LUCEE_ADMIN_PASSWORD`: The password for the Lucee Administrator
-`LUCEE_VERSION`: If set Lucee will run this version independent of the version installed.
-`LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms64m -Xmx512m".
+- `LUCEE_ADMIN_PASSWORD`: The password for the Lucee Administrator
+- `LUCEE_VERSION`: If set Lucee will run this version independent of the version installed.
+- `LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms64m -Xmx512m".
 
 For all possible enviroment variables supported by Lucee, see [here](https://github.com/lucee/lucee-docs/blob/master/docs/recipes/environment-variables-system-properties.md).
+
 
 ## How to locally develop Lucee Docker builds
 
@@ -187,16 +184,29 @@ lucee:
 
 You can also find examples that show you how to for example add your own configuration or custom extensions [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
 
-
 ### Advanced build changes
 
 If adding new Tomcat base (OS) images, Tomcat versions, Java versions, or Lucee versions or variants, the matrix.yaml needs to be edited so that several features
 like the tag building/lookups will work. After modifying the matrix.yaml run the script `./generate-matrix.py` to generate the new Travis configuration (note: Travis CI is deprecated as builds have transitioned to GitHub Actions, however this part of the build hasn't been fully removed yet).
 
+## Older Lucee Base Images
+
+The older versions of Lucee remain available as tags in the `lucee/lucee` Docker Hub repository. Listed are the newest releases for each minor version.
+
+Lucee 5.3.x - Tomcat 9.0 with Java 11
+
+- `5.3.12.1-tomcat9.0-jre11-temurin-jammy`, `5.3.12.1`, **`5.3`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.3.12.1-nginx-tomcat9.0-jre11-temurin-jammy`, `5.3.12.1-nginx`, **`5.3-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+
+Lucee 5.2.x - Tomcat 9.0 with Java 11
+
+- `5.2.9.31-tomcat9.0-jre11`, `5.2.9.31`, **`5.2`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+  - `5.2.9.31-nginx-tomcat9.0-jre11`, `5.2.9.31-nginx`, **`5.2-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+
 
 ## Legacy Lucee Base Images
 
-The older Lucee Base Images will remain available for the projects that are using them, though the build process for those images is considered "legacy" as they have been superseded by the new build matrix builds.
+The legacy Lucee Base Images / repositories will remain available for the projects that are using them, though the build process for those images is considered "legacy" as they have been superseded by the new build matrix builds.
 
 The base images can be accessed in the existing Docker Hub repositories and the source is now in the `legacy` branch;
 
