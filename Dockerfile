@@ -40,21 +40,38 @@ ENV LUCEE_JAVA_OPTS "-Xms64m -Xmx512m"
 RUN mkdir -p /usr/local/tomcat/lucee
 ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar
 
-# Set Tomcat config to load Lucee
-COPY config/tomcat/catalina.properties \
-	config/tomcat/server.xml \
-	config/tomcat//web.xml \
-	/usr/local/tomcat/conf/
-
-# Conditional copying of lucee-server.xml
-RUN if [ -f "config/lucee/${LUCEE_MINOR}/lucee-server.xml" ]; then \
-	cp "config/lucee/${LUCEE_MINOR}/lucee-server.xml" /opt/lucee/server/lucee-server/context/lucee-server.xml; \
+# Only execute if the major version is at least 10
+# Check the major version and conditionally add the JAR files
+RUN MAJOR_VERSION=$(echo ${TOMCAT_VERSION} | awk -F. '{print $1}') && \
+	if [ "$MAJOR_VERSION" -ge 10 ]; then \
+	wget -P /usr/local/tomcat/lib https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar && \
+	wget -P /usr/local/tomcat/lib https://repo1.maven.org/maven2/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar && \
+	wget -P /usr/local/tomcat/lib https://repo1.maven.org/maven2/javax/el/javax.el-api/3.0.0/javax.el-api-3.0.0.jar; \
 	fi
 
-# Conditional copying of lucee-web.xml.cfm
-RUN if [ -f "config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" ]; then \
-	cp "config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
-	fi
+
+# Copy the config directory to the build context
+COPY config/ /config/
+
+# Define the TOMCAT_MAJOR_MINOR_VERSION dynamically and conditionally copy the files
+RUN TOMCAT_MAJOR_MINOR_VERSION=$(echo ${TOMCAT_VERSION} | awk -F. '{print $1 "." $2}') && \
+	if [ -f "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/web.xml" ]; then \
+	cp "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/web.xml" /usr/local/tomcat/conf/web.xml; \
+	fi && \
+	if [ -f "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/catalina.properties" ]; then \
+	cp "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/catalina.properties" /usr/local/tomcat/conf/catalina.properties; \
+	fi && \
+	if [ -f "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/server.xml" ]; then \
+	cp "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/server.xml" /usr/local/tomcat/conf/server.xml; \
+	fi && \
+	if [ -f "/config/lucee/${LUCEE_MINOR}/lucee-server.xml" ]; then \
+	cp "/config/lucee/${LUCEE_MINOR}/lucee-server.xml" /opt/lucee/server/lucee-server/context/lucee-server.xml; \
+	fi && \
+	if [ -f "/config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" ]; then \
+	cp "/config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
+	fi && \
+	rm -rf /config
+
 
 
 # Custom setenv.sh to load Lucee

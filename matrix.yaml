@@ -66,6 +66,14 @@ tags:
     LUCEE_SERVER: ''
     LUCEE_VARIANT: ''
 
+  '6.2': &6_2
+    TOMCAT_VERSION: '10.1'
+    TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    TOMCAT_BASE_IMAGE: ''
+    LUCEE_MINOR: '6.2'
+    LUCEE_SERVER: ''
+    LUCEE_VARIANT: ''
+
   # all other plain tags
   latest: &latest
     <<: *6_0
@@ -109,11 +117,19 @@ tags:
     <<: *6_1
     LUCEE_SERVER: '-nginx'
 
+  # 6.2 tags
+  6.2-light:
+    <<: *6_2
+    LUCEE_VARIANT: '-light'
+  6.2-nginx:
+    <<: *6_2
+    LUCEE_SERVER: '-nginx'
+
 matrix:
 
   TOMCAT_VERSION:
     - '9.0'
-    # - '10.1'
+    - '10.1'
 
   TOMCAT_JAVA_VERSION:
     - 'jre8-temurin-jammy'
