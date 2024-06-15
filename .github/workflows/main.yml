@@ -97,7 +97,7 @@ jobs:
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "6.2"
           LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
+          LUCEE_VARIANTS: ""
 
       - name: Build Lucee docker image [JRE21, Tomcat 9.0]
         run: python3 -u build-images.py
