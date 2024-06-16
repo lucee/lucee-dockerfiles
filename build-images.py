@@ -8,6 +8,8 @@ import os
 import re
 import yaml
 import attr
+import requests
+import xml.etree.ElementTree as ET
 
 @attr.s(frozen=True)
 class Config(object):
@@ -35,10 +37,24 @@ def get_minor_version(ver):
 	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
 def get_jar_url(ver, variant):
-	if variant == '-light':
-		return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
-	else:
-		return f"https://cdn.lucee.org/lucee-{ver}.jar"
+    print(f"Fetching URL for version: {ver} with variant: {variant}")
+    
+    if variant == '-light':
+        return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
+    else:
+        if "SNAPSHOT" in ver:
+            try:
+                return get_snapshot_url("org.lucee", "lucee", ver)
+            except Exception as e:
+                print(f"Error fetching snapshot URL from Sonatype: {e}. Falling back to CDN URL.")
+                return f"https://cdn.lucee.org/lucee-{ver}.jar"
+        else:
+            try:
+                return get_release_url("org.lucee", "lucee", ver)
+            except Exception as e:
+                print(f"Error fetching release URL from Sonatype: {e}. Falling back to CDN URL.")
+                return f"https://cdn.lucee.org/lucee-{ver}.jar"
+
 
 def run(cmd):
 	return subprocess.run(cmd, check=True, universal_newlines=True)
@@ -114,6 +130,65 @@ def pick_dockerfile(config):
 		return './Dockerfile.nginx'
 	else:
 		return './Dockerfile'
+
+# Determine if the version is a snapshot or a release, and call the appropriate function to get the artifact URL
+def get_artifact_url(version):
+    group_id = "org.lucee"
+    artifact_id = "lucee"
+    
+    if "SNAPSHOT" in version:
+        return get_snapshot_url(group_id, artifact_id, version)
+    else:
+        return get_release_url(group_id, artifact_id, version)
+
+def get_snapshot_url(group_id, artifact_id, version):
+    """
+    Construct the URL for a snapshot version by reading the maven-metadata.xml file and extracting the correct snapshot version.
+    """
+    base_url = f"https://oss.sonatype.org/content/repositories/snapshots/{group_id.replace('.', '/')}/{artifact_id}/{version}/"
+    metadata_url = base_url + "maven-metadata.xml"
+
+    response = requests.get(metadata_url)
+    print(f"Snapshot metadata URL: {metadata_url}, Status Code: {response.status_code}")
+    if response.status_code != 200:
+        raise Exception(f"Failed to access the URL: {metadata_url}")
+
+    tree = ET.ElementTree(ET.fromstring(response.content))
+    root = tree.getroot()
+
+    # Extract the value for the snapshot version with the jar extension
+    snapshot_value = None
+    for snapshot_version in root.findall('versioning/snapshotVersions/snapshotVersion'):
+        extension = snapshot_version.findtext('extension')
+        if extension == 'jar':
+            snapshot_value = snapshot_version.findtext('value')
+            break
+
+    if not snapshot_value:
+        raise Exception("No JAR file found in the snapshot versions.")
+
+    jar_filename = f"{artifact_id}-{snapshot_value}.jar"
+    jar_url = base_url + jar_filename
+
+    return jar_url
+
+def get_release_url(group_id, artifact_id, version):
+    """
+    Construct the URL for a release version and verify its existence using a HEAD request.
+    """
+    base_url = f"https://oss.sonatype.org/service/local/repositories/releases/content/{group_id.replace('.', '/')}/{artifact_id}/{version}/"
+    jar_filename = f"{artifact_id}-{version}.jar?"
+    jar_url = base_url + jar_filename
+
+    # Make a HEAD request to check if the URL exists
+    response = requests.head(jar_url)
+    print(f"Release URL: {jar_url}, Status Code: {response.status_code}")
+    if response.status_code == 200:
+        return jar_url
+    else:
+        raise Exception(f"Release JAR not found at URL: {jar_url}")
+
+
 
 
 def main():
