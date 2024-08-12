@@ -137,10 +137,8 @@ matrix:
     - 'jre21-temurin-jammy'
     - 'jdk8-temurin-jammy'
     - 'jdk11-temurin-jammy'
-    - 'jdk21-temurin-jammy'
     - 'jdk8-temurin-focal'
     - 'jdk11-temurin-focal'
-    - 'jdk21-temurin-focal'
 
   TOMCAT_BASE_IMAGE:
     - ''
@@ -149,6 +147,8 @@ matrix:
     - '5.3'
     - '5.4'
     - '6.0'
+    - '6.1'
+    - '6.2'
 
   LUCEE_SERVER:
     - ''
