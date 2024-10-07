@@ -38,7 +38,9 @@ ENV LUCEE_JAVA_OPTS "-Xms64m -Xmx512m"
 
 # Download Lucee JAR
 RUN mkdir -p /usr/local/tomcat/lucee
-ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar
+#ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar 
+RUN curl -L -o /usr/local/tomcat/lucee/lucee.jar ${LUCEE_JAR_URL}
+
 
 # Only execute if the major version is at least 10
 # Check the major version and conditionally add the JAR files
