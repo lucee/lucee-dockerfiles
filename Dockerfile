@@ -55,6 +55,7 @@ COPY config/ /config/
 
 # Define the TOMCAT_MAJOR_MINOR_VERSION dynamically and conditionally copy the files
 RUN TOMCAT_MAJOR_MINOR_VERSION=$(echo ${TOMCAT_VERSION} | awk -F. '{print $1 "." $2}') && \
+	mkdir -p /usr/local/tomcat/conf /opt/lucee/server/lucee-server/context /opt/lucee/web && \
 	if [ -f "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/web.xml" ]; then \
 	cp "/config/tomcat/${TOMCAT_MAJOR_MINOR_VERSION}/web.xml" /usr/local/tomcat/conf/web.xml; \
 	fi && \
@@ -71,7 +72,6 @@ RUN TOMCAT_MAJOR_MINOR_VERSION=$(echo ${TOMCAT_VERSION} | awk -F. '{print $1 "."
 	cp "/config/lucee/${LUCEE_MINOR}/lucee-web.xml.cfm" /opt/lucee/web/lucee-web.xml.cfm; \
 	fi && \
 	rm -rf /config
-
 
 
 # Custom setenv.sh to load Lucee
