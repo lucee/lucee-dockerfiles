@@ -1,4 +1,5 @@
 # Lucee Docker Images
+
 [![Build Lucee Docker Images](https://github.com/lucee/lucee-dockerfiles/actions/workflows/main.yml/badge.svg)](https://github.com/lucee/lucee-dockerfiles/actions/workflows/main.yml)
 [![docker pulls](https://img.shields.io/docker/pulls/lucee/lucee.svg?label=docker+pulls)](https://hub.docker.com/r/lucee/lucee/)
 
@@ -9,31 +10,39 @@
 
 ## Supported tags and respective Dockerfile links
 
-### Latest stable release
+### Latest Stable Release - 6.2.0.321 - Tomcat 10.1 with Java 21 (recommended)
 
-**Lucee 6.0.x - Tomcat 9.0 with Java 11 (recommended)**
+- lucee/lucee:6.2.0.321-nginx-tomcat10.1-jre21-temurin-jammy
+- lucee/lucee:6.2.0.321-tomcat10.1-jre21-temurin-jammy
+- lucee/lucee:6.2.0.321
+- lucee/lucee:6.2.0.321-light-tomcat10.1-jre21-temurin-jammy
+- lucee/lucee:6.2.0.321-light
 
-- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`6.0`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `6.0.3.1-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+Tomcat 10.1 uses the Jakarta namespace, Tomcat 9 used the javax namespace, so you might need to update some libraries like urlrewrite
 
 ### Previous stable release (LTS)
 
-**Lucee 5.4.x - Tomcat 9.0 with Java 11 (recommended)**
+Lucee 6.0.x - Tomcat 9.0 with Java 11
+
+- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`6.0`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `6.0.3.1-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+
+Lucee 5.4.x - Tomcat 9.0 with Java 11
 
 - `5.4.5.23-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23`, **`5.4`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.4.5.23-nginx-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23-nginx`, **`5.4-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.4.5.23-nginx-tomcat9.0-jre11-temurin-jammy`, `5.4.5.23-nginx`, **`5.4-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 Lucee 5.4.x - Tomcat 9.0 with Java 8
 
 - `5.4.5.23-tomcat9.0-jre8-temurin-jammy` ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
-  - `5.4.5.23-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `5.4.5.23-nginx-tomcat9.0-jre8-temurin-jammy` ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 ### Bleeding edge Snapshot / RC / Beta
 
 - `6.1.0.193-RC-tomcat9.0-jre21-temurin-jammy`, `6.1.0.193-RC`
-  - `6.1.0.193-RC-nginx-tomcat9.0-jre21-temurin-jammy`, `6.1.0.193-RC-nginx`
+- `6.1.0.193-RC-nginx-tomcat9.0-jre21-temurin-jammy`, `6.1.0.193-RC-nginx`
 - `6.0.2.41-RC-tomcat9.0-jre11-temurin-jammy`, `6.0.2.41-RC`
-  - `6.0.2.41-RC-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.2.41-RC-nginx`
+- `6.0.2.41-RC-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.2.41-RC-nginx`
 
 The `SNAPSHOTS` Docker image builds are automatically generated after a successful Lucee build. Check the [Docker Hub tags](https://hub.docker.com/r/lucee/lucee/tags) and/or the [Lucee Downloads](https://download.lucee.org/) page to see the latest SNAPSHOT version numbers.
 
@@ -61,7 +70,6 @@ The tag naming convention is;
 - The Docker Tomcat images were previously based on OpenJDK images which used Debian as the underlying OS. The OpenJDK Debian images have been [discontinued for Java 8 and Java 11](https://github.com/docker-library/tomcat/issues/262) so the next best match in the Docker Tomcat images are now the Ubuntu Jammy (22.04 LTS) and Focal (20.04 LTS) images using the OpenJDK baed Temurin Java distributions.
 - The Docker Tomcat images [removed support for Alpine](https://github.com/docker-library/tomcat/issues/166) and so the Lucee `-alpine` variant can no longer be supported. If the Tomcat base images add support for Alpine in the future then we will look to support the `-alpine` variant again.
 
-
 ## Example Project Dockerfile
 
 For the latest stable release with Tomcat only:
@@ -85,8 +93,17 @@ COPY www /var/www
 
 More examples [here](https://github.com/lucee/lucee-docs/tree/master/examples/docker)
 
-
 ## Features
+
+### Redirecting logs to the Console
+
+With Lucee 6.2, you can redirect all logging to the console using an environment variables
+
+`LUCEE_LOGGING_FORCE_APPENDER=console`
+
+You can also, override the default log level of ERROR
+
+`LUCEE_LOGGING_FORCE_LEVEL=INFO`
 
 ### Java optimisation tweaks
 
@@ -99,7 +116,6 @@ More examples [here](https://github.com/lucee/lucee-docs/tree/master/examples/do
 The default configuration serves a single application for any hostname on the listening port. Multiple applications can be supported by editing the server.xml in the Tomcat config.
 
 Lucee 6 by default runs in single mode (only one configuration and Administrator), if you prefer to run it in multi mode you need to to set the flag "mode" to "multi" in the of the .CFConfig.json file.
-
 
 ## Using this image
 
@@ -147,7 +163,6 @@ Following some helpful Environment variables you can use with the Lucee docker i
 
 For all possible enviroment variables supported by Lucee, see [here](https://github.com/lucee/lucee-docs/blob/master/docs/recipes/environment-variables-system-properties.md).
 
-
 ## How to locally develop Lucee Docker builds
 
 Developing and testing builds locally requires a Docker environment with buildx support and Python 3 installed. Run `pip3 install -r requirements.txt`
@@ -167,12 +182,14 @@ export LUCEE_VERSION=5.4.4.38
 ```
 
 Then use the default builder with buildx and run the `build-images` script using a single target platform only (matching your native platform), e.g.
+
 ```
 docker buildx use default
 ./build-images.py --no-push --buildx-load --buildx-platform linux/amd64
 ```
 
 Specify the newly built image tag in a Docker Compose file to run and test the container image with `docker-compose up`;
+
 ```
 lucee:
   image: lucee/lucee:5.4.4.38
@@ -188,7 +205,6 @@ You can also find examples that show you how to for example add your own configu
 If adding new Tomcat base (OS) images, Tomcat versions, Java versions, or Lucee versions or variants, the matrix.yaml needs to be edited so that several features
 like the tag building/lookups will work. After modifying the matrix.yaml run the script `./generate-matrix.py` to generate the new Travis configuration (note: Travis CI is deprecated as builds have transitioned to GitHub Actions, however this part of the build hasn't been fully removed yet).
 
-
 ## Older Lucee Base Images
 
 The older versions of Lucee remain available as tags in the `lucee/lucee` Docker Hub repository. Listed are the newest releases for each minor version.
@@ -202,7 +218,6 @@ Lucee 5.2.x - Tomcat 9.0 with Java 11
 
 - `5.2.9.31-tomcat9.0-jre11`, `5.2.9.31`, **`5.2`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
   - `5.2.9.31-nginx-tomcat9.0-jre11`, `5.2.9.31-nginx`, **`5.2-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
-
 
 ## Legacy Lucee Base Images
 
