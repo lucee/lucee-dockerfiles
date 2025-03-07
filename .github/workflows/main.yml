@@ -90,10 +90,10 @@ jobs:
           python3 ./generate-matrix.py >/dev/null && git diff --exit-code
 
       # Runs a set of commands using the runners shell
-      - name: Build Lucee docker image [JRE21, Tomcat 10.1]
+      - name: Build Lucee docker image [JRE21, Tomcat 11]
         run: python3 -u build-images.py
         env:
-          TOMCAT_VERSION: "10.1"
+          TOMCAT_VERSION: "11"
           TOMCAT_JAVA_VERSION: jre21-temurin-jammy
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "6.2"
