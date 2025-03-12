@@ -196,8 +196,12 @@ def main():
 			if is_master_build and args.push:
 				buildx_args = [f"--push"]
 				print('pushing', plain_tags)
+				with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
+					print('pushing', plain_tags, file=fh)
 			else: 
 				print('not a master build; skipping deployment of', plain_tags)
+				with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
+					print('not a master build; skipping deployment of', plain_tags, file=fh)
 
 			command = [
 				"docker", "buildx", "build", *docker_args,

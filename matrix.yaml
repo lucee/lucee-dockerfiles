@@ -68,7 +68,7 @@ tags:
 
   '6.2': &6_2
     TOMCAT_VERSION: '11.0'
-    TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    TOMCAT_JAVA_VERSION: 'jre21-temurin-noble'
     TOMCAT_BASE_IMAGE: ''
     LUCEE_MINOR: '6.2'
     LUCEE_SERVER: ''
@@ -180,4 +180,8 @@ exclusions:
   - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
     LUCEE_MINOR: '5.3'
   - TOMCAT_JAVA_VERSION: 'jre21-temurin-jammy'
+    LUCEE_MINOR: '5.4'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-noble'
+    LUCEE_MINOR: '5.3'
+  - TOMCAT_JAVA_VERSION: 'jre21-temurin-noble'
     LUCEE_MINOR: '5.4'
