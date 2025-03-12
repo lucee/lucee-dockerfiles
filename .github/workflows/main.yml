@@ -71,11 +71,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3.3.0
         with:
-            #username: ${{ secrets.DOCKER_USERNAME }}
-            #password: ${{ secrets.DOCKER_PASSWORD }}
-            username: ${{ secrets.DOCKERHUB_PUBLIC_USERNAME || ' ' }}
-            password: ${{ secrets.DOCKERHUB_PUBLIC_TOKEN || ' ' }}
-            
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Copy repository_dispatch event clientpayload to ENV
         if: ${{ github.event_name == 'repository_dispatch' }}
         run: |
@@ -95,12 +92,12 @@ jobs:
       - name: Build Lucee docker image [JRE21, Tomcat 11]
         run: python3 -u build-images.py
         env:
-          TOMCAT_VERSION: "11"
-          TOMCAT_JAVA_VERSION: jre21-temurin-jammy
+          TOMCAT_VERSION: "11.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-noble
           TOMCAT_BASE_IMAGE: ""
           LUCEE_MINOR: "6.2"
           LUCEE_SERVER: ",-nginx"
-          LUCEE_VARIANTS: ",-light"
+          LUCEE_VARIANTS: ",-light,-zero"
 
       - name: Build Lucee docker image [JRE21, Tomcat 9.0]
         run: python3 -u build-images.py
