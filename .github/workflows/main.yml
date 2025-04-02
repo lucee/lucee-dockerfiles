@@ -95,7 +95,7 @@ jobs:
           TOMCAT_VERSION: "11.0"
           TOMCAT_JAVA_VERSION: jre21-temurin-noble
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "6.2"
+          LUCEE_MINOR: "6.2,7.0"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light,-zero"
       # jdk builds, need for Lucee Debug!
@@ -105,7 +105,7 @@ jobs:
           TOMCAT_VERSION: "11.0"
           TOMCAT_JAVA_VERSION: jdk21-temurin-noble
           TOMCAT_BASE_IMAGE: ""
-          LUCEE_MINOR: "6.2"
+          LUCEE_MINOR: "6.2,7.0"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ""
 
