@@ -85,7 +85,7 @@ tags:
 
   # all other plain tags
   latest: &latest
-    <<: *6_0
+    <<: *6_2
   nginx:
     <<: *latest
     LUCEE_SERVER: '-nginx'
