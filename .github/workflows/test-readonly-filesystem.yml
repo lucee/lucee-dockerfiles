@@ -1,0 +1,74 @@
+name: Test Read-Only Filesystem Support
+
+# This workflow tests Lucee Docker images with read-only root filesystem enabled
+# for security compliance (Kubernetes security best practices)
+
+on:
+  # Allows manual triggering from Actions tab
+  workflow_dispatch:
+    inputs:
+      LUCEE_VERSION:
+        description: 'Lucee version to test (e.g., 7.0.0.395)'
+        required: false
+        default: '7.0.0.395'
+        type: string
+      LUCEE_MINOR:
+        description: 'Lucee minor version (e.g., 7.0)'
+        required: false
+        default: '7.0'
+        type: string
+  # Can be triggered by other workflows
+  workflow_call:
+    inputs:
+      LUCEE_VERSION:
+        required: true
+        type: string
+      LUCEE_MINOR:
+        required: true
+        type: string
+
+jobs:
+  test-readonly-filesystem:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.9.0
+
+      - name: Placeholder - Build test image
+        run: |
+          echo "TODO: Build Docker image without prewarm"
+          echo "LUCEE_VERSION: ${{ inputs.LUCEE_VERSION || '7.0.0.395' }}"
+          echo "LUCEE_MINOR: ${{ inputs.LUCEE_MINOR || '7.0' }}"
+          echo ""
+          echo "This will:"
+          echo "  1. Build image with USER directive (non-root)"
+          echo "  2. Skip prewarm step"
+          echo "  3. Test with --read-only flag"
+          echo "  4. Verify volume mounts work"
+          echo "  5. Check Lucee starts and responds"
+
+      - name: Placeholder - Test read-only filesystem
+        run: |
+          echo "TODO: Test with read-only root filesystem"
+          echo ""
+          echo "Tests will include:"
+          echo "  - Verify container runs as non-root (uid=1000)"
+          echo "  - Verify root filesystem is read-only"
+          echo "  - Verify writable volumes work"
+          echo "  - Verify Lucee initializes correctly"
+          echo "  - Verify HTTP requests work"
+          echo "  - Measure startup time"
+
+      - name: Placeholder - Security validation
+        run: |
+          echo "TODO: Run security checks"
+          echo ""
+          echo "Security checks will include:"
+          echo "  - Verify no writes to root filesystem"
+          echo "  - Verify running as non-root user"
+          echo "  - Verify no new privileges"
+          echo "  - Check for vulnerable permissions"
