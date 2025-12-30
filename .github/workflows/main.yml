@@ -1,10 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Build Lucee Docker Images
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       LUCEE_VERSION:
@@ -13,12 +9,10 @@ on:
       REBUILD_DATE:
         required: false
         type: string
-      # DRY_RUN is a boolean for the dispatch UI, seems to work fine
       DRY_RUN:
         required: false
         default: false
         type: boolean
-  # Triggers the workflow on push or pull request events but only for the master branch
   workflow_call:
     inputs:
       LUCEE_VERSION:
@@ -27,70 +21,55 @@ on:
       REBUILD_DATE:
         required: false
         type: string
-      # DRY_RUN is a string for the workflow call so that the default is set properly
       DRY_RUN:
         required: false
         default: "false"
         type: string
   repository_dispatch:
-     types: [build-docker-images]
+    types: [build-docker-images]
 
 env:
   LUCEE_VERSION: ${{ github.event.inputs.LUCEE_VERSION }}
   REBUILD_DATE: ${{ github.event.inputs.REBUILD_DATE }}
   DRY_RUN: ${{ github.event.inputs.DRY_RUN }}
 
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build-docker-images:
-    # The type of runner that the job will run on
+  # Build amd64 images natively on x64 runner
+  build-amd64:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.4.0
-        with:
-            platforms: amd64,arm64
-            image: tonistiigi/binfmt:qemu-v7.0.0-28
-
       - name: Set up Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@v3.9.0
         with:
-          config: .github/buildkitd.toml
+          buildkitd-config: .github/buildkitd.toml
 
       - name: Setup Python v3
         uses: actions/setup-python@v5
-        
+        with:
+          python-version: '3.11'
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3.3.0
         with:
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Copy repository_dispatch event clientpayload to ENV
         if: ${{ github.event_name == 'repository_dispatch' }}
         run: |
           echo "LUCEE_VERSION=${{ github.event.client_payload.LUCEE_VERSION }}" >> $GITHUB_ENV
           echo "BRANCH=${{ github.event.client_payload.BRANCH }}" >> $GITHUB_ENV
 
-      # Runs a single command using the runners shell
       - name: Setup env
         run: |
           echo LUCEE_VERSION: $LUCEE_VERSION
-          echo BRANCH: $BRANCH
-          echo PULL_REQUEST: $PULL_REQUEST
           pip3 install -r requirements.txt
           python3 ./generate-matrix.py >/dev/null && git diff --exit-code
 
-      # Runs a set of commands using the runners shell
-      - name: Build Lucee docker image [JRE21, Tomcat 11]
-        run: python3 -u build-images.py
+      - name: Build [JRE21, Tomcat 11]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "11.0"
           TOMCAT_JAVA_VERSION: jre21-temurin-noble
@@ -98,9 +77,9 @@ jobs:
           LUCEE_MINOR: "6.2,7.0"
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light,-zero"
-      # jdk builds, need for Lucee Debug!
-      - name: Build Lucee docker image [JDK21, Tomcat 11]
-        run: python3 -u build-images.py
+
+      - name: Build [JDK21, Tomcat 11]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "11.0"
           TOMCAT_JAVA_VERSION: jdk21-temurin-noble
@@ -109,8 +88,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ""
 
-      - name: Build Lucee docker image [JRE21, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JRE21, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jre21-temurin-jammy
@@ -119,8 +98,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JRE11, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JRE11, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jre11-temurin-jammy
@@ -129,8 +108,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JRE8, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JRE8, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jre8-temurin-jammy
@@ -139,8 +118,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JDK21, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JDK21, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk21-temurin-jammy
@@ -149,8 +128,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JDK11, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JDK11, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk11-temurin-jammy
@@ -159,8 +138,8 @@ jobs:
           LUCEE_SERVER: ",-nginx"
           LUCEE_VARIANTS: ",-light"
 
-      - name: Build Lucee docker image [JDK8, Tomcat 9.0]
-        run: python3 -u build-images.py
+      - name: Build [JDK8, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk8-temurin-jammy
@@ -170,8 +149,8 @@ jobs:
           LUCEE_VARIANTS: ",-light"
           SKIP_SNAPSHOTS: true
 
-      - name: Build Lucee docker image [JDK11, Tomcat 9.0, older Ubuntu 20.04 LTS]
-        run: python3 -u build-images.py
+      - name: Build [JDK11, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk11-temurin-focal
@@ -181,8 +160,276 @@ jobs:
           LUCEE_VARIANTS: ",-light"
           SKIP_SNAPSHOTS: true
 
-      - name: Build Lucee docker image [JDK8, Tomcat 9.0, older Ubuntu 20.04 LTS]
-        run: python3 -u build-images.py
+      - name: Build [JDK8, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --arch-suffix="-amd64" --buildx-platform linux/amd64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk8-temurin-focal
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+  # Build arm64 images natively on arm64 runner
+  build-arm64:
+    runs-on: ubuntu-24.04-arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.9.0
+        with:
+          buildkitd-config: .github/buildkitd.toml
+
+      - name: Setup Python v3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Copy repository_dispatch event clientpayload to ENV
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo "LUCEE_VERSION=${{ github.event.client_payload.LUCEE_VERSION }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ github.event.client_payload.BRANCH }}" >> $GITHUB_ENV
+
+      - name: Setup env
+        run: |
+          echo LUCEE_VERSION: $LUCEE_VERSION
+          pip3 install -r requirements.txt
+          python3 ./generate-matrix.py >/dev/null && git diff --exit-code
+
+      - name: Build [JRE21, Tomcat 11]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "11.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-noble
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.2,7.0"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light,-zero"
+
+      - name: Build [JDK21, Tomcat 11]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "11.0"
+          TOMCAT_JAVA_VERSION: jdk21-temurin-noble
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.2,7.0"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ""
+
+      - name: Build [JRE21, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Build [JRE11, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre11-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Build [JRE8, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre8-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Build [JDK21, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Build [JDK11, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk11-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Build [JDK8, Tomcat 9.0]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk8-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+      - name: Build [JDK11, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk11-temurin-focal
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+      - name: Build [JDK8, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --arch-suffix="-arm64" --buildx-platform linux/arm64
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk8-temurin-focal
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+  # Create and push multi-arch manifests
+  create-manifests:
+    needs: [build-amd64, build-arm64]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python v3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Copy repository_dispatch event clientpayload to ENV
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo "LUCEE_VERSION=${{ github.event.client_payload.LUCEE_VERSION }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ github.event.client_payload.BRANCH }}" >> $GITHUB_ENV
+
+      - name: Setup env
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Create manifests [JRE21, Tomcat 11]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "11.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-noble
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.2,7.0"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light,-zero"
+
+      - name: Create manifests [JDK21, Tomcat 11]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "11.0"
+          TOMCAT_JAVA_VERSION: jdk21-temurin-noble
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.2,7.0"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ""
+
+      - name: Create manifests [JRE21, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Create manifests [JRE11, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre11-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Create manifests [JRE8, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jre8-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Create manifests [JDK21, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk21-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Create manifests [JDK11, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk11-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+
+      - name: Create manifests [JDK8, Tomcat 9.0]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk8-temurin-jammy
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+      - name: Create manifests [JDK11, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --create-manifests
+        env:
+          TOMCAT_VERSION: "9.0"
+          TOMCAT_JAVA_VERSION: jdk11-temurin-focal
+          TOMCAT_BASE_IMAGE: ""
+          LUCEE_MINOR: "5.3,5.4,6.0,6.1"
+          LUCEE_SERVER: ",-nginx"
+          LUCEE_VARIANTS: ",-light"
+          SKIP_SNAPSHOTS: true
+
+      - name: Create manifests [JDK8, Tomcat 9.0, Ubuntu 20.04]
+        run: python3 -u build-images.py --create-manifests
         env:
           TOMCAT_VERSION: "9.0"
           TOMCAT_JAVA_VERSION: jdk8-temurin-focal

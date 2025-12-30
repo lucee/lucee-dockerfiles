@@ -134,9 +134,17 @@ def main():
 						help='the target platform(s) to build, e.g. linux/amd64,linux/arm64')
 	parser.add_argument('--buildx-load', dest='load', action='store_true', default=False,
 						help='load the image into Docker from the builder')
+	parser.add_argument('--arch-suffix', dest='arch_suffix', action='store', default='',
+						help='suffix to append to tags for arch-specific builds (e.g. -amd64, -arm64)')
+	parser.add_argument('--create-manifests', dest='create_manifests', action='store_true', default=False,
+						help='create and push multi-arch manifests instead of building images')
 	args = parser.parse_args()
 
 	if args.list_tags:
+		args.push = False
+		args.build = False
+
+	if args.create_manifests:
 		args.push = False
 		args.build = False
 
@@ -182,13 +190,42 @@ def main():
 			build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name))
 			dockerfile = pick_dockerfile(config)
 
-			tags = find_tags_for_image(config, default_tomcat=matrix['tags'][config.LUCEE_MINOR], tags=matrix['tags'])
+			tags = list(find_tags_for_image(config, default_tomcat=matrix['tags'][config.LUCEE_MINOR], tags=matrix['tags']))
 
 			if args.list_tags:
 				print(", ".join(tags))
 				continue
 
-			plain_tags = [f"{namespace}/{image_name}:{tag}" for tag in tags]
+			if args.create_manifests:
+				# Create and push multi-arch manifests
+				for tag in tags:
+					manifest_tag = f"{namespace}/{image_name}:{tag}"
+					amd64_tag = f"{namespace}/{image_name}:{tag}-amd64"
+					arm64_tag = f"{namespace}/{image_name}:{tag}-arm64"
+
+					if is_master_build:
+						print(f'creating manifest {manifest_tag}')
+						manifest_cmd = [
+							"docker", "manifest", "create", manifest_tag,
+							"--amend", amd64_tag,
+							"--amend", arm64_tag,
+						]
+						print(' '.join(manifest_cmd))
+						run(manifest_cmd)
+
+						push_cmd = ["docker", "manifest", "push", manifest_tag]
+						print(' '.join(push_cmd))
+						run(push_cmd)
+
+						if os.getenv('GITHUB_STEP_SUMMARY', None):
+							with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
+								print(f'created manifest {manifest_tag}', file=fh)
+					else:
+						print(f'dry run: would create manifest {manifest_tag} from {amd64_tag} and {arm64_tag}')
+				continue
+
+			# Apply arch suffix to tags if specified
+			plain_tags = [f"{namespace}/{image_name}:{tag}{args.arch_suffix}" for tag in tags]
 			tag_args = flatten([["-t", tag] for tag in plain_tags])
 
 			buildx_args = []
@@ -198,12 +235,14 @@ def main():
 			if is_master_build and args.push:
 				buildx_args = [f"--push"]
 				print('pushing', plain_tags)
-				with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
-					print('pushing', plain_tags, file=fh)
-			else: 
+				if os.getenv('GITHUB_STEP_SUMMARY', None):
+					with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
+						print('pushing', plain_tags, file=fh)
+			else:
 				print('not a master build; skipping deployment of', plain_tags)
-				with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
-					print('not a master build; skipping deployment of', plain_tags, file=fh)
+				if os.getenv('GITHUB_STEP_SUMMARY', None):
+					with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
+						print('not a master build; skipping deployment of', plain_tags, file=fh)
 
 			command = [
 				"docker", "buildx", "build", *docker_args,
@@ -212,7 +251,6 @@ def main():
 				*buildx_args,
 				"-f", dockerfile,
 				*tag_args,
-				*buildx_args,
 				".",
 			]
 
