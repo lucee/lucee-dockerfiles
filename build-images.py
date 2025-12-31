@@ -201,7 +201,8 @@ def main():
 				continue
 
 			if args.create_manifests:
-				# Create and push multi-arch manifests
+				# Create and push multi-arch manifests using buildx imagetools
+				# imagetools can combine manifest lists (images with attestations)
 				for tag in tags:
 					manifest_tag = f"{namespace}/{image_name}:{tag}"
 					amd64_tag = f"{namespace}/{image_name}:{tag}-amd64"
@@ -209,17 +210,14 @@ def main():
 
 					if is_master_build:
 						print(f'creating manifest {manifest_tag}')
-						manifest_cmd = [
-							"docker", "manifest", "create", manifest_tag,
-							"--amend", amd64_tag,
-							"--amend", arm64_tag,
+						imagetools_cmd = [
+							"docker", "buildx", "imagetools", "create",
+							"-t", manifest_tag,
+							amd64_tag,
+							arm64_tag,
 						]
-						print(' '.join(manifest_cmd))
-						run(manifest_cmd)
-
-						push_cmd = ["docker", "manifest", "push", manifest_tag]
-						print(' '.join(push_cmd))
-						run(push_cmd)
+						print(' '.join(imagetools_cmd))
+						run(imagetools_cmd)
 
 						if os.getenv('GITHUB_STEP_SUMMARY', None):
 							with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
@@ -237,7 +235,7 @@ def main():
 				buildx_args = [f"--load"]
 
 			if is_master_build and args.push:
-				buildx_args = [f"--push"]
+				buildx_args = ["--push"]
 				print('pushing', plain_tags)
 				if os.getenv('GITHUB_STEP_SUMMARY', None):
 					with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as fh:
