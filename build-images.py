@@ -99,11 +99,11 @@ def find_tags_for_image(config, default_tomcat, tags):
 		]
 
 
-def config_to_build_args(config, namespace, image_name):
+def config_to_build_args(config, namespace, image_name, arch_suffix=''):
 	if config.LUCEE_SERVER == '':
 		build_args = {**attr.asdict(config), 'LUCEE_VERSION': os.getenv('LUCEE_VERSION'), 'LUCEE_MINOR': config.LUCEE_MINOR, 'LUCEE_JAR_URL': get_jar_url(os.getenv('LUCEE_VERSION'), config.LUCEE_VARIANT)}
 	elif config.LUCEE_SERVER == '-nginx':
-		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}{rebuild_tag()}"}
+		build_args = {'LUCEE_IMAGE': f"{namespace}/{image_name}:{os.getenv('LUCEE_VERSION')}{config.LUCEE_VARIANT}-{tomcat(config)}{rebuild_tag()}{arch_suffix}"}
 	else:
 		build_args = {}
 
@@ -183,11 +183,15 @@ def main():
 			if args.load:
 				# don't try to pull images from the registry when using buildx load
 				docker_args = []
+			if not is_master_build and config.LUCEE_SERVER == '-nginx':
+				# in dry runs, skip nginx builds - base image isn't in registry for FROM to resolve
+				print(f'dry run: skipping nginx build (base image not available)')
+				continue
 
 			if args.cache == False:
 				docker_args.append("--no-cache")
 
-			build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name))
+			build_args = list(config_to_build_args(config, namespace=namespace, image_name=image_name, arch_suffix=args.arch_suffix))
 			dockerfile = pick_dockerfile(config)
 
 			tags = list(find_tags_for_image(config, default_tomcat=matrix['tags'][config.LUCEE_MINOR], tags=matrix['tags']))
