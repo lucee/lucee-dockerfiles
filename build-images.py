@@ -184,8 +184,9 @@ def main():
 				# don't try to pull images from the registry when using buildx load
 				docker_args = []
 			if not is_master_build and config.LUCEE_SERVER == '-nginx':
-				# in dry runs, don't try to pull nginx base image from registry (it was just built locally)
-				docker_args = []
+				# in dry runs, skip nginx builds - base image isn't in registry for FROM to resolve
+				print(f'dry run: skipping nginx build (base image not available)')
+				continue
 
 			if args.cache == False:
 				docker_args.append("--no-cache")
