@@ -183,6 +183,9 @@ def main():
 			if args.load:
 				# don't try to pull images from the registry when using buildx load
 				docker_args = []
+			if not is_master_build and config.LUCEE_SERVER == '-nginx':
+				# in dry runs, don't try to pull nginx base image from registry (it was just built locally)
+				docker_args = []
 
 			if args.cache == False:
 				docker_args.append("--no-cache")
