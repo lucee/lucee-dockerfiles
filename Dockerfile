@@ -18,7 +18,7 @@ RUN echo ver: $LUCEE_VERSION minor: $LUCEE_MINOR server: $LUCEE_SERVER variant: 
 # Update packages
 RUN DEBIAN_FRONTEND=noninteractive apt update && \
 	apt upgrade -y && \
-	apt-get install -y --no-install-recommends zip unzip && \
+	apt-get install -y --no-install-recommends zip unzip wget && \
 	rm -rf /var/lib/apt/lists/*
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from
