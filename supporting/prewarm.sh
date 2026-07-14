@@ -29,3 +29,13 @@ else
     /usr/local/tomcat/bin/catalina.sh run
 
 fi
+
+# ensure lucee user can read/write all Lucee and Tomcat files at runtime
+if id lucee >/dev/null 2>&1; then
+    chown -R lucee:lucee \
+        /opt/lucee \
+        /usr/local/tomcat/logs \
+        /usr/local/tomcat/temp \
+        /usr/local/tomcat/work \
+        /var/www
+fi

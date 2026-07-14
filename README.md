@@ -10,15 +10,17 @@
 
 ## Supported tags and respective Dockerfile links
 
-### Latest Stable Release - 6.2.0.321 - Tomcat 10.1 with Java 21 (recommended)
+### Latest Stable Release - 7.0.3.43 - Tomcat 11.0 with Java 21 (recommended)
 
-- lucee/lucee:6.2.0.321-nginx-tomcat10.1-jre21-temurin-jammy
-- lucee/lucee:6.2.0.321-tomcat10.1-jre21-temurin-jammy
-- lucee/lucee:6.2.0.321
-- lucee/lucee:6.2.0.321-light-tomcat10.1-jre21-temurin-jammy
-- lucee/lucee:6.2.0.321-light
+- `7.0.3.43-tomcat11.0-jre21-temurin-noble`, `7.0.3.43`, **`7.0`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `7.0.3.43-nginx-tomcat11.0-jre21-temurin-noble`, `7.0.3.43-nginx`, **`7.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
-Tomcat 10.1 uses the Jakarta namespace, Tomcat 9 used the javax namespace, so you might need to update some libraries like urlrewrite
+### Long-Term Support (LTS) Release - 6.2.6.19 - Tomcat 11.0 with Java 21
+
+- `6.2.6.19-tomcat11.0-jre21-temurin-noble`, `6.2.6.19`, **`6.2`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `6.2.6.19-nginx-tomcat11.0-jre21-temurin-noble`, `6.2.6.19-nginx`, **`6.2-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+
+Tomcat 11.0 and 10.1 use the Jakarta namespace, Tomcat 9 used the javax namespace, so you might need to update some libraries like urlrewrite.
 
 ### Previous stable release (LTS)
 
@@ -117,6 +119,45 @@ The default configuration serves a single application for any hostname on the li
 
 Lucee 6 by default runs in single mode (only one configuration and Administrator), if you prefer to run it in multi mode you need to to set the flag "mode" to "multi" in the of the .CFConfig.json file.
 
+### Non-Root User and Read-Only Root Filesystem (Lucee 6.2+)
+
+Lucee 6.2 and later images include opt-in support for running as a non-root user and with a read-only root filesystem. Earlier Lucee minors (5.x, 6.0, 6.1) are unchanged and continue to run as root with a writable filesystem.
+
+**To enable the non-root user**, opt in using any one of:
+
+- `USER lucee` in your downstream Dockerfile
+- `--user lucee` (Docker CLI)
+- `user: "lucee"` (docker-compose)
+- `securityContext.runAsUser: 999` (Kubernetes)
+- `"user": "lucee"` (AWS ECS task definition)
+
+The image creates a `lucee` user with uid 999.
+
+**To enable a read-only root filesystem**, set `LUCEE_RUNTIME_DIR=/opt/lucee/server-runtime` so the entrypoint can seed a writable copy of the Lucee server context at container start. Without this, Lucee will fail to perform any operation that needs to write to its server context. Then opt in using any one of:
+
+- `--read-only` (Docker CLI)
+- `read_only: true` (docker-compose)
+- `securityContext.readOnlyRootFilesystem: true` (Kubernetes)
+- `"readonlyRootFilesystem": true` (AWS ECS task definition)
+
+The image declares writable runtime paths (`/usr/local/tomcat/{logs,temp,work}`, `/opt/lucee/server-runtime`, `/tmp`, plus nginx-specific paths in the `-nginx` images) as anonymous volumes so `docker run --read-only` works out of the box. **Note that some orchestrators (notably Kubernetes and AWS ECS on Fargate) require writable mounts to be declared explicitly in your deployment manifest** (e.g. `emptyDir` for Kubernetes, or `volumes` + `mountPoints` entries in an ECS task definition; ephemeral storage is fine).
+
+On dev or CI machines, anonymous volumes outlive the container that created them and can accumulate over time — run containers with `--rm` to clean up on exit, run `docker volume prune` periodically, or override the paths with named volumes in your compose file (and use `docker compose down -v` to remove them). For production deployments, named volumes or bind mounts are preferred over anonymous volumes for paths you want to persist across container restarts, such as log directories.
+
+Example with docker-compose:
+
+```yaml
+services:
+  lucee:
+    image: lucee/lucee:7.0
+    user: "lucee"
+    read_only: true
+    environment:
+      - LUCEE_RUNTIME_DIR=/opt/lucee/server-runtime
+    ports:
+      - "8888:8888"
+```
+
 ## Using this image
 
 ### Accessing the service
@@ -160,6 +201,7 @@ Following some helpful Environment variables you can use with the Lucee docker i
 - `LUCEE_ADMIN_PASSWORD`: The password for the Lucee Administrator
 - `LUCEE_VERSION`: If set Lucee will run this version independent of the version installed.
 - `LUCEE_JAVA_OPTS`: Additional JVM parameters for Tomcat. Used by /usr/local/tomcat/bin/setenv.sh. Default: "-Xms64m -Xmx512m".
+- `LUCEE_RUNTIME_DIR`: When set, the entrypoint seeds a writable copy of the Lucee server context here at container start, and re-points Lucee to use it. Intended for use with a read-only root filesystem. (Lucee 6.2+)
 
 For all possible enviroment variables supported by Lucee, see [here](https://github.com/lucee/lucee-docs/blob/master/docs/recipes/environment-variables-system-properties.md).
 

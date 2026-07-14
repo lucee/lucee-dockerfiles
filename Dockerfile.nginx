@@ -14,6 +14,23 @@ RUN set -x && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Chown nginx writable dirs to lucee user (Lucee 6.2+ base images only)
+RUN if id lucee >/dev/null 2>&1; then \
+		chown -R lucee:lucee \
+			/var/lib/nginx \
+			/var/log/nginx \
+			/var/log/supervisor \
+			/run; \
+	fi
+
+# Allow non-root nginx to bind privileged ports (Lucee 6.2+ base images only)
+RUN if id lucee >/dev/null 2>&1; then \
+		apt-get update && \
+		apt-get install -y --no-install-recommends libcap2-bin && \
+		setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx && \
+		rm -rf /var/lib/apt/lists/*; \
+	fi
+
 # Copy default nginx config files
 COPY nginx/nginx.conf /etc/nginx/
 COPY nginx/default.conf /etc/nginx/conf.d/
@@ -25,6 +42,9 @@ COPY nginx/supervisord.conf /etc/supervisor/conf.d/
 RUN mkdir -p /var/www
 COPY www/ /var/www/
 ONBUILD RUN rm -rf /var/www/*
+
+# Declare nginx-writable VOLUMEs for --read-only support
+VOLUME ["/var/lib/nginx", "/var/log/nginx", "/var/log/supervisor", "/run"]
 
 # Expose HTTP and HTTPS ports
 EXPOSE 80 443
