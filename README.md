@@ -46,6 +46,8 @@ Lucee 5.4.x - Tomcat 9.0 with Java 8
 
 The `SNAPSHOTS` Docker image builds are automatically generated after a successful Lucee build. Check the [Docker Hub tags](https://hub.docker.com/r/lucee/lucee/tags) and/or the [Lucee Downloads](https://download.lucee.org/) page to see the latest SNAPSHOT version numbers.
 
+From March 2027, `SNAPSHOT` tags are removed after 90 days, the same as the snapshot jars on Maven (see [LDEV-6536](https://luceeserver.atlassian.net/browse/LDEV-6536)). Release, RC and Beta tags are never removed.
+
 The `RC` and `Beta` builds are manually triggered when they are announced.
 
 For more information about Lucee versions and extensions see the [Lucee Downloads](https://download.lucee.org/) page.

@@ -6,6 +6,12 @@ import subprocess
 import sys
 import os
 import re
+import time
+import datetime
+import functools
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
 import yaml
 import attr
 
@@ -34,13 +40,71 @@ def is_release_build(ver):
 def get_minor_version(ver):
 	return re.sub(r"^(\d+\.\d+).*", r"\1", ver)
 
-def get_jar_url(ver, variant):
+# LDEV-6536 cdn.lucee.org is retired in March 2027, so the jars come from Maven:
+# releases from Maven Central, snapshots from the Sonatype Central snapshots repo
+# (the snapshot file name is timestamped, so it has to be resolved via maven-metadata.xml).
+# Central can take a while after a release is published, so we wait for the jar.
+# Until the CDN is retired, the CDN copy is used if the jar is not on Maven yet.
+SNAP_REPO = "https://central.sonatype.com/repository/maven-snapshots/org/lucee/lucee"
+RELEASE_REPO = "https://repo1.maven.org/maven2/org/lucee/lucee"
+CDN_RETIRED = datetime.datetime(2027, 3, 1, tzinfo=datetime.timezone.utc)
+
+def jar_classifier(variant):
+	return {"-light": "light", "-zero": "zero"}.get(variant, "")
+
+def http_ok(url, method="HEAD"):
+	try:
+		with urllib.request.urlopen(urllib.request.Request(url, method=method), timeout=60) as response:
+			return response.read() if method == "GET" else response.status == 200
+	except urllib.error.HTTPError as error:
+		if error.code == 404:
+			return None
+		raise
+
+def maven_jar_url(ver, classifier):
+	suffix = f"-{classifier}" if classifier else ""
+	if not ver.endswith("-SNAPSHOT"):
+		url = f"{RELEASE_REPO}/{ver}/lucee-{ver}{suffix}.jar"
+		return url if http_ok(url) else None
+	meta = http_ok(f"{SNAP_REPO}/{ver}/maven-metadata.xml", "GET")
+	if not meta:
+		return None
+	for snapshot_version in ET.fromstring(meta).findall('./versioning/snapshotVersions/snapshotVersion'):
+		if snapshot_version.findtext('extension') == 'jar' and (snapshot_version.findtext('classifier') or "") == classifier:
+			return f"{SNAP_REPO}/{ver}/lucee-{snapshot_version.findtext('value')}{suffix}.jar"
+	return None
+
+def cdn_jar_url(ver, variant):
 	if variant == '-light':
 		return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
 	elif variant == '-zero':
 		return f"https://cdn.lucee.org/lucee-zero-{ver}.jar"
 	else:
 		return f"https://cdn.lucee.org/lucee-{ver}.jar"
+
+@functools.lru_cache(maxsize=None)
+def get_jar_url(ver, variant):
+	classifier = jar_classifier(variant)
+	wait_minutes = int(os.getenv('LUCEE_JAR_WAIT_MINUTES', '90'))
+	deadline = time.time() + wait_minutes * 60
+	while True:
+		try:
+			url = maven_jar_url(ver, classifier)
+		except Exception as error:
+			print(f"error looking up the {ver}{variant} jar on Maven: {error}")
+			url = None
+		if url:
+			print(f"using {url}")
+			return url
+		if datetime.datetime.now(datetime.timezone.utc) < CDN_RETIRED:
+			url = cdn_jar_url(ver, variant)
+			if http_ok(url):
+				print(f"{ver}{variant} is not on Maven yet, using {url}")
+				return url
+		if time.time() > deadline:
+			sys.exit(f"the {ver}{variant} jar did not show up on Maven within {wait_minutes} minutes")
+		print(f"waiting for the {ver}{variant} jar to show up on Maven ...")
+		time.sleep(60)
 
 def run(cmd):
 	return subprocess.run(cmd, check=True, universal_newlines=True)
