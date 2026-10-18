@@ -165,6 +165,25 @@ Following some helpful Environment variables you can use with the Lucee docker i
 
 For all possible enviroment variables supported by Lucee, see [here](https://github.com/lucee/lucee-docs/blob/master/docs/recipes/environment-variables-system-properties.md).
 
+### Health check
+
+The image includes `wget` (but not `curl`), so you can use it for a container health check.
+
+No status page is shipped by default, because what counts as "healthy" differs per application, and an open status endpoint shouldn't be enabled by default. Instead, add your own small page, e.g. `/var/www/healthcheck.cfm`, that outputs `ok` and optionally checks your datasource.
+
+Tomcat in the image listens on port 8888, so a docker-compose health check looks like this:
+
+```yaml
+healthcheck:
+  test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8888/healthcheck.cfm || exit 1"]
+  interval: 30s
+  timeout: 5s
+  retries: 3
+  start_period: 60s
+```
+
+On Kubernetes, you can point an `httpGet` probe at the same URL (path `/healthcheck.cfm`, port 8888).
+
 ## How to locally develop Lucee Docker builds
 
 Developing and testing builds locally requires a Docker environment with buildx support and Python 3 installed. Run `pip3 install -r requirements.txt`
