@@ -36,6 +36,10 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # -Xmx<size> set maximum Java heap size
 ENV LUCEE_JAVA_OPTS "-Xms64m -Xmx512m"
 
+# Replace web.xml init-params with env vars (honored by Lucee 6.2+)
+ENV LUCEE_SERVER_DIR=/opt/lucee/server
+ENV LUCEE_WEB_DIR=/opt/lucee/web
+
 # Download Lucee JAR
 RUN mkdir -p /usr/local/tomcat/lucee
 ADD ${LUCEE_JAR_URL} /usr/local/tomcat/lucee/lucee.jar
@@ -83,7 +87,32 @@ RUN mkdir -p /var/www
 COPY www/ /var/www/
 ONBUILD RUN rm -rf /var/www/*
 
+# Non-root user and read-only rootfs support (Lucee 6.2+ / Tomcat 11.x+ only)
+RUN MAJOR_VERSION=$(echo ${TOMCAT_VERSION} | awk -F. '{print $1}') && \
+	if [ "$MAJOR_VERSION" -ge 11 ]; then \
+		groupadd -r -g 999 lucee && \
+		useradd -r -u 999 -g lucee -s /bin/false -M lucee && \
+		mkdir -p /opt/lucee/server-runtime && \
+		chown -R lucee:lucee \
+			/opt/lucee \
+			/usr/local/tomcat/logs \
+			/usr/local/tomcat/temp \
+			/usr/local/tomcat/work \
+			/var/www && \
+		chmod 644 /usr/local/tomcat/lucee/lucee.jar; \
+	fi
+
+# Declare VOLUMEs so writable paths work under --read-only without --tmpfs
+VOLUME ["/usr/local/tomcat/logs", "/usr/local/tomcat/temp", "/usr/local/tomcat/work", "/opt/lucee/server-runtime", "/tmp"]
+
 # Lucee first time startup; explodes lucee and installs bundles/extensions
 COPY supporting/prewarm.sh /usr/local/tomcat/bin/
 RUN chmod +x /usr/local/tomcat/bin/prewarm.sh
 RUN /usr/local/tomcat/bin/prewarm.sh ${LUCEE_MINOR}
+
+# Entrypoint handles LUCEE_RUNTIME_DIR seeding for read-only rootfs support
+COPY supporting/docker-entrypoint.sh /usr/local/tomcat/bin/
+RUN chmod +x /usr/local/tomcat/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/tomcat/bin/docker-entrypoint.sh"]
+# Setting ENTRYPOINT above clears the Tomcat base image's CMD; restore it
+CMD ["catalina.sh", "run"]

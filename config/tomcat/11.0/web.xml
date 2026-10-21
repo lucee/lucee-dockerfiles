@@ -4747,6 +4747,7 @@
         <servlet-name>CFMLServlet</servlet-name>
         <description>CFML runtime Engine</description>
         <servlet-class>lucee.loader.servlet.jakarta.CFMLServlet</servlet-class>
+        <!-- paths come from the LUCEE_SERVER_DIR and LUCEE_WEB_DIR env vars (set in Dockerfile)
         <init-param>
            <param-name>lucee-server-directory</param-name>
            <param-value>/opt/lucee/server/</param-value>
@@ -4757,6 +4758,7 @@
             <param-value>/opt/lucee/web/</param-value>
             <description>Lucee Web Directory (for Website-specific configurations, settings, and libraries)</description>
         </init-param>
+        -->
         <load-on-startup>1</load-on-startup>
     </servlet>
 
