@@ -74,6 +74,37 @@ def maven_jar_url(ver, classifier):
 			return f"{SNAP_REPO}/{ver}/lucee-{snapshot_version.findtext('value')}{suffix}.jar"
 	return None
 
+# LDEV-6710 from 7.1 on, the jars of a (non-snapshot) build are attached to the GitHub Release,
+# which is published right away, so they are taken from there first; Maven stays the fallback.
+# 6.2 / 7.0 and snapshots keep using Maven (and the CDN) as before.
+# The release tag is the version without qualifier (7.1.2.184-RC -> 7.1.2.184); releases that were
+# backfilled before that convention use the full version as tag, so that is tried second.
+GITHUB_RELEASES = "https://github.com/lucee/Lucee/releases/download"
+
+def uses_github_release(ver):
+	match = re.match(r"^(\d+)\.(\d+)\.\d+\.\d+", ver)
+	if not match or ver.endswith("-SNAPSHOT"):
+		return False
+	return (int(match.group(1)), int(match.group(2))) >= (7, 1)
+
+def github_jar_urls(ver, variant):
+	if not uses_github_release(ver):
+		return []
+	name = {"-light": "lucee-light", "-zero": "lucee-zero"}.get(variant, "lucee")
+	tags = [re.sub(r"-.*$", "", ver)]
+	if tags[0] != ver:
+		tags.append(ver)
+	return [f"{GITHUB_RELEASES}/{tag}/{name}-{ver}.jar" for tag in tags]
+
+def github_jar_url(ver, variant):
+	for url in github_jar_urls(ver, variant):
+		try:
+			if http_ok(url):
+				return url
+		except Exception as error:
+			print(f"error looking up {url}: {error}")
+	return None
+
 def cdn_jar_url(ver, variant):
 	if variant == '-light':
 		return f"https://cdn.lucee.org/lucee-light-{ver}.jar"
@@ -88,6 +119,10 @@ def get_jar_url(ver, variant):
 	wait_minutes = int(os.getenv('LUCEE_JAR_WAIT_MINUTES', '90'))
 	deadline = time.time() + wait_minutes * 60
 	while True:
+		url = github_jar_url(ver, variant)
+		if url:
+			print(f"using {url}")
+			return url
 		try:
 			url = maven_jar_url(ver, classifier)
 		except Exception as error:
@@ -102,8 +137,8 @@ def get_jar_url(ver, variant):
 				print(f"{ver}{variant} is not on Maven yet, using {url}")
 				return url
 		if time.time() > deadline:
-			sys.exit(f"the {ver}{variant} jar did not show up on Maven within {wait_minutes} minutes")
-		print(f"waiting for the {ver}{variant} jar to show up on Maven ...")
+			sys.exit(f"the {ver}{variant} jar did not show up within {wait_minutes} minutes")
+		print(f"waiting for the {ver}{variant} jar to show up ...")
 		time.sleep(60)
 
 def run(cmd):
