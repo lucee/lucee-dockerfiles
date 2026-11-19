@@ -4770,11 +4770,13 @@
     <servlet-mapping>
         <servlet-name>CFMLServlet</servlet-name>
         <url-pattern>*.cfm</url-pattern>
+        <url-pattern>*.cfs</url-pattern>
         <url-pattern>*.cfml</url-pattern>
         <url-pattern>*.cfc</url-pattern>
         <url-pattern>/index.cfm/*</url-pattern>
         <url-pattern>/index.cfc/*</url-pattern>
         <url-pattern>/index.cfml/*</url-pattern>
+        <url-pattern>/index.cfs/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
