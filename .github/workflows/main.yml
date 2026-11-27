@@ -37,6 +37,7 @@ jobs:
   # Build amd64 images natively on x64 runner
   build-amd64:
     runs-on: ubuntu-latest
+    if: ${{ !contains(inputs.LUCEE_VERSION, '-SNAPSHOT') && !contains(github.event.inputs.LUCEE_VERSION, '-SNAPSHOT') && !contains(github.event.client_payload.LUCEE_VERSION, '-SNAPSHOT') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -194,6 +195,7 @@ jobs:
   # Build arm64 images natively on arm64 runner
   build-arm64:
     runs-on: ubuntu-24.04-arm
+    if: ${{ !contains(inputs.LUCEE_VERSION, '-SNAPSHOT') && !contains(github.event.inputs.LUCEE_VERSION, '-SNAPSHOT') && !contains(github.event.client_payload.LUCEE_VERSION, '-SNAPSHOT') }}
     steps:
       - uses: actions/checkout@v4
 
