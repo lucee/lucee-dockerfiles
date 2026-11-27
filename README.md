@@ -10,7 +10,15 @@
 
 ## Supported tags and respective Dockerfile links
 
-### Latest Stable Release - 6.2.0.321 - Tomcat 10.1 with Java 21 (recommended)
+### Latest Stable Release - 8.0.0.310 - Tomcat 11.0 with Java 25 (recommended)
+
+- `8.0.0.310-tomcat11.0-jre25-temurin-noble`, `8.0.0.310`, **`8.0`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `8.0.0.310-nginx-tomcat11.0-jre25-temurin-noble`, `8.0.0.310-nginx`, **`8.0-nginx`**, **`nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
+- `8.0.0.310-light-tomcat11.0-jre25-temurin-noble`, `8.0.0.310-light`, **`8.0-light`**, **`light`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+
+Tomcat 11 uses the Jakarta namespace, Tomcat 9 used the javax namespace, so you might need to update some libraries like urlrewrite
+
+### Previous stable release - 6.2.0.321 - Tomcat 10.1 with Java 21
 
 - lucee/lucee:6.2.0.321-nginx-tomcat10.1-jre21-temurin-jammy
 - lucee/lucee:6.2.0.321-tomcat10.1-jre21-temurin-jammy
@@ -24,7 +32,7 @@ Tomcat 10.1 uses the Jakarta namespace, Tomcat 9 used the javax namespace, so yo
 
 Lucee 6.0.x - Tomcat 9.0 with Java 11
 
-- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`6.0`**, **`latest`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
+- `6.0.3.1-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1`, **`6.0`** ([Dockerfile](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile))
 - `6.0.3.1-nginx-tomcat9.0-jre11-temurin-jammy`, `6.0.3.1-nginx`, **`6.0-nginx`** ([Dockerfile.nginx](https://github.com/lucee/lucee-dockerfiles/blob/master/Dockerfile.nginx))
 
 Lucee 5.4.x - Tomcat 9.0 with Java 11
@@ -77,7 +85,7 @@ The tag naming convention is;
 For the latest stable release with Tomcat only:
 
 ```
-FROM lucee/lucee:6.0
+FROM lucee/lucee:8.0
 
 COPY config/lucee/ /opt/lucee/web/
 COPY www /var/www
@@ -86,7 +94,7 @@ COPY www /var/www
 For the latest stable release with NGINX and Tomcat:
 
 ```
-FROM lucee/lucee:6.0-nginx
+FROM lucee/lucee:8.0-nginx
 
 COPY config/nginx/ /etc/nginx/
 COPY config/lucee/ /opt/lucee/web/
